@@ -71,11 +71,11 @@
 
 .hero-title span,
 .hero-title .gold-gradient-title {
-  background: var(--gold-gradient) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
+  color: var(--gold-primary) !important;
+  -webkit-text-fill-color: var(--gold-primary) !important;
+  background: none !important;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+  font-weight: 900;
   display: inline !important;
 }
 

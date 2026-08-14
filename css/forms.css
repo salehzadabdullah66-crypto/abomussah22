@@ -97,11 +97,10 @@ textarea.form-control {
 }
 
 .form-vip-title span {
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--gold-primary) !important;
+  -webkit-text-fill-color: var(--gold-primary) !important;
+  background: none !important;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
 .form-vip-desc {
