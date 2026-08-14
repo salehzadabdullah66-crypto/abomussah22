@@ -120,21 +120,23 @@
 .main-nav {
   display: flex;
   align-items: center;
-  overflow: hidden;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
   flex-wrap: nowrap;
 }
 
 .nav-link {
-  font-size: 0.88rem;
+  font-size: 0.81rem;
   font-weight: 700;
   color: var(--text-primary);
-  padding: 6px 2px;
+  padding: 5px 6px;
+  border-radius: var(--radius-sm);
   position: relative;
   transition: var(--transition-fast);
   white-space: nowrap !important;
@@ -142,9 +144,20 @@
   align-items: center;
 }
 
-/* إخفاء أيقونات روابط القائمة الرئيسية الهيدر العلوي لمنع الازدحام والتداخل مع الشعار */
+/* إظهار وتنسيق الأيقونات الذهبية الفاخرة لروابط القائمة الرئيسية في الهيدر العلوي */
 .main-header .nav-link i {
-  display: none !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  color: var(--gold-primary);
+  margin-left: 3px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+html[dir="ltr"] .main-header .nav-link i {
+  margin-left: 0;
+  margin-right: 3px;
 }
 
 .nav-link::after {
@@ -162,6 +175,13 @@
 .nav-link:hover,
 .nav-link.active {
   color: var(--gold-primary);
+  background: var(--gold-gradient-soft);
+}
+
+.nav-link:hover i,
+.nav-link.active i {
+  color: var(--gold-primary);
+  transform: scale(1.15);
 }
 
 .nav-link:hover::after,
