@@ -11,6 +11,47 @@
 
   const MOON_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
+  function playThemeToggleSound(theme) {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      const now = ctx.currentTime;
+
+      if (theme === 'light') {
+        // نغمة صاعده هادئة وفاخرة عند الانتقال للوضع النهاري
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.start(now);
+        osc.stop(now + 0.14);
+      } else {
+        // نغمة دافئة هادئة عند الانتقال للوضع الليلي
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(660, now);
+        osc.frequency.exponentialRampToValueAtTime(330, now + 0.14);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.start(now);
+        osc.stop(now + 0.14);
+      }
+    } catch (err) {
+      // التجاوز في حال تقييد الصوت من المتصفح
+    }
+  }
+
   function getPreferredTheme() {
     return localStorage.getItem(STORAGE_KEY) || 'dark';
   }
@@ -39,6 +80,7 @@
         e.preventDefault();
         const activeTheme = document.documentElement.getAttribute('data-theme') || 'dark';
         const newTheme = activeTheme === 'light' ? 'dark' : 'light';
+        playThemeToggleSound(newTheme);
         setTheme(newTheme);
       });
     });
