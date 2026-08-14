@@ -155,13 +155,18 @@ html, body {
     padding: 55px 0;
   }
   .section-title {
-    font-size: clamp(1.6rem, 4vw + 1rem, 2.2rem);
+    font-size: clamp(1.5rem, 4vw + 0.8rem, 2rem) !important;
+    line-height: 1.42 !important;
   }
-  .hero-title {
-    font-size: clamp(1.8rem, 5vw + 1rem, 2.5rem);
+  .hero-title,
+  .about-hero-title {
+    font-size: clamp(1.7rem, 5vw + 0.8rem, 2.4rem) !important;
+    line-height: 1.48 !important;
+    margin-bottom: 16px;
   }
   .hero-tagline-quote {
     font-size: 1.35rem;
+    line-height: 1.45 !important;
     padding: 14px 16px;
   }
   .hero-btns {
@@ -186,7 +191,8 @@ html, body {
     padding: 130px 0 45px 0;
   }
   .page-banner h1 {
-    font-size: clamp(1.7rem, 4vw + 1rem, 2.4rem);
+    font-size: clamp(1.6rem, 4vw + 0.8rem, 2.2rem) !important;
+    line-height: 1.4 !important;
   }
   .section-header {
     margin-bottom: 35px;
@@ -197,6 +203,7 @@ html, body {
   .accordion-header {
     padding: 16px 18px;
     font-size: 1.05rem;
+    line-height: 1.45 !important;
   }
   .accordion-content {
     padding: 0 18px;
@@ -281,14 +288,23 @@ html, body {
     font-size: 0.88rem;
   }
   .floating-contact-stack {
-    bottom: 15px;
-    right: 12px;
-    gap: 10px;
+    bottom: 12px;
+    right: 10px;
+    gap: 8px;
   }
   .float-btn {
-    width: 46px;
-    height: 46px;
-    font-size: 1.25rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.15rem;
+  }
+  .hero-title,
+  .about-hero-title {
+    font-size: clamp(1.5rem, 5vw + 0.5rem, 1.85rem) !important;
+    line-height: 1.5 !important;
+  }
+  .hero-tagline-quote {
+    font-size: 1.15rem;
+    line-height: 1.45 !important;
   }
   .contact-form-card-vip {
     padding: 22px 14px;
@@ -302,6 +318,7 @@ html, body {
   }
   .car-title {
     font-size: 1.2rem;
+    line-height: 1.4 !important;
   }
   .price-value {
     font-size: 1.25rem;
@@ -335,15 +352,19 @@ html, body {
   .header-actions {
     gap: 4px;
   }
-  .hero-title {
-    font-size: 1.5rem;
+  .hero-title,
+  .about-hero-title {
+    font-size: 1.4rem !important;
+    line-height: 1.52 !important;
   }
   .hero-tagline-quote {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    line-height: 1.45 !important;
     padding: 10px 12px;
   }
   .owner-name {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
+    line-height: 1.35 !important;
   }
   .owner-card-hero {
     min-height: 360px;
@@ -375,6 +396,7 @@ html, body {
   .accordion-header {
     padding: 12px 10px;
     font-size: 0.92rem;
+    line-height: 1.42 !important;
   }
   .accordion-item.active .accordion-content {
     padding: 10px 10px 14px 10px !important;
