@@ -217,6 +217,15 @@ html, body {
    4. الهواتف الصغيرة والمتوسطة (576px)
    ========================================================================== */
 @media (max-width: 576px) {
+  .hero-scroll-down {
+    bottom: 10px;
+    font-size: 0.75rem;
+  }
+  .hero-scroll-down i {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
   section {
     padding: 42px 0;
   }

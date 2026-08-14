@@ -108,6 +108,64 @@
   margin-top: 10px;
 }
 
+/* زر التمرير للأسفل (Hero Scroll Down) */
+.hero-scroll-down {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold-light);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.hero-scroll-down i {
+  font-size: 0.95rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold-gradient-soft);
+  border: 1.5px solid var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-primary);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+  animation: bounceDown 2s infinite ease-in-out;
+}
+
+.hero-scroll-down:hover {
+  color: var(--gold-primary);
+  transform: translateX(-50%) translateY(4px);
+}
+
+.hero-scroll-down:hover i {
+  background: var(--gold-gradient);
+  color: #0A0B0E;
+  box-shadow: var(--shadow-gold);
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(7px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
 /* كارت مالك المعرض "أبو موسى" Spotlight Card - الصورة تغطي الكارت بالكامل */
 .owner-card-hero {
   position: relative;
