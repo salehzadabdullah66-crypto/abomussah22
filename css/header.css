@@ -1,0 +1,343 @@
+/* ==========================================================================
+   معرض آية لتجارة السيارات - ترويسة الموقع وقائمة التنقل (header.css)
+   ========================================================================== */
+
+/* الشريط العلوي Topbar */
+.topbar {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  transition: var(--transition-normal);
+}
+
+.topbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-info, .topbar-social {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-item i {
+  color: var(--gold-primary);
+}
+
+/* الهيدر الرئيسي Sticky Header */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-header);
+  background: var(--bg-header);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition-normal);
+}
+
+.main-header.scrolled {
+  box-shadow: var(--shadow-md);
+  padding: 4px 0;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+/* الشعار Logo */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-img-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  padding: 2px;
+  background: var(--gold-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-gold);
+  transition: var(--transition-normal);
+}
+
+.brand-logo:hover .logo-img-wrap {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.logo-title span {
+  color: var(--gold-primary);
+}
+
+.logo-tagline {
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* قائمة التصفح Main Nav */
+.main-nav {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.nav-link {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: 6px 2px;
+  position: relative;
+  transition: var(--transition-fast);
+  white-space: nowrap !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* إخفاء أيقونات روابط القائمة الرئيسية الهيدر العلوي لمنع الازدحام والتداخل مع الشعار */
+.main-header .nav-link i {
+  display: none !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--gold-gradient);
+  transition: width 0.3s ease;
+  border-radius: var(--radius-full);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--gold-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* أدوات الهيدر (Theme Toggle & Burger & Call CTA) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-toggle-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+  line-height: 1;
+}
+
+/* زر التبديل اللغوي (Language Switcher Button) */
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary) !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.lang-toggle-btn:hover {
+  background: var(--gold-gradient);
+  color: #0A0B0E !important;
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold-hover);
+}
+
+.theme-toggle-btn i {
+  color: var(--gold-primary) !important;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--gold-gradient);
+  color: #0A0B0E !important;
+  transform: rotate(20deg) scale(1.08);
+  box-shadow: var(--shadow-gold-hover);
+}
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: var(--z-drawer);
+}
+
+.hamburger-btn span {
+  width: 100%;
+  height: 3px;
+  background: var(--gold-primary);
+  border-radius: 3px;
+  transition: var(--transition-fast);
+}
+
+/* قائمة الجوال Mobile Drawer */
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: calc(var(--z-drawer) - 1);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-normal);
+}
+
+.mobile-drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100vh;
+  max-height: 100vh;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-color);
+  z-index: var(--z-drawer);
+  padding: 20px 18px 30px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-lg);
+}
+
+.mobile-drawer.active {
+  right: 0;
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 40px;
+}
+
+.mobile-nav-link {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition-fast);
+}
+
+.mobile-nav-link i {
+  font-size: 1.1rem;
+  color: var(--gold-primary);
+  width: 22px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav-link:hover i,
+.mobile-nav-link.active i {
+  transform: scale(1.18);
+}
+
+.mobile-nav-link.active,
+.mobile-nav-link:hover {
+  background: var(--gold-gradient-soft);
+  color: var(--gold-primary);
+  border-right: 3px solid var(--gold-primary);
+}

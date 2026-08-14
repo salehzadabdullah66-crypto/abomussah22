@@ -1,0 +1,91 @@
+/* ==========================================================================
+   معرض آية لتجارة السيارات - متغيرات النظام والتنسيقات (variables.css)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* الخطوط */
+  --font-primary: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-en: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* لوحة الألوان الذهبية الملكية */
+  --gold-primary: #D4AF37;
+  --gold-light: #F4E090;
+  --gold-dark: #9A7B1C;
+  --gold-hover: #E5C158;
+  --gold-glow: rgba(212, 175, 55, 0.4);
+  --gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+  --gold-gradient-soft: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+
+  /* الوضع الداكن افتراضياً (Luxury Dark Theme) */
+  --bg-body: #0A0B0E;
+  --bg-surface: #12141A;
+  --bg-surface-elevated: #1A1D26;
+  --bg-glass: rgba(18, 20, 26, 0.85);
+  --bg-header: rgba(10, 11, 14, 0.92);
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A6B8;
+  --text-muted: #6C7284;
+  --text-gold: #D4AF37;
+
+  --border-color: rgba(212, 175, 55, 0.18);
+  --border-color-hover: rgba(212, 175, 55, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 25px rgba(212, 175, 55, 0.25);
+  --shadow-gold-hover: 0 10px 30px rgba(212, 175, 55, 0.4);
+
+  /* الأبعاد والانحناءات */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  
+  --header-height: 85px;
+  --topbar-height: 40px;
+
+  /* الانتقالات */
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* طبقات العرض */
+  --z-back: -1;
+  --z-normal: 1;
+  --z-sticky: 100;
+  --z-header: 1000;
+  --z-drawer: 1100;
+  --z-modal: 1200;
+  --z-toast: 1300;
+  --z-loader: 9999;
+}
+
+/* التبديل للوضع الفاتح (Light Theme Overrides) */
+[data-theme="light"] {
+  --bg-body: #F4F6F9;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F8F9FC;
+  --bg-glass: rgba(255, 255, 255, 0.9);
+  --bg-header: rgba(255, 255, 255, 0.95);
+
+  --text-primary: #0F131D;
+  --text-secondary: #4A5163;
+  --text-muted: #828A9E;
+  --text-gold: #B38728;
+
+  --border-color: rgba(212, 175, 55, 0.3);
+  --border-color-hover: rgba(179, 135, 40, 0.7);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+  --shadow-gold: 0 4px 20px rgba(179, 135, 40, 0.18);
+  --shadow-gold-hover: 0 10px 30px rgba(179, 135, 40, 0.3);
+}

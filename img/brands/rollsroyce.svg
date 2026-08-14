@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 110" width="100%" height="100%">
+  <rect x="8" y="8" width="64" height="94" rx="6" fill="#0F131D" stroke="#D4AF37" stroke-width="3" />
+  <text x="40" y="25" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#D4AF37" text-anchor="middle">ROLLS</text>
+  <path d="M24 40 V85 M24 40 H38 C46 40, 46 56, 38 56 H24 M32 56 L44 85" fill="none" stroke="#D4AF37" stroke-width="4" />
+  <path d="M48 40 V85 M48 40 H62 C70 40, 70 56, 62 56 H48 M56 56 L68 85" fill="none" stroke="#FCF6BA" stroke-width="4" />
+  <text x="40" y="97" font-family="Georgia, serif" font-size="10" font-weight="bold" fill="#D4AF37" text-anchor="middle">ROYCE</text>
+</svg>

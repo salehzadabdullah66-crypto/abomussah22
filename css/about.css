@@ -1,0 +1,835 @@
+/* ==========================================================================
+   معرض آية لتجارة السيارات - تصميم صفحة من نحن الفاخرة (about.css)
+   دعم كامل للوضع الداكن (Dark Theme) ووضع النهار (Light Theme)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700;900&display=swap');
+
+:root {
+  --bg-dark-absolute: #050505;
+  --bg-dark-surface: #0a0a0c;
+  --gold-primary: #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-dark: #AA7C11;
+  --gold-glow: rgba(212, 175, 55, 0.35);
+  --gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA7C11 100%);
+  --gold-gradient-soft: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(170, 124, 17, 0.05) 100%);
+  --font-arabic: var(--font-primary, 'Cairo', sans-serif);
+  --font-english: var(--font-en, 'Outfit', sans-serif);
+}
+
+/* ==========================================================================
+   قسم الهيرو الفاخر - About Hero Showcase
+   ========================================================================== */
+.about-hero-section {
+  position: relative;
+  min-height: 85vh;
+  padding: 120px 0 80px 0;
+  background: radial-gradient(circle at 50% 30%, #121318 0%, #050505 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.3s ease;
+}
+
+[data-theme="light"] .about-hero-section {
+  background: radial-gradient(circle at 50% 30%, #FFFFFF 0%, #EAEFF5 85%);
+}
+
+/* جسيمات الضوء والضباب الخلفي */
+#about-particles-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.car-backdrop-fog {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  height: 450px;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.05) 45%, transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 2;
+  animation: fogPulse 8s ease-in-out infinite alternate;
+}
+
+[data-theme="light"] .car-backdrop-fog {
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.3) 0%, rgba(212, 175, 55, 0.1) 45%, transparent 75%);
+}
+
+/* الخطوط الذهبية المتحركة */
+.gold-accent-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold-primary) 50%, transparent 100%);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.gold-accent-line.line-top {
+  top: 15%;
+  left: 5%;
+  right: 5%;
+  animation: lineGlow 4s ease-in-out infinite alternate;
+}
+
+.gold-accent-line.line-bottom {
+  bottom: 12%;
+  left: 10%;
+  right: 10%;
+  animation: lineGlow 5s ease-in-out 1s infinite alternate;
+}
+
+/* تخطيط محتوى قسم الهيرو */
+.about-hero-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* الوسام والشعار العلوي */
+.about-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 22px;
+  border-radius: 50px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  color: var(--gold-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.about-hero-badge i {
+  color: var(--gold-dark);
+  font-size: 1.1rem;
+}
+
+[data-theme="dark"] .about-hero-badge i {
+  color: var(--gold-light);
+}
+
+/* منطقة عرض الصورة الرئيسية والمؤثرات */
+.about-car-showcase {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  height: auto;
+  min-height: 260px;
+  margin: 15px 0 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* غلاف السيارة المتحرك */
+.about-car-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(100vw);
+  transition: transform 1.1s cubic-bezier(0.05, 0.95, 0.05, 1), opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.about-car-wrapper.animated-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* الإطار الملكي الفاخر الموحد للشعار والصورة (Combined Luxury Frame) */
+.hero-combined-frame {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  padding: 18px;
+  background: var(--gold-gradient);
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.35), 0 10px 30px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+  z-index: 5;
+  will-change: transform;
+}
+
+[data-theme="light"] .hero-combined-frame {
+  box-shadow: 0 15px 40px rgba(179, 135, 40, 0.25), 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-combined-frame:hover {
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.5), 0 15px 35px rgba(0, 0, 0, 0.9);
+}
+
+/* الوسام العلوي داخل الإطار مع تصحيح التباين في الوضعين */
+.hero-combined-frame .about-hero-badge {
+  margin-bottom: 0;
+  background: rgba(10, 11, 14, 0.92);
+  border: 1px solid var(--gold-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  color: var(--gold-light);
+}
+
+[data-theme="light"] .hero-combined-frame .about-hero-badge {
+  background: #FFFFFF;
+  color: #8B6508;
+  border-color: rgba(179, 135, 40, 0.6);
+  box-shadow: 0 4px 15px rgba(179, 135, 40, 0.25);
+}
+
+[data-theme="light"] .hero-combined-frame .about-hero-badge i {
+  color: #B38728;
+}
+
+/* غلاف الصورة الداخلي */
+.frame-image-wrap {
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 3px solid var(--bg-body);
+  background: var(--bg-body);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.frame-image-wrap .about-car-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+}
+
+/* الانعكاس الضوئي والإنارة الذهبية تحت السيارة */
+.car-ground-platform {
+  position: absolute;
+  bottom: -15px;
+  width: 85%;
+  height: 60px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* التوهج الذهبي Glow */
+.car-gold-aura {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 75%;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.28) 0%, rgba(212, 175, 55, 0.08) 50%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(35px);
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease 1s;
+}
+
+.about-car-wrapper.animated-in .car-gold-aura {
+  opacity: 1;
+}
+
+/* الانعكاس الأرضي الضوئي */
+.car-reflected-glow {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 30px;
+  background: radial-gradient(ellipse at center, rgba(243, 229, 171, 0.6) 0%, rgba(212, 175, 55, 0.3) 40%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(12px);
+  z-index: 4;
+}
+
+/* الظل الواقعي */
+.car-drop-shadow {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82%;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 85%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: 4;
+}
+
+[data-theme="light"] .car-drop-shadow {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.12) 60%, transparent 85%);
+}
+
+/* إخفاء عنصر الانعكاس المقلوب غير المرغوب فيه */
+.car-mirror-reflection {
+  display: none !important;
+}
+
+/* النصوص والأزرار المتحركة أسفل السيارة */
+.about-hero-text {
+  text-align: center;
+  max-width: 850px;
+  margin-top: 25px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease 1.2s, transform 1s ease 1.2s;
+}
+
+.about-hero-text.animated-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-hero-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  font-family: var(--font-arabic);
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+}
+
+.about-hero-title span {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  position: relative;
+}
+
+.about-hero-subtitle {
+  font-size: 1.35rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  line-height: 1.7;
+  margin-bottom: 35px;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* زر "اكتشف سياراتنا" الفاخر */
+.btn-discover-cars {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 42px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: var(--font-arabic);
+  color: #0A0B0E;
+  background: var(--gold-gradient);
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-discover-cars i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-discover-cars:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 35px rgba(212, 175, 55, 0.65);
+  color: #000000;
+}
+
+.btn-discover-cars:hover i {
+  transform: translateX(-6px);
+}
+
+/* ==========================================================================
+   أقسام تعريفية إضافية بالموقع (About Content Sections)
+   ========================================================================== */
+
+/* قسم الرؤية والقيادة (أبو موسى) */
+.about-leadership-section {
+  padding: 100px 0;
+  background: var(--bg-surface);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  align-items: stretch;
+}
+
+.leadership-card {
+  position: relative;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.leadership-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gold-gradient);
+  border-radius: 24px 24px 0 0;
+}
+
+.leadership-badge {
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+[data-theme="light"] .leadership-badge {
+  color: #8B6508;
+}
+
+.leadership-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.leadership-quote {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  line-height: 1.6;
+  padding: 20px 25px;
+  background: var(--gold-gradient-soft);
+  border-right: 4px solid var(--gold-primary);
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+[data-theme="dark"] .leadership-quote {
+  color: var(--gold-light);
+}
+
+[data-theme="light"] .leadership-quote {
+  color: #8B6508;
+  background: rgba(212, 175, 55, 0.12);
+  border-right-color: #B38728;
+}
+
+.leadership-desc {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* شبكة ركائز الفخامة (Pillars) */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 80px;
+}
+
+.pillar-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 35px 28px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.pillar-item:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-gold-hover);
+}
+
+.pillar-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 16px;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--gold-primary);
+  margin-bottom: 22px;
+}
+
+[data-theme="light"] .pillar-icon {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(179, 135, 40, 0.5);
+  color: #B38728;
+}
+
+.pillar-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.pillar-text {
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   قسم الفيديو الاستعراضي الفاخر (About Video Showcase Section)
+   ========================================================================== */
+.about-video-section {
+  padding: 90px 0;
+  background: var(--bg-body);
+  position: relative;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.3s ease;
+}
+
+.video-section-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 45px auto;
+}
+
+.video-section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 15px 0;
+}
+
+.video-section-title span {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.video-section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.luxury-video-card {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.luxury-video-frame {
+  position: relative;
+  width: 100%;
+  padding: 12px;
+  background: var(--gold-gradient);
+  border-radius: 28px;
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.35), 0 15px 35px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.luxury-video-frame:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 70px rgba(212, 175, 55, 0.5), 0 20px 40px rgba(0, 0, 0, 0.9);
+}
+
+.luxury-video-element {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  display: block;
+  border-radius: 20px;
+  background: #000000;
+  border: 3px solid var(--bg-body);
+  outline: none;
+}
+
+/* زر تشغيل وإيقاف الصوت الفاخر على الفيديو */
+.video-sound-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: rgba(10, 11, 14, 0.85);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  font-family: var(--font-arabic);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .video-sound-btn {
+  background: rgba(255, 255, 255, 0.92);
+  color: #8B6508;
+  border-color: rgba(179, 135, 40, 0.6);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.video-sound-btn:hover {
+  background: var(--gold-gradient);
+  color: #0A0B0E;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+}
+
+.video-sound-btn.unmuted {
+  border-color: #10B981;
+  color: #10B981;
+}
+
+.video-sound-btn.unmuted:hover {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.video-features-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+  padding: 20px 30px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.video-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.video-feature-item i {
+  color: var(--gold-primary);
+  font-size: 1.2rem;
+}
+
+[data-theme="light"] .video-feature-item i {
+  color: #B38728;
+}
+
+/* ==========================================================================
+   قسم دعوة للتواصل والحجز (About CTA Section)
+   ========================================================================== */
+.about-cta-section {
+  padding: 80px 0;
+  background: var(--bg-surface);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.about-cta-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--gold-gradient-soft);
+  border: 1px dashed var(--gold-primary);
+  padding: 45px 30px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .about-cta-card {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(179, 135, 40, 0.5);
+}
+
+.about-cta-title {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+.about-cta-desc {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   التجاوب مع كافة الشاشات Responsive Design
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .about-hero-title {
+    font-size: 2.6rem;
+  }
+  .about-hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .about-car-showcase {
+    max-width: 750px;
+  }
+}
+
+@media (max-width: 992px) {
+  .about-hero-section {
+    min-height: auto;
+    padding: 105px 0 60px 0;
+  }
+  .about-hero-title {
+    font-size: 2.15rem;
+  }
+  .about-hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 28px;
+  }
+  .frame-image-wrap .about-car-img {
+    max-width: 100%;
+    max-height: 300px;
+  }
+  .leadership-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-combined-frame {
+    padding: 12px;
+    border-radius: 20px;
+    max-width: 100%;
+    gap: 12px;
+  }
+  .about-hero-badge {
+    font-size: 0.82rem;
+    padding: 6px 14px;
+  }
+  .about-car-showcase {
+    margin: 10px 0 20px 0;
+    min-height: auto;
+  }
+  .frame-image-wrap {
+    border-radius: 14px;
+  }
+  .frame-image-wrap .about-car-img {
+    max-height: 250px;
+  }
+  .about-hero-text {
+    margin-top: 22px;
+  }
+  .about-hero-title {
+    font-size: 1.75rem;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .about-hero-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin-bottom: 25px;
+  }
+  .btn-discover-cars {
+    padding: 14px 32px;
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .about-cta-title {
+    font-size: 1.6rem;
+  }
+  .about-cta-desc {
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero-section {
+    padding: 90px 0 50px 0;
+  }
+  .hero-combined-frame {
+    padding: 10px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+  .frame-image-wrap .about-car-img {
+    max-height: 200px;
+  }
+  .about-hero-text {
+    margin-top: 18px;
+  }
+  .about-hero-title {
+    font-size: 1.45rem;
+  }
+  .about-hero-subtitle {
+    font-size: 0.9rem;
+  }
+}

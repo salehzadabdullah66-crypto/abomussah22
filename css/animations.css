@@ -1,0 +1,1322 @@
+/* ==========================================================================
+   معرض آية لتجارة السيارات - تأثيرات الحركة والانتقالات (animations.css)
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes goldPulse {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes lightboxZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* التكشف الفوري عند السكرول Scroll Reveal */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* تأثير التوهج الضوئي للذهب */
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 70%
+  );
+  transform: rotate(30deg);
+  animation: shimmer 6s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* نافذة المودال والـ Lightbox المخصصة */
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 8, 0.95);
+  backdrop-filter: blur(15px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-normal);
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 1000px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: lightboxZoom 0.4s ease;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gold-primary);
+  box-shadow: var(--shadow-gold);
+}
+
+.lightbox-caption {
+  margin-top: 15px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  border: none;
+  color: #0A0B0E;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.lightbox-close:hover {
+  transform: scale(1.15) rotate(90deg);
+}
+
+/* ==========================================================================
+   حركات مخصصة لصفحة "من نحن" الهيرو (About Luxury Animations)
+   ========================================================================== */
+
+@keyframes fogPulse {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@keyframes lineGlow {
+  0% {
+    opacity: 0.2;
+    transform: scaleX(0.85);
+  }
+  100% {
+    opacity: 0.65;
+    transform: scaleX(1.05);
+  }
+}
+
+@keyframes carIdleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes goldGlowPulse {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(35px);
+  }
+  50% {
+    opacity: 0.85;
+    filter: blur(45px);
+  }
+}
+
+/* ==========================================================================
+   حركات مخصصة لصفحة "تواصل معنا" (Contact Us Interactive Animations)
+   ========================================================================== */
+
+.contact-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 45px;
+}
+
+.contact-hub-card {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 35px 25px;
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.contact-hub-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-hub-card:hover::before {
+  opacity: 1;
+  animation: rotateSpotlight 8s linear infinite;
+}
+
+@keyframes rotateSpotlight {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.contact-hub-card:hover {
+  border-color: var(--gold-primary);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 35px rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="light"] .contact-hub-card {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.contact-icon-wrapper {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 20px auto;
+  border-radius: 50%;
+  background: var(--gold-gradient-soft);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  position: relative;
+  transition: transform 0.4s ease, background 0.4s ease, color 0.4s ease;
+  animation: floatIcon 4s ease-in-out infinite;
+  z-index: 1;
+}
+
+[data-theme="light"] .contact-icon-wrapper {
+  color: #B38728;
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(179, 135, 40, 0.5);
+}
+
+.contact-hub-card:hover .contact-icon-wrapper {
+  transform: scale(1.15) rotate(8deg);
+  background: var(--gold-gradient);
+  color: #0F131D;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.85);
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.contact-icon-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px stroke var(--gold-primary);
+  opacity: 0.5;
+  animation: pulseRing 2.5s infinite ease-out;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.contact-hub-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.contact-hub-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.contact-hub-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: var(--gold-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* حركة النموذج والأزرار */
+.btn-send-animated {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.btn-send-animated i {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-send-animated:hover i {
+  transform: translate(-6px, -6px) scale(1.25);
+}
+
+.btn-send-animated.sending i {
+  animation: planeFly 1.2s forwards ease-in-out;
+}
+
+@keyframes planeFly {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { transform: translate(-40px, -40px) scale(0.4); opacity: 0; }
+  51% { transform: translate(40px, 40px) scale(0.4); opacity: 0; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   حركات وتنسيقات صفحة "الأسئلة الشائعة" (FAQ Interactive Animations)
+   ========================================================================== */
+
+/* 1. شريط البحث الفوري التفاعلي */
+.faq-search-box-wrap {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto 35px auto;
+}
+
+.faq-search-input {
+  width: 100%;
+  padding: 16px 55px 16px 25px;
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all 0.35s ease;
+}
+
+[data-theme="light"] .faq-search-input {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.faq-search-input:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+.faq-search-icon {
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  color: var(--gold-primary);
+  font-size: 1.25rem;
+  pointer-events: none;
+}
+
+/* 2. تبويبات تصفية الأقسام (FAQ Category Tabs) */
+.faq-tabs-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.faq-tab-btn {
+  padding: 10px 24px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-theme="light"] .faq-tab-btn {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.faq-tab-btn:hover,
+.faq-tab-btn.active {
+  background: var(--gold-gradient);
+  border-color: var(--gold-primary);
+  color: #0F131D;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.faq-tab-btn i {
+  font-size: 1.05rem;
+}
+
+/* 3. الأكورديون المطور (Enhanced Accordion Styling) */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .accordion-item {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.accordion-item.active {
+  border-color: var(--gold-primary);
+  border-right: 5px solid var(--gold-primary);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(212, 175, 55, 0.2);
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 22px 28px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  cursor: pointer;
+  text-align: right;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.accordion-header span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-badge {
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.accordion-item.active .accordion-header {
+  color: var(--gold-primary);
+}
+
+.accordion-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--border-color);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: transform 0.4s ease, background 0.4s ease, color 0.4s ease;
+  flex-shrink: 0;
+}
+
+.accordion-item.active .accordion-icon {
+  transform: rotate(180deg);
+  background: var(--gold-gradient);
+  color: #0F131D;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+.accordion-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease-in-out, opacity 0.35s ease, padding 0.35s ease;
+  padding: 0 28px;
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  line-height: 1.85;
+  border-top: 0px solid transparent;
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 1000px !important;
+  opacity: 1 !important;
+  padding: 18px 28px 25px 28px !important;
+  border-top: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+/* 4. كارت "لم تجد إجابة لسؤالك؟" (Ask Directly CTA Box) */
+.faq-cta-box {
+  margin-top: 55px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(10, 11, 14, 0.95) 100%),
+              url('../img/cars/financing_bg.jpg') center center / cover;
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-lg);
+  padding: 45px 35px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-cta-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  color: #FFFFFF !important;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.faq-cta-desc {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.92) !important;
+  max-width: 620px;
+  margin: 0 auto 25px auto;
+  line-height: 1.7;
+}
+
+.faq-cta-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   حركات وتنسيقات قسم "الخدمات" (Services Interactive Animations)
+   ========================================================================== */
+
+/* 1. خط خطوات تنفيذ وتنفيذ الخدمة (5-Step Service Process Timeline) */
+.services-steps-section {
+  padding: 80px 0;
+  background: var(--bg-surface-elevated);
+  position: relative;
+  overflow: hidden;
+}
+
+.services-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  position: relative;
+  margin-top: 45px;
+}
+
+.services-steps-grid::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  right: 10%;
+  left: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), var(--gold-primary), rgba(212, 175, 55, 0.2));
+  z-index: 0;
+}
+
+.service-step-item {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.service-step-num {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px auto;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--gold-primary);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 900;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-step-item:hover .service-step-num,
+.service-step-item.active .service-step-num {
+  background: var(--gold-gradient);
+  color: #0F131D;
+  transform: scale(1.15) rotate(6deg);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+}
+
+.service-step-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.service-step-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 2. النافذة المنبثقة التفاعلية لحجز الخدمة (VIP Service Booking Modal) */
+.service-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 8, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.service-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.service-modal-box {
+  background: var(--bg-surface);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-lg);
+  max-width: 580px;
+  width: 100%;
+  padding: 40px 35px;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(212, 175, 55, 0.3);
+  transform: scale(0.85) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.service-modal-overlay.active .service-modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.service-modal-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.service-modal-close:hover {
+  background: var(--gold-gradient);
+  color: #0F131D;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.service-modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.service-modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.service-modal-subtitle {
+  font-size: 0.95rem;
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   الإطار الملكي الذهبي الفاخر لصورة البوستر (Royal Golden Frame)
+   ========================================================================== */
+
+.royal-poster-frame {
+  position: relative;
+  background: linear-gradient(145deg, #0D0E12 0%, #1A1D28 50%, #08090C 100%);
+  border: 2px solid #D4AF37;
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 0 45px rgba(212, 175, 55, 0.45), 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(212, 175, 55, 0.25);
+  animation: royalGlowPulse 4s infinite alternate ease-in-out;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+[data-theme="light"] .royal-poster-frame {
+  background: linear-gradient(145deg, #FFFFFF 0%, #FFFDF7 50%, #F5ECDF 100%);
+  box-shadow: 0 0 35px rgba(179, 135, 40, 0.35), 0 15px 40px rgba(0, 0, 0, 0.12), inset 0 0 20px rgba(179, 135, 40, 0.2);
+}
+
+@keyframes royalGlowPulse {
+  0% {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.35), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(212, 175, 55, 0.2);
+    border-color: #D4AF37;
+  }
+  100% {
+    box-shadow: 0 0 55px rgba(212, 175, 55, 0.7), 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(255, 242, 161, 0.4);
+    border-color: #FFF2A1;
+  }
+}
+
+/* تاج الفخامة الملكي في الترويسة العليا للإطار */
+.royal-frame-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #0F131D 0%, #1A1D26 100%);
+  border: 1.5px solid #D4AF37;
+  border-radius: var(--radius-full);
+  color: #D4AF37;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 900;
+  width: fit-content;
+  margin: 0 auto 14px auto;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="light"] .royal-frame-header {
+  background: #FFFFFF;
+  color: #8B6508;
+}
+
+.royal-frame-header i {
+  color: #FFC107;
+  font-size: 1rem;
+  filter: drop-shadow(0 0 6px rgba(255, 193, 7, 0.8));
+}
+
+/* الحاشية الملكية الداخلية المحيطة بالصورة (Inner Passpartout Frame) */
+.royal-inner-border {
+  position: relative;
+  border: 1.8px solid #D4AF37;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* صورة البوستر الملكية */
+.royal-poster-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.royal-poster-frame:hover .royal-poster-img {
+  transform: scale(1.03);
+}
+
+/* الزوايا الذهبية الملكية الدقيقة (Royal Corner Filigree Accents) */
+.royal-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 3px solid #D4AF37;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.royal-corner-tl {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+}
+
+.royal-corner-tr {
+  top: 10px;
+  right: 10px;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 8px;
+}
+
+.royal-corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+}
+
+.royal-corner-br {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 8px;
+}
+
+/* ==========================================================================
+   صندوق معلومات الاتصال المباشر الفاخر VIP (Modern VIP Contact Suite)
+   ========================================================================== */
+
+.contact-info-suite-vip {
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+  border: 1.8px solid var(--gold-primary);
+  border-radius: var(--radius-lg);
+  padding: 35px 30px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .contact-info-suite-vip {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 100%);
+  border-color: #D4AF37;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(179, 135, 40, 0.15);
+}
+
+.vip-suite-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.vip-suite-icon-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: #0F131D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.6);
+  flex-shrink: 0;
+}
+
+.vip-suite-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.vip-suite-title span {
+  color: var(--gold-primary);
+}
+
+.vip-contact-tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-tile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none !important;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .contact-tile-card {
+  background: #F8F9FC;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.contact-tile-card:hover {
+  border-color: var(--gold-primary);
+  transform: translateX(-6px) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+  background: var(--bg-surface-elevated);
+}
+
+[data-theme="light"] .contact-tile-card:hover {
+  background: #FFFFFF;
+}
+
+.contact-tile-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: all 0.35s ease;
+  flex-shrink: 0;
+}
+
+.contact-tile-card:hover .contact-tile-icon-box {
+  background: var(--gold-gradient);
+  color: #0F131D;
+  transform: scale(1.1) rotate(6deg);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+}
+
+.contact-tile-info {
+  flex-grow: 1;
+}
+
+.contact-tile-label {
+  font-size: 0.82rem;
+  color: var(--gold-primary);
+  font-weight: 800;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.contact-tile-val {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.contact-tile-action-btn {
+  padding: 6px 12px;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  border-radius: var(--radius-full);
+  color: var(--gold-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.contact-tile-card:hover .contact-tile-action-btn {
+  background: var(--gold-gradient);
+  color: #0F131D;
+}
+
+/* شريط التواصل الاجتماعي الفاخر (VIP Social Bar) */
+.vip-social-footer {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.vip-social-label {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.vip-social-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vip-social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.vip-social-btn:hover {
+  background: var(--gold-gradient);
+  color: #0F131D !important;
+  transform: translateY(-4px) scale(1.12);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
+}
+
+/* ==========================================================================
+   أنيميشن تتابع ظهور جميع السيارات (Right -> Left -> Center Stagger Sequence)
+   ========================================================================== */
+
+/* الحالات الابتدائية قبل التكشف لكل بطاقة سيارة في الموقع */
+.car-card {
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.85s ease, box-shadow 0.5s ease;
+  will-change: transform, opacity;
+}
+
+/* 1. الكرت الأيمن في الترتيب العربي RTL (السيارات 1، 4، 7، 10...) - يظهر أولاً */
+.car-card:nth-child(3n+1) {
+  transform: translateX(65px) scale(0.9);
+  transition-delay: 0.1s;
+}
+
+/* 2. الكرت الأيسر في الترتيب العربي RTL (السيارات 3، 6، 9، 12...) - يظهر ثانياً */
+.car-card:nth-child(3n+3) {
+  transform: translateX(-65px) scale(0.9);
+  transition-delay: 0.4s;
+}
+
+/* 3. الكرت الأوسط في الترتيب العربي RTL (السيارات 2، 5، 8، 11...) - يظهر ثالثاً ببريق مذهب */
+.car-card:nth-child(3n+2) {
+  transform: translateY(55px) scale(0.82);
+  transition-delay: 0.72s;
+}
+
+/* حالة التكشف والظهور في كل صعود ونزول لكل سيارة في جميع الصفحات */
+.car-card.revealed,
+.cars-grid.revealed .car-card {
+  opacity: 1 !important;
+  transform: translateX(0) translateY(0) scale(1) !important;
+}
+
+/* توهج خاص ورائع للكرت الأوسط في كل صف بعد اكتمال التتابع */
+.car-card:nth-child(3n+2).revealed,
+.cars-grid.revealed .car-card:nth-child(3n+2) {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+@media (max-width: 768px) {
+  .car-card:nth-child(3n+1),
+  .car-card:nth-child(3n+2),
+  .car-card:nth-child(3n+3) {
+    transform: translateY(35px) scale(0.94);
+    transition-delay: 0.15s;
+  }
+}
+
+/* ==========================================================================
+   الإطار الملكي الذهبي الفاخر لمشغلات الفيديو (Royal Video Frame)
+   ========================================================================== */
+
+.royal-video-card {
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+  border: 1.8px solid var(--gold-primary);
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.25);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .royal-video-card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 100%);
+  border-color: #D4AF37;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 25px rgba(179, 135, 40, 0.2);
+}
+
+.royal-video-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 45px rgba(212, 175, 55, 0.5);
+  border-color: #FFF2A1;
+}
+
+.royal-video-frame {
+  position: relative;
+  background: #08090C;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.royal-video-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(15, 19, 29, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-primary);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 900;
+  z-index: 6;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.royal-video-badge i {
+  color: #FFC107;
+  filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.8));
+}
+
+.royal-inner-video-border {
+  position: relative;
+  border: 1.5px solid rgba(212, 175, 55, 0.7);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.royal-native-video {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  display: block;
+  background: #080A10 url('../img/logo.png') center center / 150px no-repeat;
+}
+
+/* ==========================================================================
+   قسم وتصميم آراء العملاء الفاخر VIP (Modern VIP Testimonials Suite)
+   ========================================================================== */
+
+/* بنار إحصائيات تقييمات العملاء الفاخر */
+.testimonials-stats-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 45px;
+}
+
+@media (max-width: 768px) {
+  .testimonials-stats-banner {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+.testimonial-stat-box {
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(212, 175, 55, 0.2);
+  transition: all 0.35s ease;
+}
+
+[data-theme="light"] .testimonial-stat-box {
+  background: #FFFFFF;
+  border-color: #D4AF37;
+}
+
+.testimonial-stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+}
+
+.stat-box-num {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--gold-primary);
+  margin-bottom: 4px;
+}
+
+.stat-box-label {
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* كارت التقييمات المكتوبة الفاخر (VIP Written Testimonial Card) */
+.written-testimonial-card-vip {
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: 24px;
+  padding: 30px 25px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 25px rgba(212, 175, 55, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+[data-theme="light"] .written-testimonial-card-vip {
+  background: #FFFFFF;
+  border-color: #D4AF37;
+}
+
+.written-testimonial-card-vip:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.4);
+}
+
+.quote-icon-gold {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2.5rem;
+  color: rgba(212, 175, 55, 0.15);
+  pointer-events: none;
+}
+
+.verified-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(46, 125, 50, 0.15);
+  border: 1px solid #2E7D32;
+  border-radius: var(--radius-full);
+  color: #81C784;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+/* مؤشر آلة الكتابة الحرفية (Typewriter Cursor) */
+.type-cursor {
+  display: inline-block;
+  color: var(--gold-primary);
+  font-weight: 900;
+  margin-right: 4px;
+  animation: blinkCursor 0.65s infinite alternate;
+}
+
+@keyframes blinkCursor {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

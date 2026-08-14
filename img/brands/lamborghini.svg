@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 110" width="100%" height="100%">
+  <path d="M10 10 L80 10 L85 60 L45 105 L5 60 Z" fill="#0B0C10" stroke="#D4AF37" stroke-width="3" />
+  <path d="M25 65 C35 45, 55 45, 65 65 L45 40 Z" fill="#D4AF37" />
+  <circle cx="45" cy="52" r="6" fill="#FCF6BA" />
+  <text x="45" y="22" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#D4AF37" text-anchor="middle">LAMBORGHINI</text>
+</svg>

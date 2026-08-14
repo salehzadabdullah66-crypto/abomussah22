@@ -1,0 +1,241 @@
+/* ==========================================================================
+   معرض آية لتجارة السيارات - الاستجابة والتلاؤم مع الشاشات (responsive.css)
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .topbar {
+    display: none;
+  }
+  .main-nav {
+    display: none !important;
+  }
+  .hamburger-btn {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  .hero-tagline-quote {
+    font-size: 1.8rem;
+  }
+  .cars-grid,
+  .offers-grid,
+  .services-grid,
+  .testimonials-grid,
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .hero-content {
+    align-items: center;
+  }
+  .hero-badge {
+    margin: 0 auto;
+  }
+  .hero-tagline-quote {
+    border-right: none;
+    border-top: 4px solid var(--gold-primary);
+  }
+  .owner-card-hero {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .services-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .financing-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 25px;
+  }
+  .calculator-card {
+    grid-template-columns: 1fr;
+  }
+  .filter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* الهيدر الرئيسي في الهواتف الذكية */
+  .header-actions {
+    gap: 6px;
+  }
+  .header-actions .btn-gold,
+  .d-none-mobile {
+    display: none !important;
+  }
+  .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.92rem;
+  }
+  .lang-toggle-btn {
+    padding: 5px 9px;
+    font-size: 0.76rem;
+    gap: 3px;
+  }
+  .mobile-drawer {
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    padding-bottom: 40px !important;
+  }
+  .mobile-nav-list {
+    gap: 6px !important;
+  }
+  .mobile-nav-link {
+    padding: 7px 12px !important;
+    font-size: 0.95rem !important;
+  }
+  
+  /* شبكات وتنسيقات الجوال */
+  .contact-hub-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .services-steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  .services-steps-grid::before {
+    display: none !important;
+  }
+
+  section {
+    padding: 55px 0;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-tagline-quote {
+    font-size: 1.4rem;
+    padding: 14px 18px;
+  }
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-btns .btn {
+    width: 100%;
+  }
+  .cars-grid,
+  .offers-grid,
+  .services-grid,
+  .testimonials-grid,
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-banner {
+    padding: 130px 0 45px 0;
+  }
+  .page-banner h1 {
+    font-size: 2.1rem;
+  }
+  .section-header {
+    margin-bottom: 35px;
+  }
+}
+
+@media (max-width: 576px) {
+  section {
+    padding: 45px 0;
+  }
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .section-header {
+    margin-bottom: 28px;
+    padding: 0 10px;
+  }
+  .section-title {
+    font-size: 1.75rem;
+  }
+  .page-banner {
+    padding: 110px 0 35px 0;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .brand-logo {
+    gap: 8px;
+  }
+  .logo-title {
+    font-size: 1.05rem;
+    line-height: 1.1;
+  }
+  .logo-tagline {
+    font-size: 0.62rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  .logo-img-wrap {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 4px;
+  }
+  .lang-toggle-btn {
+    padding: 4px 7px;
+    font-size: 0.72rem;
+  }
+  .theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.88rem;
+  }
+  .floating-contact-stack {
+    bottom: 15px;
+    right: 12px;
+    gap: 10px;
+  }
+  .float-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem;
+  }
+}

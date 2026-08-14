@@ -1,0 +1,23 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad_lamborghini_urus" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1A1A" />
+      <stop offset="100%" stop-color="#050608" />
+    </linearGradient>
+    <linearGradient id="goldGrad_lamborghini_urus" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFC107" />
+      <stop offset="100%" stop-color="#F4E090" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#grad_lamborghini_urus)" />
+  <circle cx="400" cy="200" r="250" fill="#FFC107" opacity="0.08" />
+  <path d="M 100 320 C 150 310, 220 280, 300 220 C 380 160, 520 160, 600 220 C 660 260, 720 300, 740 320 L 750 350 L 50 350 Z" fill="none" stroke="url(#goldGrad_lamborghini_urus)" stroke-width="4" />
+  <path d="M 200 245 C 270 200, 480 200, 560 245" fill="none" stroke="#FFC107" stroke-width="2" opacity="0.7" />
+  <circle cx="220" cy="350" r="45" fill="#000" stroke="#FFC107" stroke-width="6" />
+  <circle cx="220" cy="350" r="20" fill="#FFC107" opacity="0.6" />
+  <circle cx="600" cy="350" r="45" fill="#000" stroke="#FFC107" stroke-width="6" />
+  <circle cx="600" cy="350" r="20" fill="#FFC107" opacity="0.6" />
+  <rect x="0" y="420" width="800" height="80" fill="#08090C" />
+  <text x="400" y="465" font-family="Cairo, Tajawal, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Lamborghini Urus Performante</text>
+  <text x="400" y="488" font-family="Cairo, Tajawal, sans-serif" font-size="14" fill="#FFC107" text-anchor="middle">معرض آية لتجارة السيارات - أبو موسى</text>
+</svg>
