@@ -1036,6 +1036,29 @@
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.4;
+  word-break: break-word;
+}
+
+.phone-numbers-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  direction: rtl;
+}
+
+.phone-num {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+.phone-sep {
+  color: var(--gold-primary);
+  font-weight: 800;
+  display: inline-block;
 }
 
 .contact-tile-action-btn {
