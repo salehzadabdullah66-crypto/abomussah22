@@ -4,6 +4,7 @@
 
 @import url('variables.css');
 @import url('doodle-social.css');
+@import url('theme-switch.css');
 
 *, *::before, *::after {
   margin: 0;

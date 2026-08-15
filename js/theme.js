@@ -7,10 +7,6 @@
 
   const STORAGE_KEY = 'aya_car_theme';
 
-  const SUN_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-
-  const MOON_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-
   function playThemeToggleSound(theme) {
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -29,7 +25,7 @@
       const now = ctx.currentTime;
 
       if (theme === 'light') {
-        // نغمة صاعده هادئة وفاخرة عند الانتقال للوضع النهاري
+        // نغمة صاعدة هادئة وفاخرة عند الانتقال للوضع النهاري
         osc.type = 'sine';
         osc.frequency.setValueAtTime(440, now);
         osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
@@ -56,33 +52,46 @@
     return localStorage.getItem(STORAGE_KEY) || 'dark';
   }
 
-  function updateIcons(theme) {
-    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn, #theme-toggle');
-    themeToggleBtns.forEach((btn) => {
-      btn.innerHTML = theme === 'light' ? MOON_SVG : SUN_SVG;
-      btn.setAttribute('title', theme === 'light' ? 'التبديل للوضع الليلي' : 'التبديل للوضع النهاري');
+  function updateInputs(theme) {
+    const isDark = theme === 'dark';
+    const inputs = document.querySelectorAll('.theme-toggle-input, #theme-toggle');
+    inputs.forEach((input) => {
+      if (input.type === 'checkbox') {
+        input.checked = isDark;
+      }
     });
   }
 
-  function setTheme(theme) {
+  function setTheme(theme, playSound = false) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
-    updateIcons(theme);
+    updateInputs(theme);
+    if (playSound) {
+      playThemeToggleSound(theme);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = getPreferredTheme();
-    setTheme(currentTheme);
+    setTheme(currentTheme, false);
 
-    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn, #theme-toggle');
-    themeToggleBtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
+    // الاستماع لتغيير المفتاح الإلكتروني
+    document.addEventListener('change', (e) => {
+      if (e.target && (e.target.classList.contains('theme-toggle-input') || e.target.id === 'theme-toggle')) {
+        const newTheme = e.target.checked ? 'dark' : 'light';
+        setTheme(newTheme, true);
+      }
+    });
+
+    // دعم الضغط المباشر
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.theme-toggle-btn');
+      if (btn && !btn.querySelector('input')) {
         e.preventDefault();
         const activeTheme = document.documentElement.getAttribute('data-theme') || 'dark';
         const newTheme = activeTheme === 'light' ? 'dark' : 'light';
-        playThemeToggleSound(newTheme);
-        setTheme(newTheme);
-      });
+        setTheme(newTheme, true);
+      }
     });
   });
 })();
