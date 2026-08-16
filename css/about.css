@@ -832,3 +832,423 @@
     font-size: 0.9rem;
   }
 }
+
+
+/* ==========================================================================
+   قسم أسد الفاقي (أبو موسى) - السيرة والرؤية والقيم والشعار
+   ========================================================================== */
+
+.founder-profile-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  padding: 45px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+  transition: all 0.35s ease;
+}
+
+.founder-profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--gold-gradient);
+}
+
+.founder-profile-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 45px;
+  align-items: center;
+}
+
+.founder-image-col {
+  position: relative;
+}
+
+.founder-img-wrapper {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 3px solid var(--gold-primary);
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25);
+  background: var(--bg-dark-surface);
+}
+
+.founder-img {
+  width: 100%;
+  height: 440px;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.founder-img-wrapper:hover .founder-img {
+  transform: scale(1.04);
+}
+
+.founder-badge-overlay {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 36px);
+  max-width: 270px;
+  background: rgba(10, 11, 14, 0.92);
+  border: 1px solid var(--gold-primary);
+  backdrop-filter: blur(12px);
+  padding: 8px 16px;
+  border-radius: 50px;
+  color: var(--gold-primary);
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.section-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 50px;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  font-size: 0.88rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+[data-theme="light"] .section-badge-gold {
+  color: #8B6508;
+  border-color: rgba(179, 135, 40, 0.5);
+}
+
+.founder-name-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.founder-name-title span {
+  color: var(--gold-primary);
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.founder-sub-subtitle {
+  font-size: 1.15rem;
+  color: var(--gold-dark);
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+[data-theme="dark"] .founder-sub-subtitle {
+  color: var(--gold-light);
+}
+
+.founder-bio-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.founder-bio-paragraphs p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+.founder-bio-paragraphs strong {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.founder-bio-paragraphs em {
+  color: var(--gold-primary);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.founder-social-tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.social-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 50px;
+  background: var(--bg-body);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.social-tag i {
+  color: var(--gold-primary);
+}
+
+.social-tag:hover {
+  border-color: var(--gold-primary);
+  background: var(--gold-gradient-soft);
+  transform: translateY(-2px);
+}
+
+/* شبكة تفاصيل الرؤية والشعار والمجال */
+.founder-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.detail-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  padding: 32px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gold-gradient);
+}
+
+.detail-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-primary);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+}
+
+.detail-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: var(--gold-primary);
+  margin-bottom: 20px;
+}
+
+.detail-card-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.detail-card-text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.detail-card-quote {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+  line-height: 1.6;
+  background: var(--gold-gradient-soft);
+  padding: 14px 18px;
+  border-radius: 12px;
+  border-right: 3px solid var(--gold-primary);
+  margin: 0;
+}
+
+[data-theme="light"] .detail-card-quote {
+  color: #8B6508;
+  background: rgba(212, 175, 55, 0.12);
+}
+
+/* قسم القيم الأساسية */
+.core-values-section {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 35px 40px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.values-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.values-title i {
+  color: var(--gold-primary);
+}
+
+.values-badges-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.value-badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 800;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.value-badge-item i {
+  color: var(--gold-primary);
+  font-size: 1.2rem;
+}
+
+[data-theme="light"] .value-badge-item i {
+  color: #B38728;
+}
+
+.value-badge-item:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+  border-color: var(--gold-light);
+}
+
+/* البطاقة الختامية الفاخرة */
+.founder-closing-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(10, 11, 14, 0.95) 100%);
+  border: 1px solid var(--gold-primary);
+  border-radius: 24px;
+  padding: 35px 40px;
+  margin-bottom: 80px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .founder-closing-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(179, 135, 40, 0.6);
+}
+
+.closing-quote-icon {
+  width: 65px;
+  height: 65px;
+  min-width: 65px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: #0A0B0E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.closing-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .founder-profile-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .founder-img {
+    height: 380px;
+    object-position: center 22%;
+  }
+  .founder-badge-overlay {
+    bottom: 16px;
+    font-size: 0.85rem;
+    padding: 7px 14px;
+    max-width: 240px;
+  }
+  .founder-details-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .founder-name-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .founder-profile-card {
+    padding: 25px 20px;
+  }
+  .founder-img {
+    height: 340px;
+    object-position: center 20%;
+  }
+  .founder-badge-overlay {
+    bottom: 14px;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    max-width: 220px;
+  }
+  .core-values-section {
+    padding: 25px 20px;
+  }
+  .value-badge-item {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  .founder-closing-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 25px 20px;
+  }
+  .closing-text {
+    font-size: 1.05rem;
+  }
+}
