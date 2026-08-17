@@ -61,5 +61,34 @@
     if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileDrawer);
     if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileDrawer);
     if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobileDrawer);
+
+    // 4. تفعيل القائمة المنسدلة كأكورديون/سلم في قائمة الجوال (Mobile Ladder Accordion)
+    document.querySelectorAll('.mobile-nav-dropdown-item').forEach((item) => {
+      const toggleLink = item.querySelector('.mobile-nav-link');
+      const arrowIcon = item.querySelector('.mobile-chevron-arrow');
+
+      // افتراضياً فتح القائمة إذا كنا في صفحة السيارات
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      if (currentPath.includes('cars.html')) {
+        item.classList.add('open');
+      }
+
+      if (arrowIcon) {
+        arrowIcon.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          item.classList.toggle('open');
+        });
+      }
+
+      if (toggleLink) {
+        toggleLink.addEventListener('click', (e) => {
+          if (!item.classList.contains('open')) {
+            e.preventDefault();
+            item.classList.add('open');
+          }
+        });
+      }
+    });
   });
 })();

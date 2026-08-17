@@ -470,38 +470,112 @@ html[dir="ltr"] .dropdown-item-link:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 20px rgba(179, 135, 40, 0.2);
 }
 
-/* الفرع الداخلي للقائمة في الجوال Mobile Sub Menu */
+/* ==========================================================================
+   السلم التفاعلي والقائمة المنسدلة في الجوال (Mobile Ladder Accordion)
+   ========================================================================== */
+.mobile-nav-dropdown-item {
+  position: relative;
+}
+
+.mobile-nav-link .mobile-chevron-arrow {
+  font-size: 0.8rem !important;
+  margin-right: auto !important;
+  margin-left: 0 !important;
+  transition: transform 0.35s ease !important;
+  color: var(--gold-primary) !important;
+  padding: 4px;
+  cursor: pointer;
+}
+
+html[dir="ltr"] .mobile-nav-link .mobile-chevron-arrow {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+.mobile-nav-dropdown-item.open .mobile-chevron-arrow {
+  transform: rotate(180deg) !important;
+}
+
 .mobile-sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease, margin 0.35s ease, visibility 0.35s ease;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-right: 20px;
-  margin-top: 6px;
-  margin-bottom: 8px;
-  border-right: 2px solid rgba(212, 175, 55, 0.4);
+  gap: 6px;
+  padding-right: 15px;
+  margin-right: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-right: 2px solid var(--gold-primary);
+}
+
+html[dir="ltr"] .mobile-sub-menu {
+  padding-right: 0;
+  padding-left: 15px;
+  margin-right: 0;
+  margin-left: 12px;
+  border-right: none;
+  border-left: 2px solid var(--gold-primary);
+}
+
+.mobile-nav-dropdown-item.open .mobile-sub-menu {
+  max-height: 350px;
+  opacity: 1;
+  visibility: visible;
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 
 .mobile-sub-link {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-secondary);
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   text-decoration: none;
   transition: all 0.25s ease;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .mobile-sub-link i {
-  font-size: 0.85rem !important;
+  font-size: 0.95rem !important;
   color: var(--gold-primary) !important;
-  width: 18px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  text-align: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
 }
 
-.mobile-sub-link:hover {
+.mobile-sub-link span {
+  flex: 1;
+  text-align: right;
+}
+
+html[dir="ltr"] .mobile-sub-link span {
+  text-align: left;
+}
+
+.mobile-sub-link:hover,
+.mobile-sub-link.active {
   color: var(--gold-primary);
   background: var(--gold-gradient-soft);
+  transform: translateX(-4px);
 }
+
+html[dir="ltr"] .mobile-sub-link:hover,
+html[dir="ltr"] .mobile-sub-link.active {
+  transform: translateX(4px);
+}
+
+
 
