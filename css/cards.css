@@ -659,3 +659,89 @@
 [data-theme="light"] .brand-logo-img {
   filter: brightness(0.15) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
+
+/* ==========================================================================
+   تبويبات أقسام السيارات (Car Category Tabs)
+   ========================================================================== */
+.category-tabs-wrapper {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.category-tabs-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.car-category-tab {
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.car-category-tab i {
+  color: var(--gold-primary);
+  font-size: 0.98rem;
+  transition: transform 0.3s ease;
+}
+
+.car-category-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+.car-category-tab.active {
+  background: var(--gold-gradient);
+  color: #0A0B0E;
+  border-color: var(--gold-primary);
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.45);
+}
+
+.car-category-tab.active i {
+  color: #0A0B0E;
+}
+
+[data-theme="light"] .category-tabs-container {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .car-category-tab.active {
+  color: #000000;
+}
+
+@media (max-width: 768px) {
+  .category-tabs-container {
+    border-radius: var(--radius-lg);
+    justify-content: center;
+    width: 100%;
+  }
+  .car-category-tab {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+

@@ -31,9 +31,12 @@
       const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
 
       navLinks.forEach((link) => {
-        const href = link.getAttribute('href');
-        if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-          link.classList.add('active');
+        const href = link.getAttribute('href') || '';
+        const hrefPage = href.split('?')[0];
+        if (hrefPage === currentPath || (currentPath === '' && hrefPage === 'index.html')) {
+          if (!link.classList.contains('dropdown-item-link') && !link.classList.contains('mobile-sub-link')) {
+            link.classList.add('active');
+          }
         } else {
           link.classList.remove('active');
         }

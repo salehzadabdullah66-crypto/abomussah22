@@ -66,7 +66,18 @@
         <ul class="nav-list">
           <li><a href="index.html" class="nav-link" data-i18n="nav_home"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
           <li><a href="about.html" class="nav-link" data-i18n="nav_about"><i class="fas fa-info-circle"></i> <span>من نحن</span></a></li>
-          <li><a href="cars.html" class="nav-link active" data-i18n="nav_cars"><i class="fas fa-car"></i> <span>السيارات</span></a></li>
+          <li class="nav-item-dropdown">
+            <a href="cars.html" class="nav-link active" data-i18n="nav_cars">
+              <i class="fas fa-car"></i> <span>السيارات</span> <i class="fas fa-chevron-down chevron-arrow"></i>
+            </a>
+            <ul class="dropdown-menu-vip">
+              <li><a href="cars.html" class="dropdown-item-link"><i class="fas fa-border-all"></i> <span>جميع السيارات</span></a></li>
+              <li><a href="cars.html?category=used" class="dropdown-item-link"><i class="fas fa-history"></i> <span>سيارات مستعملة</span></a></li>
+              <li><a href="cars.html?category=pickup" class="dropdown-item-link"><i class="fas fa-truck-pickup"></i> <span>سيارات بيك آب (Pick-Up)</span></a></li>
+              <li><a href="cars.html?category=new" class="dropdown-item-link"><i class="fas fa-sparkles"></i> <span>سيارات جديدة (2024-2026)</span></a></li>
+              <li><a href="cars.html?category=luxury" class="dropdown-item-link"><i class="fas fa-crown"></i> <span>سيارات ملكية وفاخرة</span></a></li>
+            </ul>
+          </li>
           <li><a href="services.html" class="nav-link" data-i18n="nav_services"><i class="fas fa-concierge-bell"></i> <span>الخدمات</span></a></li>
           <li><a href="financing.html" class="nav-link" data-i18n="nav_financing"><i class="fas fa-calculator"></i> <span>التمويل</span></a></li>
           <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery"><i class="fas fa-images"></i> <span>المعرض</span></a></li>
@@ -123,7 +134,16 @@
     <ul class="mobile-nav-list">
       <li><a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
       <li><a href="about.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> <span>من نحن</span></a></li>
-      <li><a href="cars.html" class="mobile-nav-link active"><i class="fas fa-car"></i> <span>السيارات</span></a></li>
+      <li class="mobile-nav-dropdown-item">
+        <a href="cars.html" class="mobile-nav-link active"><i class="fas fa-car"></i> <span>السيارات</span></a>
+        <div class="mobile-sub-menu">
+          <a href="cars.html" class="mobile-sub-link"><i class="fas fa-border-all"></i> جميع السيارات</a>
+          <a href="cars.html?category=used" class="mobile-sub-link"><i class="fas fa-history"></i> سيارات مستعملة</a>
+          <a href="cars.html?category=pickup" class="mobile-sub-link"><i class="fas fa-truck-pickup"></i> سيارات بيك آب</a>
+          <a href="cars.html?category=new" class="mobile-sub-link"><i class="fas fa-sparkles"></i> سيارات جديدة</a>
+          <a href="cars.html?category=luxury" class="mobile-sub-link"><i class="fas fa-crown"></i> سيارات فاخرة</a>
+        </div>
+      </li>
       <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-concierge-bell"></i> <span>الخدمات</span></a></li>
       <li><a href="financing.html" class="mobile-nav-link"><i class="fas fa-calculator"></i> <span>التمويل</span></a></li>
       <li><a href="gallery.html" class="mobile-nav-link"><i class="fas fa-images"></i> <span>المعرض</span></a></li>
@@ -451,20 +471,58 @@
     <section id="cars-catalog">
       <div class="container">
 
+        <!-- Category Tabs Navigation Bar (تبويبات أقسام السيارات) -->
+        <div class="category-tabs-wrapper scroll-reveal">
+          <div class="category-tabs-container">
+            <button class="car-category-tab active" data-category="all">
+              <i class="fas fa-border-all"></i> جميع الأقسام
+            </button>
+            <button class="car-category-tab" data-category="used">
+              <i class="fas fa-history"></i> قسم السيارات المستعملة
+            </button>
+            <button class="car-category-tab" data-category="pickup">
+              <i class="fas fa-truck-pickup"></i> قسم البيك آب (Pick-Up)
+            </button>
+            <button class="car-category-tab" data-category="new">
+              <i class="fas fa-sparkles"></i> السيارات الجديدة (2024 - 2026)
+            </button>
+            <button class="car-category-tab" data-category="luxury">
+              <i class="fas fa-crown"></i> قسم السيارات الملكية والفاخرة
+            </button>
+          </div>
+        </div>
+
         <!-- Filter & Live Search Toolbar -->
         <div class="filter-toolbar scroll-reveal">
           <div class="filter-grid">
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label"><i class="fas fa-search"></i> بحث مباشر باسم السيارة أو الموديل:</label>
-              <input type="text" id="search-car-input" class="form-control" placeholder="اكتب اسم السيارة (مثال: مايباخ, BMW, بورشه)...">
+              <input type="text" id="search-car-input" class="form-control" placeholder="اكتب اسم السيارة (مثال: تويوتا, هيلوكس, مرسيدس, BMW)...">
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">القسم الرئيسي:</label>
+              <select id="filter-category" class="form-select">
+                <option value="all">جميع الأقسام</option>
+                <option value="used">سيارات مستعملة</option>
+                <option value="pickup">سيارات بيك آب</option>
+                <option value="new">سيارات جديدة</option>
+                <option value="luxury">سيارات فاخرة وملكية</option>
+              </select>
             </div>
 
             <div class="form-group" style="margin-bottom:0;">
               <label class="form-label">الماركة:</label>
               <select id="filter-brand" class="form-select">
                 <option value="all">جميع الماركات</option>
+                <option value="toyota">Toyota (تويوتا)</option>
+                <option value="ford">Ford (فورد)</option>
+                <option value="isuzu">Isuzu (إيسوزو)</option>
+                <option value="gmc">GMC (جي إم سي)</option>
                 <option value="mercedes">Mercedes-Benz</option>
                 <option value="bmw">BMW</option>
+                <option value="hyundai">Hyundai (هيونداي)</option>
+                <option value="kia">KIA (كيا)</option>
                 <option value="porsche">Porsche</option>
                 <option value="landrover">Range Rover</option>
                 <option value="audi">Audi</option>
@@ -481,6 +539,9 @@
                 <option value="2026">2026</option>
                 <option value="2025">2025</option>
                 <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
               </select>
             </div>
 
@@ -488,8 +549,10 @@
               <label class="form-label">السعر الأقصى:</label>
               <select id="filter-price" class="form-select">
                 <option value="Infinity">جميع الأسعار</option>
-                <option value="150000">حتى 150,000 $</option>
-                <option value="250000">حتى 250,000 $</option>
+                <option value="25000">حتى 25,000 $</option>
+                <option value="50000">حتى 50,000 $</option>
+                <option value="100000">حتى 100,000 $</option>
+                <option value="200000">حتى 200,000 $</option>
                 <option value="350000">حتى 350,000 $</option>
               </select>
             </div>
@@ -505,17 +568,257 @@
 
         <!-- Cars Grid -->
         <div class="cars-grid scroll-reveal">
+
+          <!-- ==================== 1. قسم السيارات المستعملة (Used Cars) ==================== -->
           
+          <!-- Car Used 1: Mercedes-Benz E300 AMG 2021 -->
+          <div class="car-card" data-category="used" data-brand="mercedes" data-year="2021" data-price="34500">
+            <div class="car-image-box">
+              <img src="img/cars/mercedes_e300_used.jpg" alt="مرسيدس E300 مستعملة" class="car-image" onerror="this.onerror=null; this.src='img/cars/mercedes_e300_used.svg';">
+              <span class="car-badge" style="border-color:#4CAF50; color:#81C784;"><i class="fas fa-check-circle"></i> مستعملة - 42,000 كم</span>
+              <span class="car-year-badge">2021</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Mercedes-Benz (قسم المستعمل)</span>
+              <h3 class="car-title">Mercedes E300 AMG Kit</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 2.0L Turbo</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 255 حصان</div>
+                <div class="spec-item"><i class="fas fa-shield-alt"></i> فحص كامل 100%</div>
+                <div class="spec-item"><i class="fas fa-sun"></i> سقف بانوراما AMG</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (مناسب جداً)</span>
+                  <span class="price-value">34,500 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Used 2: BMW 530i M Sport 2022 -->
+          <div class="car-card" data-category="used" data-brand="bmw" data-year="2022" data-price="36000">
+            <div class="car-image-box">
+              <img src="img/cars/bmw_530i_used.jpg" alt="بي إم دبليو 530i مستعملة" class="car-image" onerror="this.onerror=null; this.src='img/cars/bmw_530i_used.svg';">
+              <span class="car-badge" style="border-color:#2196F3; color:#64B5F6;"><i class="fas fa-award"></i> بحالة الوكالة - 35,000 كم</span>
+              <span class="car-year-badge">2022</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">BMW (قسم المستعمل)</span>
+              <h3 class="car-title">BMW 530i M Sport Package</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 2.0L TwinPower</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 248 حصان</div>
+                <div class="spec-item"><i class="fas fa-history"></i> صيانة كاملة بالوكالة</div>
+                <div class="spec-item"><i class="fas fa-desktop"></i> شاشة Head-up Display</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (معقول وممتاز)</span>
+                  <span class="price-value">36,000 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Used 3: Toyota Camry SE 2022 -->
+          <div class="car-card" data-category="used" data-brand="toyota" data-year="2022" data-price="21000">
+            <div class="car-image-box">
+              <img src="img/cars/toyota_camry_used.jpg" alt="تويوتا كامري مستعملة" class="car-image" onerror="this.onerror=null; this.src='img/cars/toyota_camry_used.svg';">
+              <span class="car-badge" style="border-color:#4CAF50; color:#81C784;"><i class="fas fa-leaf"></i> مستعملة نظيفة - 48,000 كم</span>
+              <span class="car-year-badge">2022</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Toyota (قسم المستعمل)</span>
+              <h3 class="car-title">Toyota Camry SE Sports</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 2.5L 4-Cylinder</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 203 حصان</div>
+                <div class="spec-item"><i class="fas fa-gas-pump"></i> اقتصادية جداً بالبنزين</div>
+                <div class="spec-item"><i class="fas fa-car-crash"></i> رادار وتحديد مسار</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (مناسب جداً)</span>
+                  <span class="price-value">21,000 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Used 4: Hyundai Tucson Full Option 2023 -->
+          <div class="car-card" data-category="used" data-brand="hyundai" data-year="2023" data-price="23800">
+            <div class="car-image-box">
+              <img src="img/cars/hyundai_tucson_used.jpg" alt="هيونداي توسان كسر زيرو" class="car-image" onerror="this.onerror=null; this.src='img/cars/hyundai_tucson_used.svg';">
+              <span class="car-badge" style="border-color:#AB47BC; color:#CE93D8;"><i class="fas fa-star"></i> كسر زيرو - 18,000 كم</span>
+              <span class="car-year-badge">2023</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Hyundai (قسم المستعمل)</span>
+              <h3 class="car-title">Hyundai Tucson Full Option</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 1.6L Turbo</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 180 حصان</div>
+                <div class="spec-item"><i class="fas fa-video"></i> كاميرات 360 درجة</div>
+                <div class="spec-item"><i class="fas fa-sun"></i> سقف بانورامي بالكامل</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">23,800 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Used 5: KIA Sportage GT-Line 2022 -->
+          <div class="car-card" data-category="used" data-brand="kia" data-year="2022" data-price="19900">
+            <div class="car-image-box">
+              <img src="img/cars/kia_sportage_used.jpg" alt="كيا سبورتاج مستعملة" class="car-image" onerror="this.onerror=null; this.src='img/cars/kia_sportage_used.svg';">
+              <span class="car-badge" style="border-color:#009688; color:#80CBC4;"><i class="fas fa-check"></i> مفحوصة بالكامل - 38,000 كم</span>
+              <span class="car-year-badge">2022</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">KIA (قسم المستعمل)</span>
+              <h3 class="car-title">KIA Sportage GT-Line</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 1.6L GDI Turbo</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 177 حصان</div>
+                <div class="spec-item"><i class="fas fa-music"></i> نظام صوت Harman Kardon</div>
+                <div class="spec-item"><i class="fas fa-couch"></i> جلد وتدفئة مقاعد</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (سعر اقتصادي)</span>
+                  <span class="price-value">19,900 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== 2. قسم البيك آب (Pick-Up Section) ==================== -->
+
+          <!-- Car Pickup 1: Toyota Hilux Adventure 2024 -->
+          <div class="car-card" data-category="pickup" data-brand="toyota" data-year="2024" data-price="32000">
+            <div class="car-image-box">
+              <img src="img/cars/hilux_adventure.jpg" alt="تويوتا هيلوكس ادفنشر" class="car-image" onerror="this.onerror=null; this.src='img/cars/hilux_adventure.svg';">
+              <span class="car-badge" style="border-color:#FF9800; color:#FFB74D;"><i class="fas fa-truck-pickup"></i> بيك آب 4x4 فل كامل</span>
+              <span class="car-year-badge">2024</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Toyota (قسم البيك آب)</span>
+              <h3 class="car-title">Toyota Hilux Adventure 4x4</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 2.8L Turbo Diesel</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 201 حصان</div>
+                <div class="spec-item"><i class="fas fa-cogs"></i> دفع رباعي 4x4 قفل دُفلوك</div>
+                <div class="spec-item"><i class="fas fa-weight-hanging"></i> حمولة وقوة سحب عالية</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (معقول ومناسب)</span>
+                  <span class="price-value">32,000 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Pickup 2: Ford F-150 Lariat FX4 2025 -->
+          <div class="car-card" data-category="pickup" data-brand="ford" data-year="2025" data-price="48500">
+            <div class="car-image-box">
+              <img src="img/cars/ford_f150.jpg" alt="فورد F-150 لاريات" class="car-image" onerror="this.onerror=null; this.src='img/cars/ford_f150.svg';">
+              <span class="car-badge" style="border-color:#0288D1; color:#4FC3F7;"><i class="fas fa-truck-monster"></i> بيك آب فاخر 2025</span>
+              <span class="car-year-badge">2025</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Ford (قسم البيك آب)</span>
+              <h3 class="car-title">Ford F-150 Lariat FX4</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 3.5L EcoBoost V6</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 400 حصان</div>
+                <div class="spec-item"><i class="fas fa-mountain"></i> حزمة FX4 Off-Road</div>
+                <div class="spec-item"><i class="fas fa-couch"></i> مقاعد جلد مساج وسقف</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">48,500 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Pickup 3: Isuzu D-Max GT 4x4 2024 -->
+          <div class="car-card" data-category="pickup" data-brand="isuzu" data-year="2024" data-price="26500">
+            <div class="car-image-box">
+              <img src="img/cars/isuzu_dmax.jpg" alt="ايسوزو ديماكس 2024" class="car-image" onerror="this.onerror=null; this.src='img/cars/isuzu_dmax.svg';">
+              <span class="car-badge" style="border-color:#E53935; color:#EF5350;"><i class="fas fa-wrench"></i> بيك آب الاعتمادية والشاق</span>
+              <span class="car-year-badge">2024</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">Isuzu (قسم البيك آب)</span>
+              <h3 class="car-title">Isuzu D-Max GT Double Cab 4x4</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 3.0L Ddi Turbo</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 190 حصان</div>
+                <div class="spec-item"><i class="fas fa-cogs"></i> ناقل أوتوماتيك 6 سرعات</div>
+                <div class="spec-item"><i class="fas fa-boxes"></i> حمولة 1.1 طن قوية</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش (اقتصادي وعملي)</span>
+                  <span class="price-value">26,500 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car Pickup 4: GMC Sierra 1500 Denali 2025 -->
+          <div class="car-card" data-category="pickup" data-brand="gmc" data-year="2025" data-price="56000">
+            <div class="car-image-box">
+              <img src="img/cars/gmc_sierra.jpg" alt="جي ام سي سييرا دينالي" class="car-image" onerror="this.onerror=null; this.src='img/cars/gmc_sierra.svg';">
+              <span class="car-badge"><i class="fas fa-crown"></i> Denali VIP Edition</span>
+              <span class="car-year-badge">2025</span>
+            </div>
+            <div class="car-details">
+              <span class="car-brand-model">GMC (قسم البيك آب)</span>
+              <h3 class="car-title">GMC Sierra 1500 Denali</h3>
+              <div class="car-specs-grid">
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 6.2L EcoTec3 V8</div>
+                <div class="spec-item"><i class="fas fa-bolt"></i> 420 حصان</div>
+                <div class="spec-item"><i class="fas fa-door-open"></i> باب خلفي MultiPro 6 طرق</div>
+                <div class="spec-item"><i class="fas fa-volume-up"></i> نظام Bose 12 سماعة</div>
+              </div>
+              <div class="car-footer">
+                <div class="car-price-box">
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">56,000 $</span>
+                </div>
+                <a href="contact.html" class="btn btn-gold btn-sm">طلب السيارة</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== 3. قسم السيارات الجديدة والفاخرة (New & Luxury Cars) ==================== -->
+
           <!-- Car 1: Maybach -->
-          <div class="car-card" data-brand="mercedes" data-year="2026" data-price="245000">
+          <div class="car-card" data-category="luxury" data-brand="mercedes" data-year="2026" data-price="245000">
             <div class="car-image-box">
               <img src="img/cars/maybach_s680.jpg" alt="Maybach" class="car-image" onerror="this.onerror=null; this.src='img/cars/maybach_s680.svg';">
-              <span class="car-badge">جديد 2026</span>
+              <span class="car-badge">جديد 2026 VIP</span>
               <span class="car-year-badge">2026</span>
             </div>
             <div class="car-details">
               <span class="car-brand-model">Mercedes-Benz</span>
-              <h3 class="car-title">Maybach S680 VIP</h3>
+              <h3 class="car-title">Maybach S680 VIP Edition</h3>
               <div class="car-specs-grid">
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> V12 Twin-Turbo</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 621 حصان</div>
@@ -532,8 +835,8 @@
             </div>
           </div>
 
-          <!-- Car 2: BMW -->
-          <div class="car-card" data-brand="bmw" data-year="2025" data-price="135000">
+          <!-- Car 2: BMW 760i -->
+          <div class="car-card" data-category="luxury" data-brand="bmw" data-year="2025" data-price="135000">
             <div class="car-image-box">
               <img src="img/cars/bmw_760i.jpg" alt="BMW" class="car-image" onerror="this.onerror=null; this.src='img/cars/bmw_760i.svg';">
               <span class="car-badge">VIP Edition</span>
@@ -558,8 +861,8 @@
             </div>
           </div>
 
-          <!-- Car 3: Porsche -->
-          <div class="car-card" data-brand="porsche" data-year="2026" data-price="280000">
+          <!-- Car 3: Porsche 911 GT3 RS -->
+          <div class="car-card" data-category="luxury" data-brand="porsche" data-year="2026" data-price="280000">
             <div class="car-image-box">
               <img src="img/cars/porsche_911.jpg" alt="Porsche" class="car-image" onerror="this.onerror=null; this.src='img/cars/porsche_911.svg';">
               <span class="car-badge">سوبر رياضي</span>
@@ -584,8 +887,8 @@
             </div>
           </div>
 
-          <!-- Car 4: Range Rover -->
-          <div class="car-card" data-brand="landrover" data-year="2025" data-price="160000">
+          <!-- Car 4: Range Rover SV -->
+          <div class="car-card" data-category="luxury" data-brand="landrover" data-year="2025" data-price="160000">
             <div class="car-image-box">
               <img src="img/cars/range_rover.jpg" alt="Range Rover" class="car-image" onerror="this.onerror=null; this.src='img/cars/range_rover.svg';">
               <span class="car-badge">Autobiography</span>
@@ -611,7 +914,7 @@
           </div>
 
           <!-- Car 5: Audi RS7 -->
-          <div class="car-card" data-brand="audi" data-year="2025" data-price="125000">
+          <div class="car-card" data-category="luxury" data-brand="audi" data-year="2025" data-price="125000">
             <div class="car-image-box">
               <img src="img/cars/audi_rs7.jpg" alt="Audi RS7" class="car-image" onerror="this.onerror=null; this.src='img/cars/audi_rs7.svg';">
               <span class="car-badge">Performance</span>
@@ -637,7 +940,7 @@
           </div>
 
           <!-- Car 6: Lamborghini Urus -->
-          <div class="car-card" data-brand="lamborghini" data-year="2026" data-price="310000">
+          <div class="car-card" data-category="luxury" data-brand="lamborghini" data-year="2026" data-price="310000">
             <div class="car-image-box">
               <img src="img/cars/lamborghini_urus.jpg" alt="Lamborghini Urus" class="car-image" onerror="this.onerror=null; this.src='img/cars/lamborghini_urus.svg';">
               <span class="car-badge">Performante</span>
@@ -663,7 +966,7 @@
           </div>
 
           <!-- Car 7: Lexus LX600 -->
-          <div class="car-card" data-brand="lexus" data-year="2025" data-price="145000">
+          <div class="car-card" data-category="luxury" data-brand="lexus" data-year="2025" data-price="145000">
             <div class="car-image-box">
               <img src="img/cars/lexus_lx600.jpg" alt="Lexus LX600" class="car-image" onerror="this.onerror=null; this.src='img/cars/lexus_lx600.svg';">
               <span class="car-badge">VIP 4 seats</span>
@@ -689,7 +992,7 @@
           </div>
 
           <!-- Car 8: Rolls-Royce Cullinan -->
-          <div class="car-card" data-brand="rollsroyce" data-year="2026" data-price="420000">
+          <div class="car-card" data-category="luxury" data-brand="rollsroyce" data-year="2026" data-price="420000">
             <div class="car-image-box">
               <img src="img/cars/rolls_royce.jpg" alt="Rolls-Royce Cullinan" class="car-image" onerror="this.onerror=null; this.src='img/cars/rolls_royce.svg';">
               <span class="car-badge">القمة الملكية</span>
@@ -715,7 +1018,7 @@
           </div>
 
           <!-- Car 9: Toyota Land Cruiser GR Sport -->
-          <div class="car-card" data-brand="toyota" data-year="2026" data-price="115000">
+          <div class="car-card" data-category="new" data-brand="toyota" data-year="2026" data-price="115000">
             <div class="car-image-box">
               <img src="img/cars/toyota_landcruiser.jpg" alt="Toyota Land Cruiser" class="car-image" onerror="this.onerror=null; this.src='img/cars/toyota_landcruiser.svg';">
               <span class="car-badge">GR Sport 2026</span>

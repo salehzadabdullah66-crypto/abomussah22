@@ -65,7 +65,18 @@
         <ul class="nav-list">
           <li><a href="index.html" class="nav-link" data-i18n="nav_home"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
           <li><a href="about.html" class="nav-link" data-i18n="nav_about"><i class="fas fa-info-circle"></i> <span>من نحن</span></a></li>
-          <li><a href="cars.html" class="nav-link" data-i18n="nav_cars"><i class="fas fa-car"></i> <span>السيارات</span></a></li>
+          <li class="nav-item-dropdown">
+            <a href="cars.html" class="nav-link" data-i18n="nav_cars">
+              <i class="fas fa-car"></i> <span>السيارات</span> <i class="fas fa-chevron-down chevron-arrow"></i>
+            </a>
+            <ul class="dropdown-menu-vip">
+              <li><a href="cars.html" class="dropdown-item-link"><i class="fas fa-border-all"></i> <span>جميع السيارات</span></a></li>
+              <li><a href="cars.html?category=used" class="dropdown-item-link"><i class="fas fa-history"></i> <span>سيارات مستعملة</span></a></li>
+              <li><a href="cars.html?category=pickup" class="dropdown-item-link"><i class="fas fa-truck-pickup"></i> <span>سيارات بيك آب (Pick-Up)</span></a></li>
+              <li><a href="cars.html?category=new" class="dropdown-item-link"><i class="fas fa-sparkles"></i> <span>سيارات جديدة (2024-2026)</span></a></li>
+              <li><a href="cars.html?category=luxury" class="dropdown-item-link"><i class="fas fa-crown"></i> <span>سيارات ملكية وفاخرة</span></a></li>
+            </ul>
+          </li>
           <li><a href="services.html" class="nav-link active" data-i18n="nav_services"><i class="fas fa-concierge-bell"></i> <span>الخدمات</span></a></li>
           <li><a href="financing.html" class="nav-link" data-i18n="nav_financing"><i class="fas fa-calculator"></i> <span>التمويل</span></a></li>
           <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery"><i class="fas fa-images"></i> <span>المعرض</span></a></li>

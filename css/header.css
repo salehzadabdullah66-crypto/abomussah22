@@ -361,3 +361,147 @@ html[dir="ltr"] .main-header .nav-link i {
   color: var(--gold-primary);
   border-right: 3px solid var(--gold-primary);
 }
+
+/* ==========================================================================
+   قائمة خيارات أنواع السيارات المنسدلة المتميزة (Cars VIP Dropdown Menu)
+   ========================================================================== */
+.nav-item-dropdown {
+  position: relative;
+}
+
+.nav-item-dropdown .chevron-arrow {
+  font-size: 0.7rem !important;
+  margin-right: 4px !important;
+  transition: transform 0.3s ease !important;
+}
+
+html[dir="ltr"] .nav-item-dropdown .chevron-arrow {
+  margin-right: 0 !important;
+  margin-left: 4px !important;
+}
+
+.nav-item-dropdown:hover .chevron-arrow {
+  transform: rotate(180deg) !important;
+}
+
+.dropdown-menu-vip {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 240px;
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-md);
+  padding: 10px 0;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 1000;
+  list-style: none !important;
+}
+
+html[dir="ltr"] .dropdown-menu-vip {
+  right: auto;
+  left: 0;
+}
+
+.nav-item-dropdown:hover .dropdown-menu-vip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu-vip li {
+  list-style: none !important;
+  margin: 0 !important;
+}
+
+.dropdown-item-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  border-right: 3px solid transparent;
+  white-space: nowrap;
+}
+
+html[dir="ltr"] .dropdown-item-link {
+  border-right: none;
+  border-left: 3px solid transparent;
+}
+
+.dropdown-item-link i {
+  color: var(--gold-primary) !important;
+  font-size: 0.95rem !important;
+  width: 20px;
+  text-align: center;
+  margin-left: 0 !important;
+  transition: transform 0.25s ease !important;
+}
+
+.dropdown-item-link:hover {
+  background: var(--gold-gradient-soft);
+  color: var(--gold-primary);
+  border-color: var(--gold-primary);
+  padding-right: 22px;
+}
+
+html[dir="ltr"] .dropdown-item-link:hover {
+  padding-right: 18px;
+  padding-left: 22px;
+}
+
+.dropdown-item-link:hover i {
+  transform: scale(1.2) !important;
+}
+
+[data-theme="light"] .dropdown-menu-vip {
+  background: #FFFFFF;
+  border-color: #D4AF37;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 20px rgba(179, 135, 40, 0.2);
+}
+
+/* الفرع الداخلي للقائمة في الجوال Mobile Sub Menu */
+.mobile-sub-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 20px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  border-right: 2px solid rgba(212, 175, 55, 0.4);
+}
+
+.mobile-sub-link {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.mobile-sub-link i {
+  font-size: 0.85rem !important;
+  color: var(--gold-primary) !important;
+  width: 18px !important;
+}
+
+.mobile-sub-link:hover {
+  color: var(--gold-primary);
+  background: var(--gold-gradient-soft);
+}
+

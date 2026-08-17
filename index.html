@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="css/cards.css">
   <link rel="stylesheet" href="css/forms.css">
   <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/cars-slider.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -70,7 +69,18 @@
         <ul class="nav-list">
           <li><a href="index.html" class="nav-link active" data-i18n="nav_home"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
           <li><a href="about.html" class="nav-link" data-i18n="nav_about"><i class="fas fa-info-circle"></i> <span>من نحن</span></a></li>
-          <li><a href="cars.html" class="nav-link" data-i18n="nav_cars"><i class="fas fa-car"></i> <span>السيارات</span></a></li>
+          <li class="nav-item-dropdown">
+            <a href="cars.html" class="nav-link" data-i18n="nav_cars">
+              <i class="fas fa-car"></i> <span>السيارات</span> <i class="fas fa-chevron-down chevron-arrow"></i>
+            </a>
+            <ul class="dropdown-menu-vip">
+              <li><a href="cars.html" class="dropdown-item-link"><i class="fas fa-border-all"></i> <span>جميع السيارات</span></a></li>
+              <li><a href="cars.html?category=used" class="dropdown-item-link"><i class="fas fa-history"></i> <span>سيارات مستعملة</span></a></li>
+              <li><a href="cars.html?category=pickup" class="dropdown-item-link"><i class="fas fa-truck-pickup"></i> <span>سيارات بيك آب (Pick-Up)</span></a></li>
+              <li><a href="cars.html?category=new" class="dropdown-item-link"><i class="fas fa-sparkles"></i> <span>سيارات جديدة (2024-2026)</span></a></li>
+              <li><a href="cars.html?category=luxury" class="dropdown-item-link"><i class="fas fa-crown"></i> <span>سيارات ملكية وفاخرة</span></a></li>
+            </ul>
+          </li>
           <li><a href="services.html" class="nav-link" data-i18n="nav_services"><i class="fas fa-concierge-bell"></i> <span>الخدمات</span></a></li>
           <li><a href="financing.html" class="nav-link" data-i18n="nav_financing"><i class="fas fa-calculator"></i> <span>التمويل</span></a></li>
           <li><a href="gallery.html" class="nav-link" data-i18n="nav_gallery"><i class="fas fa-images"></i> <span>المعرض</span></a></li>
@@ -134,7 +144,16 @@
     <ul class="mobile-nav-list">
       <li><a href="index.html" class="mobile-nav-link active"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
       <li><a href="about.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> <span>من نحن</span></a></li>
-      <li><a href="cars.html" class="mobile-nav-link"><i class="fas fa-car"></i> <span>السيارات</span></a></li>
+      <li class="mobile-nav-dropdown-item">
+        <a href="cars.html" class="mobile-nav-link"><i class="fas fa-car"></i> <span>السيارات</span></a>
+        <div class="mobile-sub-menu">
+          <a href="cars.html" class="mobile-sub-link"><i class="fas fa-border-all"></i> جميع السيارات</a>
+          <a href="cars.html?category=used" class="mobile-sub-link"><i class="fas fa-history"></i> سيارات مستعملة</a>
+          <a href="cars.html?category=pickup" class="mobile-sub-link"><i class="fas fa-truck-pickup"></i> سيارات بيك آب</a>
+          <a href="cars.html?category=new" class="mobile-sub-link"><i class="fas fa-sparkles"></i> سيارات جديدة</a>
+          <a href="cars.html?category=luxury" class="mobile-sub-link"><i class="fas fa-crown"></i> سيارات فاخرة</a>
+        </div>
+      </li>
       <li><a href="services.html" class="mobile-nav-link"><i class="fas fa-concierge-bell"></i> <span>الخدمات</span></a></li>
       <li><a href="financing.html" class="mobile-nav-link"><i class="fas fa-calculator"></i> <span>التمويل</span></a></li>
       <li><a href="gallery.html" class="mobile-nav-link"><i class="fas fa-images"></i> <span>المعرض</span></a></li>
@@ -222,11 +241,6 @@
             <div class="stat-label">سيارة مبيعة بنجاح</div>
           </div>
           <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <div class="stat-number" data-target="1200" data-suffix="+">0</div>
-            <div class="stat-label">عميل سعيد وواثق</div>
-          </div>
-          <div class="stat-item">
             <div class="stat-icon"><i class="fas fa-award"></i></div>
             <div class="stat-number" data-target="15" data-suffix=" عاماً">0</div>
             <div class="stat-label">خبرة في سوق السيارات</div>
@@ -244,9 +258,9 @@
     <section>
       <div class="container">
         <div class="section-header scroll-reveal">
-          <span class="section-badge">أسطولنا الفاخر</span>
-          <h2 class="section-title">أحدث السيارات <span>المميزة</span></h2>
-          <p class="section-subtitle">اختر سيارتك القادمة من بين أرقى السيارات العالمية المفحوصة والمضمونة</p>
+          <span class="section-badge">أسطولنا المميز والفاخر</span>
+          <h2 class="section-title">أحدث السيارات <span>المميزة والملكية</span></h2>
+          <p class="section-subtitle">اختر سيارتك القادمة من بين أرقى السيارات العالمية المفحوصة والمضمونة لدى معرض آية</p>
         </div>
 
         <div class="cars-grid scroll-reveal">
@@ -254,21 +268,21 @@
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/maybach_s680.jpg" alt="مرسيدس مايباخ S680" class="car-image" onerror="this.onerror=null; this.src='img/cars/maybach_s680.svg';">
-              <span class="car-badge">جديد 2026</span>
+              <span class="car-badge">جديد 2026 VIP</span>
               <span class="car-year-badge">2026</span>
             </div>
             <div class="car-details">
-              <span class="car-brand-model">Mercedes-Benz</span>
+              <span class="car-brand-model">Mercedes-Maybach</span>
               <h3 class="car-title">Maybach S680 VIP</h3>
               <div class="car-specs-grid">
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> V12 6.0L</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 621 حصان</div>
                 <div class="spec-item"><i class="fas fa-cogs"></i> أوتوماتيك 9 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين VIP</div>
+                <div class="spec-item"><i class="fas fa-chair"></i> مقاعد مساج ملكية</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
+                  <span class="price-label">السعر الكاش</span>
                   <span class="price-value">245,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
@@ -276,12 +290,12 @@
             </div>
           </div>
 
-          <!-- Car Card 2: BMW -->
+          <!-- Car Card 2: BMW 760i -->
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/bmw_760i.jpg" alt="بي إم دبليو 760i" class="car-image" onerror="this.onerror=null; this.src='img/cars/bmw_760i.svg';">
               <span class="car-badge">VIP Edition</span>
-              <span class="car-year-badge">2026</span>
+              <span class="car-year-badge">2025</span>
             </div>
             <div class="car-details">
               <span class="car-brand-model">BMW</span>
@@ -290,45 +304,45 @@
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 4.4L V8</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 536 حصان</div>
                 <div class="spec-item"><i class="fas fa-cogs"></i> أوتوماتيك 8 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين</div>
+                <div class="spec-item"><i class="fas fa-tv"></i> شاشة مسرحية 31 بوصة</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
-                  <span class="price-value">185,000 $</span>
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">135,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
               </div>
             </div>
           </div>
 
-          <!-- Car Card 3: Range Rover -->
+          <!-- Car Card 3: Range Rover SV -->
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/range_rover.jpg" alt="رينج روفر افيوجرافي" class="car-image" onerror="this.onerror=null; this.src='img/cars/range_rover.svg';">
-              <span class="car-badge">أعلى فئة</span>
-              <span class="car-year-badge">2026</span>
+              <span class="car-badge">Autobiography</span>
+              <span class="car-year-badge">2025</span>
             </div>
             <div class="car-details">
               <span class="car-brand-model">Range Rover</span>
-              <h3 class="car-title">Range Rover Autobiography</h3>
+              <h3 class="car-title">Range Rover SV</h3>
               <div class="car-specs-grid">
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 4.4L V8</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 523 حصان</div>
-                <div class="spec-item"><i class="fas fa-cogs"></i> أوتوماتيك 8 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين</div>
+                <div class="spec-item"><i class="fas fa-mountain"></i> نظام Off-Road ذكي</div>
+                <div class="spec-item"><i class="fas fa-gem"></i> جلد نابا وفاخر</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
-                  <span class="price-value">220,000 $</span>
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">160,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
               </div>
             </div>
           </div>
 
-          <!-- Car Card 4: Porsche 911 -->
+          <!-- Car Card 4: Porsche 911 GT3 RS -->
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/porsche_911.jpg" alt="بورشه 911 GT3 RS" class="car-image" onerror="this.onerror=null; this.src='img/cars/porsche_911.svg';">
@@ -342,12 +356,12 @@
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 4.0L Boxer 6</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 518 حصان</div>
                 <div class="spec-item"><i class="fas fa-cogs"></i> PDK 7 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين سبرينت</div>
+                <div class="spec-item"><i class="fas fa-flag-checkered"></i> حزمة Weissach</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
-                  <span class="price-value">275,000 $</span>
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">280,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
               </div>
@@ -358,22 +372,22 @@
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/rolls_royce.jpg" alt="رولز رويس كولينان" class="car-image" onerror="this.onerror=null; this.src='img/cars/rolls_royce.svg';">
-              <span class="car-badge">ملكي حصري</span>
+              <span class="car-badge">القمة الملكية</span>
               <span class="car-year-badge">2026</span>
             </div>
             <div class="car-details">
               <span class="car-brand-model">Rolls-Royce</span>
-              <h3 class="car-title">Rolls-Royce Cullinan Series II</h3>
+              <h3 class="car-title">Cullinan Series II</h3>
               <div class="car-specs-grid">
                 <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 6.75L V12</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 563 حصان</div>
-                <div class="spec-item"><i class="fas fa-cogs"></i> أوتوماتيك 8 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين VIP</div>
+                <div class="spec-item"><i class="fas fa-star"></i> سقف النجوم Starlight</div>
+                <div class="spec-item"><i class="fas fa-crown"></i> قمة الفخامة العالمية</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
-                  <span class="price-value">395,000 $</span>
+                  <span class="price-label">السعر الكاش</span>
+                  <span class="price-value">420,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
               </div>
@@ -384,21 +398,21 @@
           <div class="car-card">
             <div class="car-image-box">
               <img src="img/cars/lamborghini_urus.jpg" alt="لامبورغيني أوروس" class="car-image" onerror="this.onerror=null; this.src='img/cars/lamborghini_urus.svg';">
-              <span class="car-badge">سوبر SUV</span>
+              <span class="car-badge">Performante</span>
               <span class="car-year-badge">2026</span>
             </div>
             <div class="car-details">
               <span class="car-brand-model">Lamborghini</span>
-              <h3 class="car-title">Lamborghini Urus Performante</h3>
+              <h3 class="car-title">Urus Performante</h3>
               <div class="car-specs-grid">
-                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 4.0L Twin-Turbo V8</div>
+                <div class="spec-item"><i class="fas fa-tachometer-alt"></i> 4.0L V8 Twin-Turbo</div>
                 <div class="spec-item"><i class="fas fa-bolt"></i> 657 حصان</div>
-                <div class="spec-item"><i class="fas fa-cogs"></i> أوتوماتيك 8 سرعات</div>
-                <div class="spec-item"><i class="fas fa-gas-pump"></i> بنزين سبورت</div>
+                <div class="spec-item"><i class="fas fa-fire"></i> الكربون ألياف</div>
+                <div class="spec-item"><i class="fas fa-road"></i> أداء الحلبات</div>
               </div>
               <div class="car-footer">
                 <div class="car-price-box">
-                  <span class="price-label">السعر المميز</span>
+                  <span class="price-label">السعر الكاش</span>
                   <span class="price-value">310,000 $</span>
                 </div>
                 <a href="cars.html" class="btn btn-gold btn-sm">التفاصيل</a>
@@ -705,7 +719,5 @@
   <script src="js/menu.js"></script>
   <script src="js/main.js"></script>
   <script src="js/animation.js"></script>
-  <script src="js/home-hero.js"></script>
-  <script src="js/cars-slider.js"></script>
 </body>
 </html>
