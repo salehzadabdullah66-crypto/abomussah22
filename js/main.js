@@ -14,6 +14,10 @@
       }, 600);
     }
 
+    // تفعيل مشغل البنار الصوتي والتشغيل التلقائي للفيديو عند التمرير
+    initAudioTestimonialPlayer();
+    initScrollAutoplayVideos();
+
     // 2. تفعيل كاشف الحركة وتثبيت ظهور القسم الرئيسي مرة واحدة فقط Scroll Observer
     if ('IntersectionObserver' in window) {
       const scrollObserver = new IntersectionObserver(
@@ -237,5 +241,112 @@
     }
 
     render();
+  }
+
+  // 14. تهيئة وتشغيل بنار التسجيل الصوتي لآراء العملاء (Audio Testimonial Player)
+  function initAudioTestimonialPlayer() {
+    const audioCards = document.querySelectorAll('.audio-banner-card');
+    audioCards.forEach((card) => {
+      const audio = card.querySelector('.testimonial-audio-elem');
+      const playBtn = card.querySelector('.audio-play-trigger');
+      const playIcon = card.querySelector('.audio-play-icon');
+      const progressWrap = card.querySelector('.audio-progress-wrap');
+      const progressFill = card.querySelector('.audio-progress-fill');
+      const timeDisp = card.querySelector('.audio-time-disp');
+
+      if (!audio || !playBtn) return;
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return '0:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+
+      playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          // إيقاف أي أصوات أو فيديوهات أخرى تعمل بالصفحة
+          document.querySelectorAll('audio, video').forEach((el) => {
+            if (el !== audio && !el.paused) el.pause();
+          });
+          audio.play().catch(() => {});
+          if (playIcon) {
+            playIcon.classList.remove('fa-play');
+            playIcon.classList.add('fa-pause');
+          }
+        } else {
+          audio.pause();
+          if (playIcon) {
+            playIcon.classList.remove('fa-pause');
+            playIcon.classList.add('fa-play');
+          }
+        }
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+          const pct = (audio.currentTime / audio.duration) * 100;
+          if (progressFill) progressFill.style.width = `${pct}%`;
+          if (timeDisp) timeDisp.textContent = formatTime(audio.currentTime);
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        if (playIcon) {
+          playIcon.classList.remove('fa-pause');
+          playIcon.classList.add('fa-play');
+        }
+        if (progressFill) progressFill.style.width = '0%';
+        if (timeDisp) timeDisp.textContent = '0:00';
+      });
+
+      if (progressWrap) {
+        progressWrap.addEventListener('click', (e) => {
+          const rect = progressWrap.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const width = rect.width;
+          if (audio.duration && width > 0) {
+            audio.currentTime = (clickX / width) * audio.duration;
+          }
+        });
+      }
+    });
+  }
+
+  // 15. التشغيل التلقائي للفيديو عند التمرير والنزول مع إيقاظ الصوت تلقائياً (Scroll Autoplay With Sound)
+  function initScrollAutoplayVideos() {
+    const videos = document.querySelectorAll('#scroll-autoplay-video, [data-autoplay-on-scroll]');
+    if (!videos.length || !('IntersectionObserver' in window)) return;
+
+    const unlockSound = () => {
+      videos.forEach((video) => {
+        video.muted = false;
+      });
+    };
+
+    window.addEventListener('click', unlockSound);
+    window.addEventListener('touchstart', unlockSound);
+    window.addEventListener('scroll', unlockSound);
+
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.muted = false;
+          const promise = video.play();
+          if (promise !== undefined) {
+            promise.catch(() => {
+              // إذا حظر المتصفح الصوت التلقائي كسياسة أمان، يتم تشغيله مؤقتاً ثم تفعيل الصوت فور أي حركة أو لمس
+              video.muted = true;
+              video.play().catch(() => {});
+            });
+          }
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    videos.forEach((vid) => videoObserver.observe(vid));
   }
 })();
