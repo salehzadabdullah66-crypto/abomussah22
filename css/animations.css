@@ -1582,17 +1582,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  min-height: 64px;
+  min-height: 52px;
   width: fit-content;
-  max-width: 100%;
+  max-width: calc(100vw - 32px);
   background: var(--gold-gradient-soft);
   border: 1px solid var(--gold-primary);
   border-right: 6px solid var(--gold-primary);
   border-radius: var(--radius-md);
-  padding: 12px 24px;
-  margin: 15px 0;
+  padding: 10px 20px;
+  margin: 15px auto;
   box-shadow: 0 0 25px rgba(212, 175, 55, 0.35), inset 0 0 15px rgba(212, 175, 55, 0.15);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, opacity 0.3s ease;
+  box-sizing: border-box;
 }
 
 .papyrus-scroll-wrapper {
@@ -1600,23 +1601,24 @@
   align-items: center;
   white-space: nowrap;
   width: auto;
+  max-width: 100%;
 }
 
 .papyrus-text-target {
   font-family: var(--font-heading);
-  font-size: 2.2rem;
+  font-size: clamp(0.95rem, 3.8vw, 2.0rem);
   font-weight: 800;
   color: var(--gold-primary);
   text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
   white-space: nowrap;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .papyrus-type-cursor {
-  font-size: 2.2rem;
+  font-size: clamp(0.95rem, 3.8vw, 2.0rem);
   font-weight: 900;
   color: #ffd700;
-  margin-right: 6px;
+  margin-right: 4px;
   animation: papyrusBlink 0.6s infinite alternate;
 }
 
@@ -1627,10 +1629,34 @@
 
 @media (max-width: 768px) {
   .hero-tagline-quote {
-    padding: 10px 18px;
-    min-height: 54px;
+    padding: 8px 14px;
+    min-height: 44px;
+    max-width: calc(100vw - 24px);
+    margin: 12px auto;
   }
   .papyrus-text-target, .papyrus-type-cursor {
-    font-size: 1.45rem;
+    font-size: clamp(0.85rem, 3.9vw, 1.25rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tagline-quote {
+    padding: 6px 10px;
+    min-height: 38px;
+    max-width: calc(100vw - 16px);
+  }
+  .papyrus-text-target, .papyrus-type-cursor {
+    font-size: clamp(0.78rem, 3.6vw, 0.98rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-tagline-quote {
+    padding: 4px 8px;
+    min-height: 34px;
+    max-width: calc(100vw - 10px);
+  }
+  .papyrus-text-target, .papyrus-type-cursor {
+    font-size: 0.75rem;
   }
 }
