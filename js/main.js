@@ -127,12 +127,63 @@
       calculateInstallment(); // حساب أولي
     }
 
-    // 5. تفعيل كتابة وعرض عنوان القسم الرئيسي مرة واحدة فقط عند الفتح
-    initHeroTypewriterOnce();
+    // 5. تفعيل حركة فتح وإغلاق البردية للشعار والكتابة المتواصلة دون توقف
+    initContinuousPapyrusScrollLoop();
 
     // 6. تفعيل خلفية الجسيمات الذهبية العائمة الشاملة لجميع الصفحات
     initGlobalGoldParticleCanvas();
   });
+
+  function initContinuousPapyrusScrollLoop() {
+    const taglineBoxes = document.querySelectorAll('.hero-tagline-quote');
+    if (!taglineBoxes.length) return;
+
+    taglineBoxes.forEach((box) => {
+      if (box.dataset.papyrusInit) return;
+      box.dataset.papyrusInit = "true";
+
+      const fullText = '"أبو موسى لديكم لا خوف عليكم"';
+
+      box.innerHTML = `
+        <div class="papyrus-scroll-wrapper">
+          <span class="papyrus-text-target"></span><span class="papyrus-type-cursor">|</span>
+        </div>
+      `;
+
+      const textTarget = box.querySelector('.papyrus-text-target');
+
+      let charIdx = 0;
+
+      function runLoop() {
+        let typeTimer = setInterval(() => {
+          if (charIdx <= fullText.length) {
+            textTarget.textContent = fullText.slice(0, charIdx);
+            charIdx++;
+          } else {
+            clearInterval(typeTimer);
+
+            setTimeout(() => {
+              let eraseTimer = setInterval(() => {
+                if (charIdx >= 0) {
+                  textTarget.textContent = fullText.slice(0, charIdx);
+                  charIdx--;
+                } else {
+                  clearInterval(eraseTimer);
+                  charIdx = 0;
+
+                  setTimeout(() => {
+                    runLoop();
+                  }, 500);
+                }
+              }, 45);
+            }, 2800);
+          }
+        }, 90);
+      }
+
+      runLoop();
+    });
+  }
 
   function initHeroTypewriterOnce() {
     const heroTitle = document.querySelector('.hero-title');

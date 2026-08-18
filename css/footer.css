@@ -120,16 +120,25 @@
 
 .footer-contact-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   color: var(--text-secondary);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .footer-contact-item i {
   color: var(--gold-primary);
-  font-size: 1.1rem;
-  margin-top: 4px;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.footer-phone-num {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .social-links {

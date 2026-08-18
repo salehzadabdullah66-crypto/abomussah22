@@ -1571,3 +1571,66 @@
   from { opacity: 1; }
   to { opacity: 0; }
 }
+
+/* ==========================================================================
+   حركة البردية الحريرية والكاتبة التلقائية المتواصلة دون توقف
+   ========================================================================== */
+
+.hero-tagline-quote {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 64px;
+  width: fit-content;
+  max-width: 100%;
+  background: var(--gold-gradient-soft);
+  border: 1px solid var(--gold-primary);
+  border-right: 6px solid var(--gold-primary);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  margin: 15px 0;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35), inset 0 0 15px rgba(212, 175, 55, 0.15);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease, opacity 0.3s ease;
+}
+
+.papyrus-scroll-wrapper {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  width: auto;
+}
+
+.papyrus-text-target {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.papyrus-type-cursor {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffd700;
+  margin-right: 6px;
+  animation: papyrusBlink 0.6s infinite alternate;
+}
+
+@keyframes papyrusBlink {
+  0% { opacity: 1; text-shadow: 0 0 12px #ffd700; }
+  100% { opacity: 0; text-shadow: none; }
+}
+
+@media (max-width: 768px) {
+  .hero-tagline-quote {
+    padding: 10px 18px;
+    min-height: 54px;
+  }
+  .papyrus-text-target, .papyrus-type-cursor {
+    font-size: 1.45rem;
+  }
+}
