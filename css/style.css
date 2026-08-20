@@ -409,15 +409,77 @@ img {
 }
 
 .float-btn-whatsapp {
+  position: relative;
   background: linear-gradient(135deg, #25D366, #128C7E);
   color: #FFFFFF !important;
   font-size: 1.7rem;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 0 15px rgba(37, 211, 102, 0.55), 0 6px 20px rgba(0, 0, 0, 0.35);
+  animation: whatsappPulseGlow 2.4s infinite ease-in-out;
+}
+
+.float-btn-whatsapp::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.85);
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.6);
+  pointer-events: none;
+  animation: whatsappRingPulse 2.4s infinite ease-in-out;
+}
+
+.float-btn-whatsapp::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(37, 211, 102, 0.4);
+  pointer-events: none;
+  animation: whatsappRipple 2.4s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .float-btn-whatsapp:hover {
   transform: scale(1.14);
-  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.65);
+  box-shadow: 0 0 30px rgba(37, 211, 102, 0.9), 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.float-btn-whatsapp:hover::before {
+  border-color: #25D366;
+  box-shadow: 0 0 18px rgba(37, 211, 102, 0.95);
+}
+
+@keyframes whatsappPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 14px rgba(37, 211, 102, 0.5), 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(37, 211, 102, 0.85), 0 6px 22px rgba(0, 0, 0, 0.45);
+  }
+}
+
+@keyframes whatsappRingPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+    border-color: rgba(37, 211, 102, 0.7);
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+    border-color: rgba(74, 238, 133, 1);
+    box-shadow: 0 0 16px rgba(37, 211, 102, 0.8);
+  }
+}
+
+@keyframes whatsappRipple {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
 }
 
 .float-btn-phone {
@@ -430,4 +492,78 @@ img {
 .float-btn-phone:hover {
   transform: scale(1.14);
   box-shadow: 0 8px 25px rgba(212, 175, 55, 0.65);
+}
+
+/* ==========================================================================
+   المؤشر الذهبي الدائري المخصص (Custom Golden Cursor Ring)
+   ========================================================================== */
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  margin-left: -16px;
+  border: 2px solid var(--gold-primary, #D4AF37);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.35);
+  transition: width 0.2s ease,
+              height 0.2s ease,
+              margin 0.2s ease,
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              opacity 0.2s ease,
+              transform 0.1s ease-out;
+  will-change: transform;
+  opacity: 0;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  margin-left: -2.5px;
+  background-color: var(--gold-primary, #D4AF37);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000000;
+  box-shadow: 0 0 3px rgba(212, 175, 55, 0.4);
+  transition: opacity 0.2s ease, transform 0.05s ease-out;
+  will-change: transform;
+  opacity: 0;
+}
+
+.custom-cursor-ring.visible,
+.custom-cursor-dot.visible {
+  opacity: 1;
+}
+
+.custom-cursor-ring.hovered {
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  margin-left: -23px;
+  border-color: var(--gold-hover, #E5C158);
+  background-color: rgba(212, 175, 55, 0.08);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.custom-cursor-ring.active {
+  transform: scale(0.85) !important;
+  background-color: rgba(212, 175, 55, 0.18);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* إخفاء المؤشر المخصص تلقائياً على الشاشات التي تعمل باللمس */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-ring,
+  .custom-cursor-dot {
+    display: none !important;
+  }
 }

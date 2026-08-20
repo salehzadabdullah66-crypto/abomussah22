@@ -14,9 +14,10 @@
       }, 600);
     }
 
-    // تفعيل مشغل البنار الصوتي والتشغيل التلقائي للفيديو عند التمرير
+    // تفعيل مشغل البنار الصوتي والتشغيل التلقائي للفيديو عند التمرير والمؤشر الذهبي
     initAudioTestimonialPlayer();
     initScrollAutoplayVideos();
+    initCustomGoldenCursor();
 
     // 2. تفعيل كاشف الحركة وتثبيت ظهور القسم الرئيسي مرة واحدة فقط Scroll Observer
     if ('IntersectionObserver' in window) {
@@ -399,5 +400,85 @@
     }, { threshold: 0.35 });
 
     videos.forEach((vid) => videoObserver.observe(vid));
+  }
+
+  // 16. مؤشر الموس المخصص - الحلقة الذهبية المضيئة (Custom Golden Cursor Ring)
+  function initCustomGoldenCursor() {
+    // عدم التفعيل على أجهزة اللمس
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    let ring = document.getElementById('custom-cursor-ring');
+    let dot = document.getElementById('custom-cursor-dot');
+
+    if (!ring) {
+      ring = document.createElement('div');
+      ring.id = 'custom-cursor-ring';
+      ring.className = 'custom-cursor-ring';
+      document.body.appendChild(ring);
+    }
+
+    if (!dot) {
+      dot = document.createElement('div');
+      dot.id = 'custom-cursor-dot';
+      dot.className = 'custom-cursor-dot';
+      document.body.appendChild(dot);
+    }
+
+    let mouseX = -100, mouseY = -100;
+    let ringX = -100, ringY = -100;
+    let isVisible = false;
+
+    // تحديث موضع المؤشر والحلقة مباشرة وثابتة على الفأرة بدون أي تأخير
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!isVisible) {
+        isVisible = true;
+        ring.classList.add('visible');
+        dot.classList.add('visible');
+      }
+
+      // تثبيت موضع الحلقة والنقطة المركزية مباشرة على رأس السهم 100%
+      ring.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    });
+
+    // إخفاء وإظهار المؤشر عند دخول وخروج الفأرة من النافذة
+    document.addEventListener('mouseleave', () => {
+      isVisible = false;
+      ring.classList.remove('visible');
+      dot.classList.remove('visible');
+    });
+
+    document.addEventListener('mouseenter', () => {
+      isVisible = true;
+      ring.classList.add('visible');
+      dot.classList.add('visible');
+    });
+
+    // تأثير الضغط عند النقر بالموس
+    window.addEventListener('mousedown', () => {
+      ring.classList.add('active');
+    });
+
+    window.addEventListener('mouseup', () => {
+      ring.classList.remove('active');
+    });
+
+    // تضخيم الحلقة الذهبية عند الوقوف على العناصر التفاعلية
+    const interactiveSelector = 'a, button, input, select, textarea, .car-card, .btn, .social-btn, [role="button"], .accordion-header, .filter-btn, .float-btn';
+    
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelector)) {
+        ring.classList.add('hovered');
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(interactiveSelector)) {
+        ring.classList.remove('hovered');
+      }
+    });
   }
 })();
