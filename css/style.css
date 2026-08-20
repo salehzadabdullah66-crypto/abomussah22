@@ -179,7 +179,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 32px;
+  padding: 14px 28px;
   font-family: var(--font-primary);
   font-size: 1.05rem;
   font-weight: 700;
@@ -190,6 +190,9 @@ img {
   white-space: nowrap;
   position: relative;
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
   z-index: 1;
 }
 
@@ -237,8 +240,17 @@ img {
 }
 
 .btn-lg {
-  padding: 18px 40px;
-  font-size: 1.2rem;
+  padding: 16px 36px;
+  font-size: 1.15rem;
+}
+
+.section-cta-wrap {
+  text-align: center;
+  margin-top: 40px;
+  padding: 0 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* ترويسات الصفحات الداخلية (Inner Page Banners) */
