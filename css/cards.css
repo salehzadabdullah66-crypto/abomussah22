@@ -388,18 +388,39 @@
 
 .gallery-card {
   position: relative;
-  height: 280px;
+  height: 380px;
   border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
   border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.gallery-card:hover {
+  border-color: var(--gold-primary);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
 }
 
 .gallery-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ضبط إحداثيات التركيز لكل صورة بدقة لمنع أي اقتصاص غير مرغوب */
+.gallery-img-delivery {
+  object-position: center 42% !important;
+}
+
+.gallery-img-showroom {
+  object-position: center 58% !important;
+}
+
+.gallery-img-vip {
+  object-position: center 36% !important;
 }
 
 .gallery-overlay {

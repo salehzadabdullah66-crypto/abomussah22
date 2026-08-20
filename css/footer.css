@@ -127,6 +127,17 @@
   line-height: 1.6;
 }
 
+.footer-contact-item a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.footer-contact-item a:hover {
+  color: var(--gold-primary);
+  text-decoration: underline;
+}
+
 .footer-contact-item i {
   color: var(--gold-primary);
   font-size: 1.15rem;
