@@ -15,7 +15,10 @@
 
       counters.forEach((counter) => {
         const target = parseInt(counter.getAttribute('data-target')) || 0;
-        const suffix = counter.getAttribute('data-suffix') || '';
+        const isEn = document.documentElement.getAttribute('lang') === 'en';
+        const suffix = (isEn && counter.hasAttribute('data-suffix-en'))
+          ? counter.getAttribute('data-suffix-en')
+          : (counter.getAttribute('data-suffix') || '');
         let count = 0;
         const duration = 2000; // 2 seconds
         const stepTime = 30;
@@ -27,7 +30,11 @@
             count = target;
             clearInterval(timer);
           }
-          counter.innerHTML = `${count}<span>${suffix}</span>`;
+          const curEn = document.documentElement.getAttribute('lang') === 'en';
+          const curSuffix = (curEn && counter.hasAttribute('data-suffix-en'))
+            ? counter.getAttribute('data-suffix-en')
+            : (counter.getAttribute('data-suffix') || '');
+          counter.innerHTML = `${count}<span>${curSuffix}</span>`;
         }, stepTime);
       });
 

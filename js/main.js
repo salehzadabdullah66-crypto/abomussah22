@@ -143,7 +143,10 @@
       if (box.dataset.papyrusInit) return;
       box.dataset.papyrusInit = "true";
 
-      const fullText = '"أبو موسى لديكم لا خوف عليكم"';
+      function getTaglineText() {
+        const isEn = document.documentElement.getAttribute('lang') === 'en';
+        return isEn ? '"Abu Mousa With You, Fear Nothing"' : '"أبو موسى لديكم لا خوف عليكم"';
+      }
 
       box.innerHTML = `
         <div class="papyrus-scroll-wrapper">
@@ -156,17 +159,20 @@
       let charIdx = 0;
 
       function runLoop() {
+        const fullText = getTaglineText();
         let typeTimer = setInterval(() => {
-          if (charIdx <= fullText.length) {
-            textTarget.textContent = fullText.slice(0, charIdx);
+          const currentFullText = getTaglineText();
+          if (charIdx <= currentFullText.length) {
+            textTarget.textContent = currentFullText.slice(0, charIdx);
             charIdx++;
           } else {
             clearInterval(typeTimer);
 
             setTimeout(() => {
               let eraseTimer = setInterval(() => {
+                const currentFullText = getTaglineText();
                 if (charIdx >= 0) {
-                  textTarget.textContent = fullText.slice(0, charIdx);
+                  textTarget.textContent = currentFullText.slice(0, charIdx);
                   charIdx--;
                 } else {
                   clearInterval(eraseTimer);
@@ -191,9 +197,10 @@
     if (!heroTitle || heroTitle.dataset.typedDone) return;
     heroTitle.dataset.typedDone = "true";
 
-    const textPart1 = "معرض ";
-    const goldText = "آية";
-    const textPart2 = " لتجارة السيارات";
+    const isEn = document.documentElement.getAttribute('lang') === 'en';
+    const textPart1 = isEn ? "Aya " : "معرض ";
+    const goldText = isEn ? "Car Trading" : "آية";
+    const textPart2 = isEn ? " Showroom" : " لتجارة السيارات";
 
     heroTitle.innerHTML = '<span id="type-text-body"></span><span class="type-cursor">|</span>';
     const textBody = document.getElementById('type-text-body');
@@ -212,7 +219,10 @@
       if (idx >= sequence.length) {
         clearInterval(interval);
         // الاستقرار النهائي على النمط الأصلي بالألوان الرسمية المعتمدة
-        heroTitle.innerHTML = 'معرض <span class="gold-gradient-title">آية</span> لتجارة السيارات';
+        const curEn = document.documentElement.getAttribute('lang') === 'en';
+        heroTitle.innerHTML = curEn 
+          ? 'Aya <span class="gold-gradient-title">Car Trading</span> Showroom' 
+          : 'معرض <span class="gold-gradient-title">آية</span> لتجارة السيارات';
         return;
       }
 
