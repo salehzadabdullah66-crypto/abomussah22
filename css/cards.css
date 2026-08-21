@@ -539,6 +539,24 @@
   }
 }
 
+html[dir="ltr"] .brands-marquee-header {
+  padding-right: 0;
+  padding-left: 5px;
+}
+
+html[dir="ltr"] .brands-marquee-track {
+  animation-name: marqueeScrollLTR;
+}
+
+@keyframes marqueeScrollLTR {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* بطاقات الماركات الصغيرة الأنيقة */
 .brand-marquee-card {
   display: flex;
