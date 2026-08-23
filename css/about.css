@@ -576,11 +576,12 @@
 .luxury-video-frame {
   position: relative;
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   background: var(--gold-gradient);
   border-radius: 28px;
   box-shadow: 0 25px 60px rgba(212, 175, 55, 0.35), 0 15px 35px rgba(0, 0, 0, 0.85);
   overflow: hidden;
+  box-sizing: border-box;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -589,18 +590,29 @@
   box-shadow: 0 30px 70px rgba(212, 175, 55, 0.5), 0 20px 40px rgba(0, 0, 0, 0.9);
 }
 
-.luxury-video-element {
+.luxury-video-wrapper {
+  position: relative;
   width: 100%;
-  height: auto;
-  max-height: 520px;
-  display: block;
-  margin: 0 auto;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio Desktop Default */
   border-radius: 20px;
+  overflow: hidden;
   background: #000000;
-  border: 3px solid var(--bg-body);
+}
+
+.luxury-video-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  -webkit-object-fit: cover !important;
+  border-radius: 18px;
+  background: transparent;
+  border: none;
   outline: none;
-  object-fit: cover;
-  -webkit-object-fit: cover;
+  display: block;
 }
 
 /* زر تشغيل وإيقاف الصوت الفاخر على الفيديو */
