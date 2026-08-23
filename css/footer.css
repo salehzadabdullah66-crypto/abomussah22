@@ -108,6 +108,16 @@
   transform: translateX(-5px);
 }
 
+.footer-link-item a.active {
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+
+.footer-link-item a.active i {
+  color: var(--gold-primary);
+  transform: translateX(-3px);
+}
+
 .footer-link-item a:hover i {
   transform: translateX(-3px);
 }
