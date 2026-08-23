@@ -231,13 +231,14 @@
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  will-change: transform;
   z-index: 1;
 }
 
-.owner-card-hero:hover .owner-full-img,
-.owner-card-hero:hover .owner-full-video {
-  transform: scale(1.06) translateZ(0);
+@media (hover: hover) and (pointer: fine) {
+  .owner-card-hero:hover .owner-full-img,
+  .owner-card-hero:hover .owner-full-video {
+    transform: scale(1.04) translateZ(0);
+  }
 }
 
 /* الطبقة السينمائية المحيطية الناعمة */

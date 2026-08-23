@@ -377,23 +377,25 @@
   }
 
   // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
+  // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
   function initHeroOwnerVideo() {
     const heroVideo = document.querySelector('.owner-full-video');
     const heroCard = document.querySelector('.owner-card-hero');
     if (!heroVideo) return;
 
-    // إعدادات التوافق التام للهواتف المحمولة
+    // إعدادات التوافق الأقصى والأداء السلس للهواتف المحمولة متصفح كروم
     heroVideo.muted = true;
     heroVideo.defaultMuted = true;
     heroVideo.playsInline = true;
     heroVideo.playbackRate = 1.0;
+
+    let isUserInteracted = false;
 
     const playVideoSafely = () => {
       if (heroVideo.paused) {
         const playPromise = heroVideo.play();
         if (playPromise !== undefined) {
           playPromise.catch(() => {
-            // في حال منع المتصفح، تأكيد الكتم ثم إعادة المحاولة
             heroVideo.muted = true;
             heroVideo.play().catch(() => {});
           });
@@ -404,17 +406,43 @@
     // تشغيل فوري
     playVideoSafely();
 
-    // تشغيل سلس بمجرد تفاعل المستخدم (لمس الشاشة / التمرير) لحل مشكلة توقف الهواتف
-    const unlockMobileVideo = () => {
+    // تفعيل التشغيل التلقائي عند أول تفاعل باللمس (بدون التكرار مع التمرير لمنع التقطيع)
+    const handleFirstInteraction = () => {
+      if (isUserInteracted) return;
+      isUserInteracted = true;
       playVideoSafely();
     };
 
-    // تشغيل مستمر ودائم عند أي تفاعل أو تمرير بدون توقف أو ظهور خلفية في كروم
-    ['touchstart', 'touchend', 'touchmove', 'click', 'scroll', 'visibilitychange'].forEach((evt) => {
-      window.addEventListener(evt, playVideoSafely, { passive: true });
+    ['pointerdown', 'touchstart', 'click'].forEach((evt) => {
+      window.addEventListener(evt, handleFirstInteraction, { passive: true, once: true });
     });
 
-    // تشغيل عند النقر المباشر على كارت الفيديو
+    // إيقاف التشغيل عند الخروج من الشاشة وتفعيله فقط عند الظهور لتوفير رامات ومعالج الهاتف ومنع التقطيع
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playVideoSafely();
+          } else {
+            if (!heroVideo.paused) {
+              heroVideo.pause();
+            }
+          }
+        });
+      }, { threshold: 0.15 });
+
+      heroObserver.observe(heroCard || heroVideo);
+    }
+
+    // إدارة الرؤية وتبديل التبويبات
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (!heroVideo.paused) heroVideo.pause();
+      } else {
+        playVideoSafely();
+      }
+    });
+
     if (heroCard) {
       heroCard.addEventListener('click', playVideoSafely);
     }
@@ -425,31 +453,33 @@
     const videos = document.querySelectorAll('#scroll-autoplay-video, [data-autoplay-on-scroll]');
     if (!videos.length || !('IntersectionObserver' in window)) return;
 
+    let soundUnlocked = false;
     const unlockSound = () => {
+      if (soundUnlocked) return;
+      soundUnlocked = true;
       videos.forEach((video) => {
         video.muted = false;
       });
     };
 
-    window.addEventListener('click', unlockSound);
-    window.addEventListener('touchstart', unlockSound);
-    window.addEventListener('scroll', unlockSound);
+    ['pointerdown', 'touchstart', 'click'].forEach((evt) => {
+      window.addEventListener(evt, unlockSound, { passive: true, once: true });
+    });
 
     const videoObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const video = entry.target;
         if (entry.isIntersecting) {
-          video.muted = false;
+          if (soundUnlocked) video.muted = false;
           const promise = video.play();
           if (promise !== undefined) {
             promise.catch(() => {
-              // إذا حظر المتصفح الصوت التلقائي كسياسة أمان، يتم تشغيله مؤقتاً ثم تفعيل الصوت فور أي حركة أو لمس
               video.muted = true;
               video.play().catch(() => {});
             });
           }
         } else {
-          video.pause();
+          if (!video.paused) video.pause();
         }
       });
     }, { threshold: 0.35 });
