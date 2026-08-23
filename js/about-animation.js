@@ -204,40 +204,38 @@
       );
     }
 
-    function playVideoWithAudio() {
-      if (!video.paused && !video.muted) return; // يعمل بالفعل بسلاسة مع الصوت
-
+    function startVideoWithSound() {
       video.muted = false;
-      if (video.paused) {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.then(() => {
-            updateSoundUi(false);
-            updatePlayUi(false);
-          }).catch(() => {
-            video.muted = true;
-            video.play().catch(() => {});
-            updateSoundUi(true);
-            updatePlayUi(false);
-          });
-        }
-      } else {
-        updateSoundUi(false);
+      video.volume = 1.0;
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.then(() => {
+          updateSoundUi(false);
+          updatePlayUi(false);
+        }).catch(() => {
+          video.muted = true;
+          video.play().catch(() => {});
+          updateSoundUi(true);
+          updatePlayUi(false);
+        });
       }
     }
 
-    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة
-    let soundUnlocked = false;
-    const unlockSoundOnInteraction = () => {
-      if (soundUnlocked) return;
+    const activateAudioOnUserTouch = () => {
+      video.muted = false;
+      video.volume = 1.0;
+      updateSoundUi(false);
       if (isElementInViewport(videoSection)) {
-        soundUnlocked = true;
-        playVideoWithAudio();
+        if (video.paused) {
+          video.play().catch(() => {});
+          updatePlayUi(false);
+        }
       }
     };
 
-    ['touchstart', 'scroll', 'wheel', 'click', 'pointerdown'].forEach((evt) => {
-      window.addEventListener(evt, unlockSoundOnInteraction, { passive: true, once: true });
+    ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'scroll', 'wheel', 'click'].forEach((evt) => {
+      window.addEventListener(evt, activateAudioOnUserTouch, { passive: true });
+      document.addEventListener(evt, activateAudioOnUserTouch, { passive: true });
     });
 
     // تفعيل IntersectionObserver للتشغيل مع الصوت فور وصول المستخدم للقسم
@@ -245,7 +243,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            playVideoWithAudio();
+            startVideoWithSound();
           } else {
             if (!video.paused) {
               video.pause();
@@ -253,7 +251,7 @@
             }
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.10 });
 
       observer.observe(videoSection);
     }

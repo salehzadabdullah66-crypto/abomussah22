@@ -154,7 +154,7 @@ function initContactParticleCanvas() {
 }
 
 /**
- * 4. تشغيل الفيديو مع الصوت وشريط التحكم الفاخر بدون تقطيع
+ * 4. تشغيل الفيديو مع الصوت وشريط التحكم الفاخر بدون تقطيع لمتصفح كروم والهواتف
  */
 function initContactShowroomVideoControls() {
   const video = document.getElementById('scroll-autoplay-video');
@@ -191,20 +191,22 @@ function initContactShowroomVideoControls() {
   function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
     return (
-      rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
-      rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) * 0.15
+      rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.90 &&
+      rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) * 0.10
     );
   }
 
-  function playVideoWithAudio() {
+  // فك كتم الصوت وتشغيل الفيديو
+  function startVideoWithSound() {
     video.muted = false;
+    video.volume = 1.0;
     const promise = video.play();
     if (promise !== undefined) {
       promise.then(() => {
         updateSoundUi(false);
         updatePlayUi(false);
       }).catch(() => {
-        // في حال حظر المتصفح الصوت قبل أول تفاعل، يبدأ صامت ويكرر فك الكتم فوراً عند التمرير
+        // في حال واجه تقييد متصفح قبل تفاعل اللمس، يبدأ صامت ويكرر فك الكتم فوراً عند أول لمسة
         video.muted = true;
         video.play().catch(() => {});
         updateSoundUi(true);
@@ -213,25 +215,31 @@ function initContactShowroomVideoControls() {
     }
   }
 
-  // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة (كبيرة أو صغيرة أو متوسطة)
-  const unlockSoundOnInteraction = () => {
+  // فك قيد الصوت المباشر في متصفح كروم عند أي لمسة أو سكرول
+  const activateAudioOnUserTouch = () => {
+    video.muted = false;
+    video.volume = 1.0;
+    updateSoundUi(false);
     if (isElementInViewport(video)) {
-      if (video.muted) {
-        playVideoWithAudio();
+      if (video.paused) {
+        video.play().catch(() => {});
+        updatePlayUi(false);
       }
     }
   };
 
-  ['scroll', 'wheel', 'touchstart', 'touchend', 'pointerdown', 'mousemove', 'click', 'keydown'].forEach((evt) => {
-    window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
+  // الاستماع المباشر لجميع أحداث اللمس والحركة لفك قيد الصوت في كروم فوراً
+  ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'scroll', 'wheel', 'click'].forEach((evt) => {
+    window.addEventListener(evt, activateAudioOnUserTouch, { passive: true });
+    document.addEventListener(evt, activateAudioOnUserTouch, { passive: true });
   });
 
-  // تفعيل IntersectionObserver للتشغيل مع الصوت عند الوصول لقسم الفيديو لجميع الشاشات
+  // تفعيل IntersectionObserver للتشغيل التلقائي عند الوصول للقسم
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          playVideoWithAudio();
+          startVideoWithSound();
         } else {
           if (!video.paused) {
             video.pause();
@@ -239,13 +247,13 @@ function initContactShowroomVideoControls() {
           }
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.10 });
 
     observer.observe(video);
   } else {
     window.addEventListener('scroll', () => {
       if (isElementInViewport(video)) {
-        playVideoWithAudio();
+        startVideoWithSound();
       } else {
         if (!video.paused) {
           video.pause();
@@ -255,11 +263,11 @@ function initContactShowroomVideoControls() {
     }, { passive: true });
   }
 
-  // تحديث شريط التقدم والوقت بانسيابية بدون إرهاق المعالج
+  // تحديث شريط التقدم والوقت
   let lastUpdate = 0;
   video.addEventListener('timeupdate', () => {
     const now = Date.now();
-    if (now - lastUpdate < 180) return; // تحديث هادئ يمنع التقطيع
+    if (now - lastUpdate < 180) return;
     lastUpdate = now;
 
     if (video.duration) {
@@ -289,8 +297,11 @@ function initContactShowroomVideoControls() {
       e.stopPropagation();
       e.preventDefault();
       if (video.paused) {
+        video.muted = false;
+        video.volume = 1.0;
         video.play().catch(() => {});
         updatePlayUi(false);
+        updateSoundUi(false);
       } else {
         video.pause();
         updatePlayUi(true);
@@ -316,7 +327,7 @@ function initContactShowroomVideoControls() {
     });
   }
 
-  // تبديل كتم / تشغيل الصوت
+  // زر كتم / تشغيل الصوت
   function toggleMute(e) {
     if (e) {
       e.stopPropagation();
@@ -324,6 +335,7 @@ function initContactShowroomVideoControls() {
     }
     if (video.muted) {
       video.muted = false;
+      video.volume = 1.0;
       if (video.paused) video.play().catch(() => {});
       updateSoundUi(false);
     } else {
@@ -349,11 +361,14 @@ function initContactShowroomVideoControls() {
     });
   }
 
-  // النقر على الفيديو لتشغيل / إيقاف مؤقت
+  // النقر على الفيديو لتشغيل / إيقاف مؤقت مع الصوت
   video.addEventListener('click', () => {
     if (video.paused) {
+      video.muted = false;
+      video.volume = 1.0;
       video.play().catch(() => {});
       updatePlayUi(false);
+      updateSoundUi(false);
     } else {
       video.pause();
       updatePlayUi(true);
