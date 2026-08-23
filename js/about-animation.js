@@ -160,42 +160,29 @@
 
     if (!videoSection || !video) return;
 
-    function playVideoWithAudio() {
-      video.muted = false;
+    function playVideoMutedAutoplay() {
+      video.muted = true;
       const promise = video.play();
       if (promise !== undefined) {
-        promise.then(() => {
-          if (soundBtn) {
-            soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
-            soundBtn.classList.add('unmuted');
-          }
-        }).catch(() => {
-          // في حال كان هاتف المتصفح يمنع تشغيل الصوت بغير كبسة أولية، يبدأ كتم ثم يفتح فوراً
-          video.muted = true;
-          video.play().catch(() => {});
-          if (soundBtn) {
-            soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
-            soundBtn.classList.remove('unmuted');
-          }
-        });
+        promise.catch(() => {});
       }
     }
 
-    // تفعيل التشغيل مع الصوت عند الفتح المباشر أو التمرير للقسم
+    // تفعيل التشغيل المباشر عند التمرير للقسم
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            playVideoWithAudio();
+            playVideoMutedAutoplay();
           } else {
             video.pause();
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
 
       observer.observe(videoSection);
     } else {
-      playVideoWithAudio();
+      playVideoMutedAutoplay();
     }
 
     // زر التحكم بالصوت
@@ -208,10 +195,19 @@
           soundBtn.classList.add('unmuted');
         } else {
           video.muted = true;
-          soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>كتم الصوت</span>';
+          soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
           soundBtn.classList.remove('unmuted');
         }
       });
     }
+
+    // النقر على الفيديو لتشغيل / إيقاف مؤقت
+    video.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
   }
 })();

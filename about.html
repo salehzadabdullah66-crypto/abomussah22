@@ -432,15 +432,16 @@
         <div class="luxury-video-card scroll-reveal">
           <div class="luxury-video-frame">
             <!-- زر التحكم بالصوت -->
-            <button id="video-sound-toggle" class="video-sound-btn unmuted" title="كتم/تشغيل الصوت">
-              <i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>
+            <button id="video-sound-toggle" class="video-sound-btn" title="تشغيل/كتم الصوت">
+              <i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>
             </button>
 
-            <video id="about-showroom-video" class="luxury-video-element" controls preload="metadata"
-              poster="img/aboomussa44.jpg" autoplay loop playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" disablePictureInPicture disableRemotePlayback>
-              <source src="videos/video111.mp4" type="video/mp4">
-              متصفحك لا يدعم تشغيل الفيديو.
-            </video>
+            <div class="luxury-inner-video-border">
+              <video id="about-showroom-video" class="luxury-video-element" autoplay muted loop playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" disablePictureInPicture disableRemotePlayback preload="metadata" poster="img/aboomussa44.jpg">
+                <source src="videos/video111.mp4" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+              </video>
+            </div>
           </div>
           <div class="video-features-bar">
             <div class="video-feature-item"><i class="fas fa-film"></i> <span>جولة 4K داخل صالة المعرض</span></div>
