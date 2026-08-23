@@ -197,7 +197,7 @@ function initContactShowroomVideoControls() {
   }
 
   function playVideoWithAudio() {
-    if (!video.paused && !video.muted) return; // يعمل بالفعل بسلاسة مع الصوت
+    if (!video.paused && !video.muted) return;
 
     video.muted = false;
     if (video.paused) {
@@ -236,7 +236,10 @@ function initContactShowroomVideoControls() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          playVideoWithAudio();
+          if (video.paused) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
         } else {
           if (!video.paused) {
             video.pause();
