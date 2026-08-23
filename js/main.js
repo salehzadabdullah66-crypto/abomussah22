@@ -379,27 +379,63 @@
   // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
   function initHeroOwnerVideo() {
     const heroVideo = document.querySelector('.owner-full-video');
+    const heroCard = document.querySelector('.owner-card-hero');
     if (!heroVideo) return;
 
-    // تشغيل سلس وفوري
+    // إعدادات التوافق التام للهواتف المحمولة
     heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
+    heroVideo.playsInline = true;
     heroVideo.playbackRate = 1.0;
-    const playPromise = heroVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {});
+
+    const playVideoSafely = () => {
+      if (heroVideo.paused) {
+        const playPromise = heroVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // في حال منع المتصفح، تأكيد الكتم ثم إعادة المحاولة
+            heroVideo.muted = true;
+            heroVideo.play().catch(() => {});
+          });
+        }
+      }
+    };
+
+    // تشغيل فوري
+    playVideoSafely();
+
+    // تشغيل سلس بمجرد تفاعل المستخدم (لمس الشاشة / التمرير) لحل مشكلة توقف الهواتف
+    const unlockMobileVideo = () => {
+      playVideoSafely();
+    };
+
+    ['touchstart', 'touchend', 'click', 'scroll', 'visibilitychange'].forEach((evt) => {
+      window.addEventListener(evt, unlockMobileVideo, { passive: true });
+    });
+
+    // تشغيل عند النقر المباشر على كارت الفيديو
+    if (heroCard) {
+      heroCard.addEventListener('click', () => {
+        if (heroVideo.paused) {
+          heroVideo.play().catch(() => {});
+        }
+      });
     }
 
-    // إيقاف الفيديو عند الابتعاد عن الهيرو لتوفير موارد كرت الشاشة والبطارية واستئنافه فور الرجوع
+    // مراقبة الفيديو عند الخروج التام من الشاشة مع حماية من التقطيع أثناء التمرير في الموبايل
     if ('IntersectionObserver' in window) {
       const heroObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            heroVideo.play().catch(() => {});
+            playVideoSafely();
           } else {
-            heroVideo.pause();
+            // إيقاف فقط إذا اختفى الكارت كلياً عن الشاشة
+            if (entry.intersectionRatio === 0) {
+              heroVideo.pause();
+            }
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: [0, 0.1] });
 
       heroObserver.observe(heroVideo);
     }
