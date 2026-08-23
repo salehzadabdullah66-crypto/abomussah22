@@ -1565,8 +1565,8 @@
 
     translateNode(document.body);
 
-    // 3. تحديث اتجاه الأيقونات السهمية
-    document.querySelectorAll('.breadcrumb i.fa-chevron-left, .breadcrumb i.fa-chevron-right').forEach((icon) => {
+    // 3. تحديث اتجاه الأيقونات السهمية للروابط والـ Breadcrumb
+    document.querySelectorAll('.footer-link-item a i.fa-chevron-left, .footer-link-item a i.fa-chevron-right, .breadcrumb i.fa-chevron-left, .breadcrumb i.fa-chevron-right').forEach((icon) => {
       if (isEn) {
         icon.classList.remove('fa-chevron-left');
         icon.classList.add('fa-chevron-right');
