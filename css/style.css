@@ -54,6 +54,20 @@ main {
   flex: 1;
 }
 
+/* إصلاح محاذاة الفيديو وتصيير الهاردوير في متصفحات الأندرويد و Mi Browser لمنع انزياح الفيديو لليمين */
+video,
+.royal-video-frame,
+.royal-inner-video-border,
+.luxury-video-frame,
+.luxury-inner-video-border,
+.owner-card-hero,
+.owner-card-bg {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: left !important;
+  max-width: 100% !important;
+}
+
 /* خلفية الجسيمات الذهبية العائمة الشاملة لجميع الصفحات */
 #global-gold-particles-canvas {
   position: fixed;

@@ -1208,6 +1208,8 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
 }
 
 .royal-video-badge {
@@ -1240,6 +1242,8 @@
   border: 1.5px solid rgba(212, 175, 55, 0.7);
   border-radius: 14px;
   overflow: hidden;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
 }
 
 .royal-native-video {
@@ -1248,6 +1252,19 @@
   object-fit: contain;
   display: block;
   background: #000000 url('../img/logo.png') center center / 150px no-repeat;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+}
+
+#scroll-autoplay-video {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 560px !important;
+  object-fit: contain !important;
+  -webkit-object-fit: contain !important;
+  background: #000000 !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 /* ==========================================================================
