@@ -38,6 +38,8 @@
     "faq_banner_title": { ar: 'الأسئلة <span>الشائعة والمكررة</span>', en: 'Frequently <span>Asked Questions</span>', html: true },
     "contact_banner_title": { ar: 'تواصل مع <span>أبو موسى والمعرض</span>', en: 'Contact <span>Abu Mousa & Showroom</span>', html: true },
     "gallery_banner_title": { ar: 'ألبوم <span>الصور والمعرض</span>', en: 'Photo & Video <span>Gallery</span>', html: true },
+    "audio_testimonial_subtitle": { ar: 'التسجيل الصوتي الحصري لتقييم عميلنا المميز', en: "Exclusive Audio Recording of Our Valued Client's Review" },
+    "dr_abdullah_title": { ar: 'الإعلامي الدكتور عبدالكريم العبدالله', en: 'Media Personality Dr. Abdulkarim Al-Abdullah' },
 
     // عناصر وتفاصيل الفوتر الموحد (Unified Footer i18n Map)
     "footer_logo_title": { ar: 'معرض <span>آية</span>', en: 'Aya <span>Showroom</span>', html: true },
@@ -1233,6 +1235,8 @@
     "لا": "No",
 
     // ترجمة كافة عناصر وقوائم الجوال والفوتر والشريط العلوي (Mobile & Footer Line-by-Line Translations)
+    "التسجيل الصوتي الحصري لتقييم عميلنا المميز": "Exclusive Audio Recording of Our Valued Client's Review",
+    "الإعلامي الدكتور عبدالكريم العبدالله": "Media Personality Dr. Abdulkarim Al-Abdullah",
     "خدماتنا المميزة": "Our Featured Services",
     "الخدمات المميزة": "Featured Services",
     "روابط التصفح الرئيسية": "Primary Navigation Links",
