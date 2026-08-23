@@ -594,10 +594,13 @@
   height: auto;
   max-height: 520px;
   display: block;
+  margin: 0 auto;
   border-radius: 20px;
   background: #000000;
   border: 3px solid var(--bg-body);
   outline: none;
+  object-fit: cover;
+  -webkit-object-fit: cover;
 }
 
 /* زر تشغيل وإيقاف الصوت الفاخر على الفيديو */

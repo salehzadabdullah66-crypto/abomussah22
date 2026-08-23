@@ -161,7 +161,7 @@ html, body {
     background: transparent !important;
   }
 
-  /* تحسين سلاسة الفيديوهات لمنع التقطيع في الهواتف */
+  /* تحسين وضوح وملء الفيديوهات لمنع التقطيع أو الهوامش السوداء في كافة المتصفحات (Mi Browser, Chrome, Safari, etc.) */
   video,
   .owner-full-video,
   .royal-native-video,
@@ -170,6 +170,42 @@ html, body {
     transition: none !important;
     transform: translateZ(0) !important;
     -webkit-transform: translateZ(0) !important;
+    object-fit: cover !important;
+    -webkit-object-fit: cover !important;
+    background: transparent !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+
+  .luxury-video-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  .luxury-video-frame {
+    padding: 6px !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: var(--gold-gradient) !important;
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.35) !important;
+  }
+
+  .luxury-video-element {
+    min-height: 380px !important;
+    max-height: 68vh !important;
+    border-radius: 14px !important;
+    border: none !important;
+  }
+
+  .video-sound-btn {
+    top: 14px !important;
+    right: 14px !important;
+    padding: 7px 14px !important;
+    font-size: 0.78rem !important;
+    z-index: 25 !important;
   }
 
   .video-corner-logo {
