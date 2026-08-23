@@ -305,17 +305,62 @@
         <div class="royal-video-card scroll-reveal" style="max-width: 960px; margin: 0 auto;">
           <div class="royal-video-frame">
             <span class="royal-video-badge"><i class="fas fa-map-marker-alt"></i> دليل الوصول والتغطية - معرض آية</span>
+            <!-- زر التحكم بالصوت الفاخر -->
+            <button id="contact-video-sound-toggle" class="video-sound-btn unmuted" title="تشغيل/كتم الصوت" style="position: absolute; top: 14px; left: 14px; z-index: 10;">
+              <i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>
+            </button>
             <div class="royal-inner-video-border">
               <div class="royal-corner royal-corner-tl"></div>
               <div class="royal-corner royal-corner-tr"></div>
               <div class="royal-corner royal-corner-bl"></div>
               <div class="royal-corner royal-corner-br"></div>
               
-              <video id="scroll-autoplay-video" controls autoplay muted playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" disablePictureInPicture disableRemotePlayback loop preload="metadata" data-autoplay-on-scroll class="royal-native-video" poster="img/logo.png" style="max-height: 560px; height: auto; width: 100%; object-fit: contain !important; -webkit-object-fit: contain !important; background: #000000; direction: ltr !important; margin: 0 auto; display: block;">
+              <video id="scroll-autoplay-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5" x5-video-player-fullscreen="false" disablePictureInPicture disableRemotePlayback preload="metadata" data-autoplay-on-scroll class="royal-native-video" poster="img/logo.png" style="max-height: 560px; height: auto; width: 100%; object-fit: contain !important; -webkit-object-fit: contain !important; background: #000000; direction: ltr !important; margin: 0 auto; display: block;">
                 <source src="videos/video2123.mp4" type="video/mp4">
                 <source src="videos/video2123.mp4.mp4" type="video/mp4">
                 متصفحك لا يدعم تشغيل الفيديو.
               </video>
+
+              <!-- شريط التحكم الفاخر المخصص لتقديم الفيديو وكتم الصوت وملء الشاشة -->
+              <div class="luxury-video-controls" id="contact-video-controls">
+                <!-- شريط التقدم الزمني للتقديم والتأخير -->
+                <div class="video-progress-wrap" id="contact-video-progress-wrap" title="تقديم وتأخير الفيديو">
+                  <div class="video-progress-bg">
+                    <div class="video-progress-fill" id="contact-video-progress-fill"></div>
+                  </div>
+                </div>
+
+                <!-- أزرار التحكم -->
+                <div class="video-controls-bottom">
+                  <div class="controls-left-group">
+                    <!-- تشغيل / إيقاف -->
+                    <button type="button" class="custom-vid-btn" id="contact-vid-ctrl-play" title="تشغيل / إيقاف مؤقت">
+                      <i class="fas fa-pause"></i>
+                    </button>
+                    <!-- ترجيع 10 ثواني -->
+                    <button type="button" class="custom-vid-btn" id="contact-vid-ctrl-rewind" title="ترجيع 10 ثواني">
+                      <i class="fas fa-undo-alt"></i> <span>10s-</span>
+                    </button>
+                    <!-- تقديم 10 ثواني -->
+                    <button type="button" class="custom-vid-btn" id="contact-vid-ctrl-forward" title="تقديم 10 ثواني">
+                      <i class="fas fa-redo-alt"></i> <span>+10s</span>
+                    </button>
+                    <!-- كتم / تشغيل الصوت -->
+                    <button type="button" class="custom-vid-btn vid-vol-btn" id="contact-vid-ctrl-mute" title="كتم / تشغيل الصوت">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                    <!-- العداد الزمني -->
+                    <span class="vid-time-text" id="contact-vid-time-text">0:00 / 0:00</span>
+                  </div>
+
+                  <div class="controls-right-group">
+                    <!-- ملء الشاشة -->
+                    <button type="button" class="custom-vid-btn" id="contact-vid-ctrl-fullscreen" title="ملء الشاشة">
+                      <i class="fas fa-expand"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="testimonial-info" style="text-align: center; padding-top: 20px;">

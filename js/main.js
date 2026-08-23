@@ -448,51 +448,80 @@
     }
   }
 
-  // 15. التشغيل التلقائي للفيديو عند التمرير والنزول مع إيقاظ الصوت تلقائياً (Scroll Autoplay With Sound)
+  // 15. التشغيل التلقائي للفيديو عند التمرير والنزول مع إيقاظ الصوت تلقائياً للشاشات الكبيرة والصغيرة
   function initScrollAutoplayVideos() {
+    // صفحة تواصل معنا تُدار حصرياً ومباشرة عبر contact-animation.js
+    if (document.getElementById('contact-video-controls') || document.querySelector('.contact-hero-section')) return;
+
     const videos = document.querySelectorAll('#scroll-autoplay-video, [data-autoplay-on-scroll]');
-    if (!videos.length || !('IntersectionObserver' in window)) return;
+    if (!videos.length) return;
 
-    let soundUnlocked = false;
-    const unlockSound = () => {
-      if (soundUnlocked) return;
-      soundUnlocked = true;
-      videos.forEach((video) => {
-        const rect = video.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-        if (!isVisible) return;
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
+        rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) * 0.15
+      );
+    }
 
-        video.muted = false;
-        video.play().catch(() => {
+    function playVideoWithAudio(video) {
+      video.muted = false;
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
           video.muted = true;
           video.play().catch(() => {});
         });
+      }
+    }
+
+    const unlockSoundOnInteraction = () => {
+      videos.forEach((video) => {
+        if (isElementInViewport(video)) {
+          playVideoWithAudio(video);
+        }
       });
     };
 
-    ['pointerdown', 'touchstart', 'click'].forEach((evt) => {
-      window.addEventListener(evt, unlockSound, { passive: true, once: true });
+    ['touchstart', 'touchend', 'scroll', 'wheel', 'pointerdown', 'click', 'keydown'].forEach((evt) => {
+      window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
     });
 
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target;
-        if (entry.isIntersecting) {
-          if (soundUnlocked) video.muted = false;
-          const promise = video.play();
-          if (promise !== undefined) {
-            promise.catch(() => {
-              video.muted = true;
-              video.play().catch(() => {});
-            });
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            playVideoWithAudio(video);
+          } else {
+            if (!video.paused) video.pause();
           }
+        });
+      }, { threshold: 0.15 });
+
+      videos.forEach((vid) => videoObserver.observe(vid));
+    } else {
+      window.addEventListener('scroll', () => {
+        videos.forEach((video) => {
+          if (isElementInViewport(video)) {
+            playVideoWithAudio(video);
+          } else {
+            if (!video.paused) video.pause();
+          }
+        });
+      }, { passive: true });
+    }
+
+    // النقر على الفيديو لتشغيل / إيقاف مؤقت
+    videos.forEach((video) => {
+      video.addEventListener('click', () => {
+        if (video.paused) {
+          video.play().catch(() => {});
         } else {
-          if (!video.paused) video.pause();
+          video.pause();
         }
       });
-    }, { threshold: 0.35 });
-
-    videos.forEach((vid) => videoObserver.observe(vid));
+    });
   }
 
   // 16. مؤشر الموس المخصص - الحلقة الذهبية المضيئة (Custom Golden Cursor Ring)

@@ -152,13 +152,49 @@
     });
   }
 
-  /* 4. التشغيل التلقائي المباشر للفيديو مع الصوت عند التمرير والوصول لقسم الفيديو في وضع الهاتف والشاشات المختلفة */
+  /* 4. التشغيل التلقائي المباشر للفيديو مع الصوت عند التمرير والوصول لقسم الفيديو مع شريط التحكم الفاخر (تقديم/تأخير/كتم) */
   function initShowroomVideoAutoplay() {
     const videoSection = document.querySelector('.about-video-section');
     const video = document.getElementById('about-showroom-video');
     const soundBtn = document.getElementById('video-sound-toggle');
+    const playBtn = document.getElementById('vid-ctrl-play');
+    const rewindBtn = document.getElementById('vid-ctrl-rewind');
+    const forwardBtn = document.getElementById('vid-ctrl-forward');
+    const muteBtn = document.getElementById('vid-ctrl-mute');
+    const fullscreenBtn = document.getElementById('vid-ctrl-fullscreen');
+    const progressWrap = document.getElementById('video-progress-wrap');
+    const progressFill = document.getElementById('video-progress-fill');
+    const timeText = document.getElementById('vid-time-text');
 
     if (!videoSection || !video) return;
+
+    function formatTime(seconds) {
+      if (isNaN(seconds) || seconds < 0) return '0:00';
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function updateSoundUi(isMuted) {
+      if (soundBtn) {
+        if (isMuted) {
+          soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
+          soundBtn.classList.remove('unmuted');
+        } else {
+          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
+          soundBtn.classList.add('unmuted');
+        }
+      }
+      if (muteBtn) {
+        muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+      }
+    }
+
+    function updatePlayUi(isPaused) {
+      if (playBtn) {
+        playBtn.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+      }
+    }
 
     function isElementInViewport(el) {
       const rect = el.getBoundingClientRect();
@@ -168,38 +204,34 @@
       );
     }
 
-    function playVideo(withSound) {
-      video.muted = !withSound;
+    function playVideoWithAudio() {
+      video.muted = false;
       const promise = video.play();
       if (promise !== undefined) {
         promise.then(() => {
-          if (soundBtn && withSound) {
-            soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
-            soundBtn.classList.add('unmuted');
-          }
+          updateSoundUi(false);
+          updatePlayUi(false);
         }).catch(() => {
-          // تشغيل صامت كاحتياط عند رفض المتصفح التشغيل مع الصوت.
+          // تشغيل صامت كإجراء احتياطي إذا فرض المتصفح حظراً قبل أول تفاعل
           video.muted = true;
           video.play().catch(() => {});
-          if (soundBtn) {
-            soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
-            soundBtn.classList.remove('unmuted');
-          }
+          updateSoundUi(true);
+          updatePlayUi(false);
         });
       }
     }
 
-    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم لشاشة الهاتف
-    const unlockAudioOnUserTouch = () => {
+    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة (كبيرة أو صغيرة بجميع المتصفحات)
+    const unlockSoundOnInteraction = () => {
       if (isElementInViewport(videoSection)) {
         if (video.muted) {
-          playVideo(true);
+          playVideoWithAudio();
         }
       }
     };
 
-    ['touchstart', 'touchend', 'scroll', 'pointerdown', 'click'].forEach((evt) => {
-      window.addEventListener(evt, unlockAudioOnUserTouch, { passive: true });
+    ['touchstart', 'touchend', 'scroll', 'wheel', 'pointerdown', 'click', 'keydown'].forEach((evt) => {
+      window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
     });
 
     // تفعيل IntersectionObserver للتشغيل مع الصوت فور وصول المستخدم للقسم
@@ -207,9 +239,10 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            playVideo(false);
+            playVideoWithAudio();
           } else {
             video.pause();
+            updatePlayUi(true);
           }
         });
       }, { threshold: 0.15 });
@@ -218,26 +251,92 @@
     } else {
       window.addEventListener('scroll', () => {
         if (isElementInViewport(videoSection)) {
-          playVideo(false);
+          playVideoWithAudio();
         } else {
           video.pause();
+          updatePlayUi(true);
         }
       }, { passive: true });
     }
 
-    // زر التحكم بالصوت
-    if (soundBtn) {
-      soundBtn.addEventListener('click', (e) => {
+    // تحديث شريط التقدم والوقت
+    video.addEventListener('timeupdate', () => {
+      if (video.duration) {
+        const percent = (video.currentTime / video.duration) * 100;
+        if (progressFill) progressFill.style.width = `${percent}%`;
+        if (timeText) timeText.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+      }
+    });
+
+    // تقديم وتأخير الفيديو عند النقر على شريط التقدم
+    if (progressWrap) {
+      progressWrap.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (video.muted) {
-          video.muted = false;
+        const rect = progressWrap.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const width = rect.width;
+        if (width > 0 && video.duration) {
+          video.currentTime = (clickX / width) * video.duration;
+        }
+      });
+    }
+
+    // زر تشغيل / إيقاف
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.paused) {
           video.play().catch(() => {});
-          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
-          soundBtn.classList.add('unmuted');
+          updatePlayUi(false);
         } else {
-          video.muted = true;
-          soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
-          soundBtn.classList.remove('unmuted');
+          video.pause();
+          updatePlayUi(true);
+        }
+      });
+    }
+
+    // زر ترجيع 10 ثواني
+    if (rewindBtn) {
+      rewindBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        video.currentTime = Math.max(0, video.currentTime - 10);
+      });
+    }
+
+    // زر تقديم 10 ثواني
+    if (forwardBtn) {
+      forwardBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+      });
+    }
+
+    // تبديل كتم / تشغيل الصوت
+    function toggleMute(e) {
+      if (e) e.stopPropagation();
+      if (video.muted) {
+        video.muted = false;
+        video.play().catch(() => {});
+        updateSoundUi(false);
+      } else {
+        video.muted = true;
+        updateSoundUi(true);
+      }
+    }
+
+    if (soundBtn) soundBtn.addEventListener('click', toggleMute);
+    if (muteBtn) muteBtn.addEventListener('click', toggleMute);
+
+    // زر ملء الشاشة
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.requestFullscreen) {
+          video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+          video.webkitRequestFullscreen();
+        } else if (video.webkitEnterFullscreen) {
+          video.webkitEnterFullscreen();
         }
       });
     }
@@ -245,14 +344,11 @@
     // النقر على الفيديو لتشغيل / إيقاف مؤقت مع الصوت
     video.addEventListener('click', () => {
       if (video.paused) {
-        video.muted = false;
         video.play().catch(() => {});
-        if (soundBtn) {
-          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
-          soundBtn.classList.add('unmuted');
-        }
+        updatePlayUi(false);
       } else {
         video.pause();
+        updatePlayUi(true);
       }
     });
   }
