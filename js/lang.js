@@ -19,6 +19,12 @@
     "nav_testimonials": { ar: "آراء العملاء", en: "Testimonials" },
     "nav_faq": { ar: "الأسئلة الشائعة", en: "FAQ" },
     "nav_contact": { ar: "تواصل معنا", en: "Contact Us" },
+    "nav_cars_showroom": { ar: "معرض السيارات", en: "Car Showroom" },
+    "nav_exclusive_offers": { ar: "العروض الحصرية", en: "Exclusive Offers" },
+    "nav_our_services": { ar: "خدماتنا المميزة", en: "Our Featured Services" },
+    "nav_financing_installments": { ar: "التمويل والتقسيط", en: "Financing & Installments" },
+    "nav_photo_gallery": { ar: "ألبوم الصور", en: "Photo Gallery" },
+    "nav_client_reviews": { ar: "آراء وتجارب العملاء", en: "Client Reviews" },
     "btn_book": { ar: "إحجز سيارتك", en: "Book Your Car" },
 
     // عناوين البانرات والهيرو بتنسيق HTML
@@ -31,10 +37,26 @@
     "testimonials_banner_title": { ar: 'تجارب <span>وفيديوهات العملاء</span>', en: 'Client <span>Reviews & Stories</span>', html: true },
     "faq_banner_title": { ar: 'الأسئلة <span>الشائعة والمكررة</span>', en: 'Frequently <span>Asked Questions</span>', html: true },
     "contact_banner_title": { ar: 'تواصل مع <span>أبو موسى والمعرض</span>', en: 'Contact <span>Abu Mousa & Showroom</span>', html: true },
-    "gallery_banner_title": { ar: 'ألبوم <span>الصور والمعرض</span>', en: 'Photo & Video <span>Gallery</span>', html: true }
+    "gallery_banner_title": { ar: 'ألبوم <span>الصور والمعرض</span>', en: 'Photo & Video <span>Gallery</span>', html: true },
+
+    // عناصر وتفاصيل الفوتر الموحد (Unified Footer i18n Map)
+    "footer_logo_title": { ar: 'معرض <span>آية</span>', en: 'Aya <span>Showroom</span>', html: true },
+    "footer_about_text": { 
+      ar: 'معرض آية لتجارة السيارات - الإسم الأبرز في عالم الفخامة والسيارات الحديثة. نحرص دائماً على تقديم التميز وأفضل الأسعار لعملائنا الكرام برعاية وإشراف مالك الشركة أبو موسى.', 
+      en: 'Aya Car Trading Showroom - The premier destination for luxury and modern automobiles. We are committed to offering excellence and best prices to our valued clients under the personal supervision of company owner Abu Mousa.' 
+    },
+    "tagline_quote": { ar: '"أبو موسى لديكم لا خوف عليكم"', en: '"Abu Mousa With You, Fear Nothing"' },
+    "footer_title_nav": { ar: 'روابط التصفح الرئيسية', en: 'Primary Navigation Links' },
+    "footer_title_sections": { ar: 'أقسام المعرض', en: 'Showroom Sections' },
+    "footer_title_contact": { ar: 'تواصل معنا', en: 'Contact Us' },
+    "footer_contact_location": { ar: 'موقع شركة آية لتجارة السيارات - دخولية مدينة الباب - دوار سوق الهال', en: 'Aya Car Trading Showroom - Al-Bab City Entrance, Al-Hal Market R/A' },
+    "footer_contact_whatsapp": { ar: 'محادثة واتساب مباشرة', en: 'Direct WhatsApp Chat' },
+    "footer_copyright": { ar: 'جميع الحقوق محفوظة © 2026 <strong>معرض آية لتجارة السيارات - برئاسة أبو موسى</strong>', en: 'All Rights Reserved © 2026 <strong>Aya Car Trading Showroom - Headed by Abu Mousa</strong>', html: true }
   };
 
                     const dictionary = {
+    "معرض آية لتجارة السيارات - الإسم الأبرز في عالم الفخامة والسيارات الحديثة. نحرص دائماً على تقديم التميز وأفضل الأسعار لعملائنا الكرام برعاية وإشراف مالك الشركة أبو موسى.": "Aya Car Trading Showroom - The premier destination for luxury and modern automobiles. We are committed to offering excellence and best prices to our valued clients under the personal supervision of company owner Abu Mousa.",
+    "معرض آية لتجارة السيارات - الإسم الأبرز في عالم الفخامة والسيارات الحديثة. نحرص دائماً على تقديم التميز وأفضل الأسعار لعملائنا الكرام برعاية وإشراف أبو موسى.": "Aya Car Trading Showroom - The premier destination for luxury and modern automobiles under the supervision of Abu Mousa.",
     "وعبر نشاطه المستمر على منصات فيسبوك وتيك توك وإنستغرام، أصبح مرجعًا للعديد من الباحثين عن السيارات، حيث يجمع بين الخبرة العملية والمتابعة المستمرة لتطورات السوق، مقدمًا محتوى احترافيًا يساهم في تسهيل عمليات البيع والشراء وتوفير المعلومات اللازمة للعملاء.": "Through his continuous activity on Facebook, TikTok, and Instagram, he has become a trusted benchmark for car buyers, combining practical market mastery with engaging professional content that streamlines buying and selling.",
     "يتميز أبو موسى بتقديم مجموعة متنوعة من السيارات مع الحرص على عرض التفاصيل والمواصفات بصورة واضحة وشفافة، مما يساعد العملاء على اتخاذ قراراتهم بثقة واطمئنان. كما يولي اهتمامًا خاصًا لجودة الخدمة وتجربة العميل، واضعًا رضى العميل وثقته في مقدمة أولوياته.": "Abu Mousa is distinguished by presenting an exceptional fleet of vehicles with absolute clarity and transparent specifications, enabling clients to decide with complete confidence. He prioritizes customer experience, placing client satisfaction at the heart of every deal.",
     "، من الأسماء المعروفة في مجال تجارة السيارات، حيث استطاع أن يبني سمعةً قائمة على الثقة والمصداقية والالتزام في التعامل مع العملاء. ومن خلال حضوره القوي على منصات التواصل الاجتماعي تحت الشعار المعروف": ", one of the most prominent figures in automotive trading, having established a reputation built on trust, integrity, and client commitment. Through his influential presence on social media under his renowned slogan",
@@ -1208,7 +1230,115 @@
     "خطأ": "Error",
     "نعم": "Yes",
     "تم": "Done",
-    "لا": "No"
+    "لا": "No",
+
+    // ترجمة كافة عناصر وقوائم الجوال والفوتر والشريط العلوي (Mobile & Footer Line-by-Line Translations)
+    "خدماتنا المميزة": "Our Featured Services",
+    "الخدمات المميزة": "Featured Services",
+    "روابط التصفح الرئيسية": "Primary Navigation Links",
+    "أقسام المعرض": "Showroom Sections",
+    "معلومات التواصل": "Contact Information",
+    "محادثة واتساب مباشرة": "Direct WhatsApp Chat",
+    "تواصل عبر الواتساب": "Chat via WhatsApp",
+    "اتصل بنا فوراً": "Call Us Immediately",
+    "إتصل بنا: +963 608 463 934 / +963 748 801 936": "Call Us: +963 608 463 934 / +963 748 801 936",
+    "موقع شركة آية - مدينة الباب، دوار سوق الهال": "Aya Company Location - Al-Bab City, Al-Hal Market R/A",
+    "موقع شركة آية لتجارة السيارات - دخولية مدينة الباب - دوار سوق الهال": "Aya Car Trading Showroom - Al-Bab City Entrance, Al-Hal Market R/A",
+    "يومياً من 9:00 صباحاً - 10:00 مساءً": "Daily 9:00 AM - 10:00 PM",
+    "يومياً: 9:00 ص - 10:00 م": "Daily: 9:00 AM - 10:00 PM",
+    "جميع الحقوق محفوظة © 2026 معرض آية لتجارة السيارات - برئاسة أبو موسى": "All Rights Reserved © 2026 Aya Car Trading Showroom - Headed by Abu Mousa",
+    "جميع الحقوق محفوظة © 2026 معرض آية لتجارة السيارات - أبو موسى": "All Rights Reserved © 2026 Aya Car Trading Showroom - Abu Mousa",
+    "جميع الحقوق محفوظة © 2026 معرض آية لتجارة السيارات - برئاسة أبو موسى. جميع الحقوق محفوظة.": "All Rights Reserved © 2026 Aya Car Trading Showroom - Headed by Abu Mousa.",
+    "جميع السيارات": "All Cars",
+    "سيارات مستعملة": "Pre-owned Cars",
+    "سيارات بيك آب": "Pick-Up Trucks",
+    "سيارات بيك آب (Pick-Up)": "Pick-Up Trucks",
+    "سيارات جديدة": "New Cars",
+    "سيارات جديدة (2024-2026)": "New Cars (2024-2026)",
+    "سيارات فاخرة": "Luxury Cars",
+    "سيارات ملكية وفاخرة": "Royal & Luxury Cars",
+    "تواصل مع أبو موسى": "Contact Abu Mousa",
+    "القائمة الجانبية": "Navigation Menu",
+    "مرر للأسفل": "Scroll Down",
+    "تصفح السيارات": "Browse Fleet",
+    "طلب السيارة": "Request Vehicle",
+    "حاسبة التمويل": "Financing Calculator",
+    "العروض والخصومات": "Offers & Discounts",
+    "ألبوم الصور": "Photo Gallery",
+    "معرض آية": "Aya Showroom",
+
+    // ترجمات تفاعلية لكافة الصفحات والنماذج وأدوات التصفية بالكامل (Comprehensive UI & Interactive Dictionary)
+    "انطلاقة القوة والأناقة": "Launch of Power & Elegance",
+    "عالم السيارات الفخمة والرياضية": "World of Luxury & Sports Cars",
+    "تصفح السيارات المتاحة": "Browse Available Fleet",
+    "طلب سيارة خاصة": "Custom Vehicle Request",
+    "كتالوج السيارات": "Car Catalog",
+    "جميع الفئات": "All Categories",
+    "جميع الماركات": "All Brands",
+    "جميع السنوات": "All Years",
+    "أقل من 30,000 $": "Under $30,000",
+    "أقل من 50,000 $": "Under $50,000",
+    "أقل من 100,000 $": "Under $100,000",
+    "أكثر من 100,000 $": "Over $100,000",
+    "جميع الأسعار": "All Prices",
+    "لم يتم العثور على سيارات مطابقة": "No matching cars found",
+    "حاول تغيير خيارات التصفية أو البحث لنتائج أكثر": "Try changing your filter options or search for more results",
+    "حاسبة التمويل والتقسيط الذكية": "Smart Financing & Installments Calculator",
+    "سعر السيارة ($)": "Car Price ($)",
+    "الدفعة الأولى ($)": "Down Payment ($)",
+    "مدة السداد (أشهر)": "Repayment Period (Months)",
+    "12 شهر (سنة)": "12 Months (1 Year)",
+    "24 شهر (سنتين)": "24 Months (2 Years)",
+    "36 شهر (3 سنوات)": "36 Months (3 Years)",
+    "48 شهر (4 سنوات)": "48 Months (4 Years)",
+    "60 شهر (5 سنوات)": "60 Months (5 Years)",
+    "احسب القسط الآن": "Calculate Installment Now",
+    "القسط الشهري التقديري": "Estimated Monthly Installment",
+    "المبلغ المتبقي للتمويل": "Remaining Finance Amount",
+    "تقديم طلب تمويل مباشر": "Apply for Direct Financing",
+    "شاركنا رأيك وتجربتك": "Share Your Review & Experience",
+    "اسمك الكامل": "Your Full Name",
+    "السيارة المشترات أو الخدمة": "Purchased Car or Service",
+    "تقييمك للمعرض": "Your Rating",
+    "اكتب انطباعك وتجربتك هنا...": "Write your feedback and experience here...",
+    "إرسال التقييم والانطباع": "Submit Rating & Review",
+    "أرسل لنا رسالتك المباشرة": "Send Us Your Direct Message",
+    "الاسم الكامل": "Full Name",
+    "رقم الهاتف / الواتساب": "Phone Number / WhatsApp",
+    "نوع الاستفسار": "Inquiry Type",
+    "اختر الفئة": "Select Category",
+    "بيع سيارة": "Sell a Car",
+    "شراء سيارة": "Buy a Car",
+    "استبدال سيارة": "Trade-in Car",
+    "استفسار عن التمويل": "Financing Inquiry",
+    "استفسار عام": "General Inquiry",
+    "موضوع الرسالة": "Message Subject",
+    "اكتب رسالتك هنا...": "Write your message here...",
+    "إرسال الرسالة الآن": "Send Message Now",
+    "ابحث عن إجابة لسؤالك...": "Search for an answer to your question...",
+    "جميع الأسئلة": "All Questions",
+    "عن المعرض": "About Showroom",
+    "التمويل والتقسيط": "Financing & Installments",
+    "التبديل والضمان": "Trade-in & Warranty",
+    "الشحن والتوصيل": "Shipping & Delivery",
+    "السعر الكاش": "Cash Price",
+    "طلب السيارة": "Request Car",
+    "ضمان ذهبي شامل 100%": "100% Comprehensive Golden Warranty",
+    "تمويل وتقسيط ميسر": "Easy Financing & Installments",
+    "تبديل فوري بأعلى سعر": "Instant Trade-in at Highest Value",
+    "شحن وتوصيل للمنزل": "Doorstep Delivery & Shipping",
+    "ضمان وسعر عادل": "Warranty & Fair Pricing",
+    "تقييم وتثمين مجاني": "Free Appraisal & Valuation",
+    "مواصفات حصرية": "Exclusive Specifications",
+    "تسليم سري ومؤمن": "Private & Insured Delivery",
+    "الكل": "All",
+    "داخل المعرض": "Inside Showroom",
+    "تسليم العملاء": "Customer Handover",
+    "ينتهي العرض خلال": "Offer Expires In",
+    "أيام": "Days",
+    "ساعات": "Hours",
+    "دقائق": "Minutes",
+    "ثواني": "Seconds"
   };
 
   // ترتيب المفاتيح تنازلياً حسب الطول لتجنب الاستبدال الجزئي بالخطأ
@@ -1236,6 +1366,12 @@
           }
           if (node.hasAttribute('alt') && !node.dataset.origAlt) {
             node.dataset.origAlt = node.getAttribute('alt');
+          }
+          if (node.hasAttribute('aria-label') && !node.dataset.origAriaLabel) {
+            node.dataset.origAriaLabel = node.getAttribute('aria-label');
+          }
+          if (node.hasAttribute('value') && (tag === 'input' || tag === 'button') && !node.dataset.origValue) {
+            node.dataset.origValue = node.getAttribute('value');
           }
           Array.from(node.childNodes).forEach(walk);
         }
@@ -1284,6 +1420,11 @@
     // 2. ترجمة العقد النصية والخصائص عبر القاموس الشامل
     const translateNode = function (node) {
       if (node.nodeType === Node.TEXT_NODE) {
+        // تجنب إعادة ترجمة العقد المستهدفة بـ data-i18n لمنع تداخل الاستبدال الجزئي
+        if (node.parentElement && node.parentElement.closest('[data-i18n]')) {
+          return;
+        }
+
         const orig = node._origText !== undefined ? node._origText : node.nodeValue;
         if (!orig || !orig.trim()) return;
 
@@ -1319,7 +1460,7 @@
           Array.from(node.childNodes).forEach(translateNode);
         }
 
-        // ترجمة الخصائص (placeholders, titles, alt)
+        // ترجمة الخصائص (placeholders, titles, alt, aria-label, input values)
         if (node.dataset && node.dataset.origPlaceholder) {
           const origP = node.dataset.origPlaceholder;
           if (!isEn) {
@@ -1376,6 +1517,46 @@
                 }
               });
               node.alt = aVal;
+            }
+          }
+        }
+
+        if (node.dataset && node.dataset.origAriaLabel) {
+          const origAria = node.dataset.origAriaLabel;
+          if (!isEn) {
+            node.setAttribute('aria-label', origAria);
+          } else {
+            const norm = origAria.trim().replace(/\s+/g, ' ');
+            if (dictionary[norm]) {
+              node.setAttribute('aria-label', dictionary[norm]);
+            } else {
+              let ariaVal = origAria;
+              arKeysSorted.forEach((key) => {
+                if (ariaVal.includes(key)) {
+                  ariaVal = ariaVal.split(key).join(dictionary[key]);
+                }
+              });
+              node.setAttribute('aria-label', ariaVal);
+            }
+          }
+        }
+
+        if (node.dataset && node.dataset.origValue && (tag === 'input' || tag === 'button')) {
+          const origValAttr = node.dataset.origValue;
+          if (!isEn) {
+            node.value = origValAttr;
+          } else {
+            const norm = origValAttr.trim().replace(/\s+/g, ' ');
+            if (dictionary[norm]) {
+              node.value = dictionary[norm];
+            } else {
+              let valAttr = origValAttr;
+              arKeysSorted.forEach((key) => {
+                if (valAttr.includes(key)) {
+                  valAttr = valAttr.split(key).join(dictionary[key]);
+                }
+              });
+              node.value = valAttr;
             }
           }
         }

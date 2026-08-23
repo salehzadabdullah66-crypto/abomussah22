@@ -50,6 +50,12 @@
       if (mobileDrawer) mobileDrawer.classList.add('active');
       if (mobileOverlay) mobileOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+
+      // تأكيد ترجمة كافة عناصر وتفاصيل قائمة الجوال سطر بسطر
+      if (typeof window.ayaApplyTranslation === 'function') {
+        const activeLang = localStorage.getItem('aya_car_lang') || 'ar';
+        window.ayaApplyTranslation(activeLang);
+      }
     }
 
     function closeMobileDrawer() {
