@@ -108,16 +108,17 @@ function initContactParticleCanvas() {
   window.addEventListener('resize', resize);
 
   const particles = [];
-  const particleCount = 28;
+  const isMobile = window.innerWidth < 768;
+  const particleCount = isMobile ? 10 : 28;
 
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 2.5 + 1,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -Math.random() * 0.6 - 0.2,
-      alpha: Math.random() * 0.6 + 0.2
+      radius: Math.random() * 2 + 0.8,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.5 - 0.15,
+      alpha: Math.random() * 0.5 + 0.2
     });
   }
 
@@ -139,8 +140,10 @@ function initContactParticleCanvas() {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = 'rgba(212, 175, 55, 0.8)';
+      if (!isMobile) {
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
+      }
       ctx.fill();
     });
 
@@ -151,13 +154,12 @@ function initContactParticleCanvas() {
 }
 
 /**
- * 4. تشغيل الفيديو مع الصوت وشريط التحكم الفاخر (تقديم/تأخير/كتم/ملء الشاشة) لصفحة تواصل معنا
+ * 4. تشغيل الفيديو مع الصوت وشريط التحكم الفاخر بدون تقطيع
  */
 function initContactShowroomVideoControls() {
   const video = document.getElementById('scroll-autoplay-video');
   if (!video) return;
 
-  const soundBtn = document.getElementById('contact-video-sound-toggle');
   const playBtn = document.getElementById('contact-vid-ctrl-play');
   const rewindBtn = document.getElementById('contact-vid-ctrl-rewind');
   const forwardBtn = document.getElementById('contact-vid-ctrl-forward');
@@ -175,15 +177,6 @@ function initContactShowroomVideoControls() {
   }
 
   function updateSoundUi(isMuted) {
-    if (soundBtn) {
-      if (isMuted) {
-        soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
-        soundBtn.classList.remove('unmuted');
-      } else {
-        soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
-        soundBtn.classList.add('unmuted');
-      }
-    }
     if (muteBtn) {
       muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
     }
@@ -204,32 +197,38 @@ function initContactShowroomVideoControls() {
   }
 
   function playVideoWithAudio() {
+    if (!video.paused && !video.muted) return; // يعمل بالفعل بسلاسة مع الصوت
+
     video.muted = false;
-    const promise = video.play();
-    if (promise !== undefined) {
-      promise.then(() => {
-        updateSoundUi(false);
-        updatePlayUi(false);
-      }).catch(() => {
-        video.muted = true;
-        video.play().catch(() => {});
-        updateSoundUi(true);
-        updatePlayUi(false);
-      });
+    if (video.paused) {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.then(() => {
+          updateSoundUi(false);
+          updatePlayUi(false);
+        }).catch(() => {
+          video.muted = true;
+          video.play().catch(() => {});
+          updateSoundUi(true);
+          updatePlayUi(false);
+        });
+      }
+    } else {
+      updateSoundUi(false);
     }
   }
 
-  // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة
+  let soundUnlocked = false;
   const unlockSoundOnInteraction = () => {
+    if (soundUnlocked) return;
     if (isElementInViewport(video)) {
-      if (video.muted) {
-        playVideoWithAudio();
-      }
+      soundUnlocked = true;
+      playVideoWithAudio();
     }
   };
 
-  ['touchstart', 'touchend', 'scroll', 'wheel', 'pointerdown', 'click', 'keydown'].forEach((evt) => {
-    window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
+  ['touchstart', 'scroll', 'wheel', 'click', 'pointerdown'].forEach((evt) => {
+    window.addEventListener(evt, unlockSoundOnInteraction, { passive: true, once: true });
   });
 
   // تفعيل IntersectionObserver للتشغيل مع الصوت عند الوصول لقسم الفيديو
@@ -239,26 +238,24 @@ function initContactShowroomVideoControls() {
         if (entry.isIntersecting) {
           playVideoWithAudio();
         } else {
-          video.pause();
-          updatePlayUi(true);
+          if (!video.paused) {
+            video.pause();
+            updatePlayUi(true);
+          }
         }
       });
     }, { threshold: 0.15 });
 
     observer.observe(video);
-  } else {
-    window.addEventListener('scroll', () => {
-      if (isElementInViewport(video)) {
-        playVideoWithAudio();
-      } else {
-        video.pause();
-        updatePlayUi(true);
-      }
-    }, { passive: true });
   }
 
-  // تحديث شريط التقدم والوقت
+  // تحديث شريط التقدم والوقت بانسيابية بدون إرهاق المعالج
+  let lastUpdate = 0;
   video.addEventListener('timeupdate', () => {
+    const now = Date.now();
+    if (now - lastUpdate < 180) return; // تحديث هادئ يمنع التقطيع
+    lastUpdate = now;
+
     if (video.duration) {
       const percent = (video.currentTime / video.duration) * 100;
       if (progressFill) progressFill.style.width = `${percent}%`;
@@ -270,6 +267,7 @@ function initContactShowroomVideoControls() {
   if (progressWrap) {
     progressWrap.addEventListener('click', (e) => {
       e.stopPropagation();
+      e.preventDefault();
       const rect = progressWrap.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const width = rect.width;
@@ -320,7 +318,7 @@ function initContactShowroomVideoControls() {
     }
     if (video.muted) {
       video.muted = false;
-      video.play().catch(() => {});
+      if (video.paused) video.play().catch(() => {});
       updateSoundUi(false);
     } else {
       video.muted = true;
@@ -328,7 +326,6 @@ function initContactShowroomVideoControls() {
     }
   }
 
-  if (soundBtn) soundBtn.addEventListener('click', toggleMute);
   if (muteBtn) muteBtn.addEventListener('click', toggleMute);
 
   // زر ملء الشاشة

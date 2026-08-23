@@ -205,33 +205,39 @@
     }
 
     function playVideoWithAudio() {
+      if (!video.paused && !video.muted) return; // يعمل بالفعل بسلاسة مع الصوت
+
       video.muted = false;
-      const promise = video.play();
-      if (promise !== undefined) {
-        promise.then(() => {
-          updateSoundUi(false);
-          updatePlayUi(false);
-        }).catch(() => {
-          // تشغيل صامت كإجراء احتياطي إذا فرض المتصفح حظراً قبل أول تفاعل
-          video.muted = true;
-          video.play().catch(() => {});
-          updateSoundUi(true);
-          updatePlayUi(false);
-        });
+      if (video.paused) {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.then(() => {
+            updateSoundUi(false);
+            updatePlayUi(false);
+          }).catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+            updateSoundUi(true);
+            updatePlayUi(false);
+          });
+        }
+      } else {
+        updateSoundUi(false);
       }
     }
 
-    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة (كبيرة أو صغيرة بجميع المتصفحات)
+    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة
+    let soundUnlocked = false;
     const unlockSoundOnInteraction = () => {
+      if (soundUnlocked) return;
       if (isElementInViewport(videoSection)) {
-        if (video.muted) {
-          playVideoWithAudio();
-        }
+        soundUnlocked = true;
+        playVideoWithAudio();
       }
     };
 
-    ['touchstart', 'touchend', 'scroll', 'wheel', 'pointerdown', 'click', 'keydown'].forEach((evt) => {
-      window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
+    ['touchstart', 'scroll', 'wheel', 'click', 'pointerdown'].forEach((evt) => {
+      window.addEventListener(evt, unlockSoundOnInteraction, { passive: true, once: true });
     });
 
     // تفعيل IntersectionObserver للتشغيل مع الصوت فور وصول المستخدم للقسم
@@ -241,26 +247,24 @@
           if (entry.isIntersecting) {
             playVideoWithAudio();
           } else {
-            video.pause();
-            updatePlayUi(true);
+            if (!video.paused) {
+              video.pause();
+              updatePlayUi(true);
+            }
           }
         });
       }, { threshold: 0.15 });
 
       observer.observe(videoSection);
-    } else {
-      window.addEventListener('scroll', () => {
-        if (isElementInViewport(videoSection)) {
-          playVideoWithAudio();
-        } else {
-          video.pause();
-          updatePlayUi(true);
-        }
-      }, { passive: true });
     }
 
-    // تحديث شريط التقدم والوقت
+    // تحديث شريط التقدم والوقت بانسيابية بدون إرهاق المعالج
+    let lastUpdate = 0;
     video.addEventListener('timeupdate', () => {
+      const now = Date.now();
+      if (now - lastUpdate < 180) return; // تحديث هادئ يمنع التقطيع
+      lastUpdate = now;
+
       if (video.duration) {
         const percent = (video.currentTime / video.duration) * 100;
         if (progressFill) progressFill.style.width = `${percent}%`;
