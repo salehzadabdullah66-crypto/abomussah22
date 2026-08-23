@@ -197,51 +197,41 @@ function initContactShowroomVideoControls() {
   }
 
   function playVideoWithAudio() {
-    if (!video.paused && !video.muted) return;
-
     video.muted = false;
-    if (video.paused) {
-      const promise = video.play();
-      if (promise !== undefined) {
-        promise.then(() => {
-          updateSoundUi(false);
-          updatePlayUi(false);
-        }).catch(() => {
-          video.muted = true;
-          video.play().catch(() => {});
-          updateSoundUi(true);
-          updatePlayUi(false);
-        });
-      }
-    } else {
-      updateSoundUi(false);
+    const promise = video.play();
+    if (promise !== undefined) {
+      promise.then(() => {
+        updateSoundUi(false);
+        updatePlayUi(false);
+      }).catch(() => {
+        // في حال حظر المتصفح الصوت قبل أول تفاعل، يبدأ صامت ويكرر فك الكتم فوراً عند التمرير
+        video.muted = true;
+        video.play().catch(() => {});
+        updateSoundUi(true);
+        updatePlayUi(false);
+      });
     }
   }
 
-  let soundUnlocked = false;
+  // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم للشاشة (كبيرة أو صغيرة أو متوسطة)
   const unlockSoundOnInteraction = () => {
-    if (soundUnlocked) return;
     if (isElementInViewport(video)) {
-      soundUnlocked = true;
-      playVideoWithAudio();
+      if (video.muted) {
+        playVideoWithAudio();
+      }
     }
   };
 
-  ['touchstart', 'click', 'pointerdown', 'keydown'].forEach((evt) => {
+  ['scroll', 'wheel', 'touchstart', 'touchend', 'pointerdown', 'mousemove', 'click', 'keydown'].forEach((evt) => {
     window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
   });
 
-  // تفعيل IntersectionObserver للتشغيل مع الصوت عند الوصول لقسم الفيديو
+  // تفعيل IntersectionObserver للتشغيل مع الصوت عند الوصول لقسم الفيديو لجميع الشاشات
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (soundUnlocked) {
-            playVideoWithAudio();
-          } else if (video.paused) {
-            video.muted = true;
-            video.play().catch(() => {});
-          }
+          playVideoWithAudio();
         } else {
           if (!video.paused) {
             video.pause();
@@ -249,9 +239,20 @@ function initContactShowroomVideoControls() {
           }
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12 });
 
     observer.observe(video);
+  } else {
+    window.addEventListener('scroll', () => {
+      if (isElementInViewport(video)) {
+        playVideoWithAudio();
+      } else {
+        if (!video.paused) {
+          video.pause();
+          updatePlayUi(true);
+        }
+      }
+    }, { passive: true });
   }
 
   // تحديث شريط التقدم والوقت بانسيابية بدون إرهاق المعالج
