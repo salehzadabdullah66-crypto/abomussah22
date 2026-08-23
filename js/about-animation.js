@@ -152,7 +152,7 @@
     });
   }
 
-  /* 4. التشغيل التلقائي المباشر للفيديو مع الصوت عند التمرير والوصول لقسم الفيديو */
+  /* 4. التشغيل التلقائي المباشر للفيديو مع الصوت عند التمرير والوصول لقسم الفيديو في وضع الهاتف والشاشات المختلفة */
   function initShowroomVideoAutoplay() {
     const videoSection = document.querySelector('.about-video-section');
     const video = document.getElementById('about-showroom-video');
@@ -160,20 +160,54 @@
 
     if (!videoSection || !video) return;
 
-    function playVideoMutedAutoplay() {
-      video.muted = true;
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 &&
+        rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) * 0.15
+      );
+    }
+
+    function unmuteAndPlay() {
+      video.muted = false;
       const promise = video.play();
       if (promise !== undefined) {
-        promise.catch(() => {});
+        promise.then(() => {
+          if (soundBtn) {
+            soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
+            soundBtn.classList.add('unmuted');
+          }
+        }).catch(() => {
+          // في حال واجه تقييداً من المتصفح قبل أول لمسة للمستخدم، يبدأ التشغيل ويكرر فك الكتم تلقائياً
+          video.muted = true;
+          video.play().catch(() => {});
+          if (soundBtn) {
+            soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>انقر لفتح الصوت 🔊</span>';
+            soundBtn.classList.remove('unmuted');
+          }
+        });
       }
     }
 
-    // تفعيل التشغيل المباشر عند التمرير للقسم
+    // إتاحة وتفعيل الصوت تلقائياً بمجرد لمس أو تمرير المستخدم لشاشة الهاتف
+    const unlockAudioOnUserTouch = () => {
+      if (isElementInViewport(videoSection)) {
+        if (video.muted) {
+          unmuteAndPlay();
+        }
+      }
+    };
+
+    ['touchstart', 'touchend', 'scroll', 'pointerdown', 'click'].forEach((evt) => {
+      window.addEventListener(evt, unlockAudioOnUserTouch, { passive: true });
+    });
+
+    // تفعيل IntersectionObserver للتشغيل مع الصوت فور وصول المستخدم للقسم
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            playVideoMutedAutoplay();
+            unmuteAndPlay();
           } else {
             video.pause();
           }
@@ -182,12 +216,19 @@
 
       observer.observe(videoSection);
     } else {
-      playVideoMutedAutoplay();
+      window.addEventListener('scroll', () => {
+        if (isElementInViewport(videoSection)) {
+          unmuteAndPlay();
+        } else {
+          video.pause();
+        }
+      }, { passive: true });
     }
 
     // زر التحكم بالصوت
     if (soundBtn) {
-      soundBtn.addEventListener('click', () => {
+      soundBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         if (video.muted) {
           video.muted = false;
           video.play().catch(() => {});
@@ -201,10 +242,15 @@
       });
     }
 
-    // النقر على الفيديو لتشغيل / إيقاف مؤقت
+    // النقر على الفيديو لتشغيل / إيقاف مؤقت مع الصوت
     video.addEventListener('click', () => {
       if (video.paused) {
+        video.muted = false;
         video.play().catch(() => {});
+        if (soundBtn) {
+          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
+          soundBtn.classList.add('unmuted');
+        }
       } else {
         video.pause();
       }
