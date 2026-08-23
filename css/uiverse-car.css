@@ -98,10 +98,11 @@
   border-radius: 24px;
   border: 1px solid rgba(212, 175, 55, 0.2);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(212, 175, 55, 0.05);
+  overflow: hidden;
 }
 
 /* ==========================================================================
-   مكون السيارة المتحركة من Uiverse (yeisonordonez) - نطاق معزول
+   مكون السيارة المتحركة من Uiverse - معزول وثابت مع دعم RTL
    ========================================================================== */
 
 .uiverse-car-wrapper {
@@ -112,12 +113,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  direction: ltr; /* لضمان صحة الإحداثيات والاتجاهات في واجهات RTL */
   transform: scale(0.95);
+  transform-origin: center center;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .uiverse-car-wrapper {
+    transform: scale(0.85);
+  }
 }
 
 @media (max-width: 480px) {
   .uiverse-car-wrapper {
-    transform: scale(0.72);
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 360px) {
+  .uiverse-car-wrapper {
+    transform: scale(0.58);
   }
 }
 
@@ -125,6 +142,8 @@
   position: absolute;
   width: 380px;
   height: 380px;
+  animation: car-lift 3s infinite cubic-bezier(0.96, 0.5, 0.27, 0.55);
+  transform-origin: center;
 }
 
 .uiverse-car-wrapper .car {
@@ -159,8 +178,8 @@
   top: 5px;
   transform: rotate(3deg);
   box-shadow:
-    -65px 5px #630909,
-    78px 5px #630909;
+    -65px 5px 0 0 #630909,
+    78px 5px 0 0 #630909;
 }
 
 .uiverse-car-wrapper .front-part {
@@ -183,6 +202,7 @@
   top: 212px;
   border-bottom: 2px solid #630909;
 }
+
 .uiverse-car-wrapper .front-part2::after {
   content: "";
   position: absolute;
@@ -191,7 +211,7 @@
   background-color: rgba(251, 243, 205, 0.686);
   right: 22px;
   top: -4px;
-  box-shadow: inset 0px -3px #000000c9;
+  box-shadow: inset 0px -3px 0 0 rgba(0, 0, 0, 0.79);
 }
 
 .uiverse-car-wrapper .front-part2::before {
@@ -206,18 +226,18 @@
 
 .uiverse-car-wrapper .front-part3 {
   position: absolute;
-  background-color: #3d090965;
+  background-color: rgba(61, 9, 9, 0.4);
   width: 320px;
   height: 30px;
   bottom: 120px;
   left: 30px;
-  box-shadow: inset 0px 12px rgba(252, 72, 72, 0.147);
+  box-shadow: inset 0px 12px 0 0 rgba(252, 72, 72, 0.15);
 }
 
 .uiverse-car-wrapper .front-part3::before {
   content: "";
   position: absolute;
-  background-color: #f984843b;
+  background-color: rgba(249, 132, 132, 0.23);
   width: 220px;
   height: 8px;
   bottom: 46px;
@@ -243,19 +263,18 @@
   top: -5px;
   border-radius: 5px 0px 0px 10px;
   box-shadow:
-    inset -5px -8px rgba(0, 0, 0, 0.409),
-    inset -5px 3px rgba(255, 255, 255, 0.324);
+    inset -5px -8px rgba(0, 0, 0, 0.41),
+    inset -5px 3px rgba(255, 255, 255, 0.32);
 }
 
 .uiverse-car-wrapper .wheel-container {
   position: absolute;
   width: 100px;
   height: 46px;
-  background-color: black;
+  background-color: #000000;
   left: 40px;
   top: 234px;
   clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-  box-shadow: 100px 0px;
 }
 
 .uiverse-car-wrapper .wheel-container2 {
@@ -347,7 +366,7 @@
   width: 55px;
   height: 40px;
   position: absolute;
-  background-color: black;
+  background-color: #000000;
   top: 160px;
   left: 45px;
   transform: skew(-5deg);
@@ -360,7 +379,7 @@
   width: 48px;
   height: 40px;
   position: absolute;
-  background-color: black;
+  background-color: #000000;
   top: 0px;
   left: 72px;
   border-radius: 6px;
@@ -372,24 +391,24 @@
   width: 30px;
   height: 40px;
   position: absolute;
-  background-color: black;
+  background-color: #000000;
   top: 0px;
   left: 132px;
   border-radius: 6px 6px 0px 6px;
   box-shadow:
-    inset 2px 0px rgb(61, 61, 61),
-    inset 0px 2px rgb(61, 61, 61);
+    inset 2px 0px 0 0 rgb(61, 61, 61),
+    inset 0px 2px 0 0 rgb(61, 61, 61);
 }
 
 .uiverse-car-wrapper .window2 {
   width: 53px;
   height: 20px;
   position: absolute;
-  background-color: black;
+  background-color: #000000;
   top: 180px;
   left: 180px;
   border-radius: 0% 100% 10% 0% / 0% 80% 10% 4%;
-  box-shadow: inset 0px -2px rgb(61, 61, 61);
+  box-shadow: inset 0px -2px 0 0 rgb(61, 61, 61);
 }
 
 .uiverse-car-wrapper .window2::before {
@@ -397,12 +416,12 @@
   position: absolute;
   width: 15px;
   height: 42px;
-  background-color: black;
+  background-color: #000000;
   top: -18px;
   right: 11px;
   transform: rotate(-37deg);
   border-radius: 0% 10% 0% 100%;
-  box-shadow: inset -2px 0px rgb(61, 61, 61);
+  box-shadow: inset -2px 0px 0 0 rgb(61, 61, 61);
 }
 
 .uiverse-car-wrapper .window2::after {
@@ -415,21 +434,21 @@
   right: 25px;
   transform: skew(37deg);
   box-shadow:
-    -60px 0px rgb(60, 60, 61),
-    -130px 0px rgb(60, 60, 61);
+    -60px 0px 0 0 rgb(60, 60, 61),
+    -130px 0px 0 0 rgb(60, 60, 61);
 }
 
 .uiverse-car-wrapper .window3 {
   width: 4px;
   height: 25px;
   position: absolute;
-  background-color: #bbbcbc52;
+  background-color: rgba(187, 188, 188, 0.32);
   top: 173px;
   left: 189px;
   transform: skew(38deg);
   box-shadow:
-    -60px 0px #bbbcbc52,
-    -129px -1px #bbbcbc52;
+    -60px 0px 0 0 rgba(187, 188, 188, 0.32),
+    -129px -1px 0 0 rgba(187, 188, 188, 0.32);
 }
 
 .uiverse-car-wrapper .window3::before {
@@ -437,7 +456,7 @@
   width: 3px;
   height: 55px;
   position: absolute;
-  background-color: black;
+  background-color: #000000;
   top: -22px;
   left: 42px;
 }
@@ -446,10 +465,10 @@
   position: absolute;
   width: 60px;
   height: 4px;
-  background-color: black;
+  background-color: #000000;
   top: 220px;
   left: 40px;
-  box-shadow: 150px 0px;
+  box-shadow: 150px 0px 0 0 #000000;
 }
 
 .uiverse-car-wrapper .details::before {
@@ -457,7 +476,7 @@
   position: absolute;
   width: 50px;
   height: 4px;
-  background-color: black;
+  background-color: #000000;
   top: 0px;
   right: -70px;
   box-shadow:
@@ -466,8 +485,8 @@
     50px 45px 0px 0px #6f6f6f,
     20px 50px 0px 1px #3b3b3b,
     66px 50px 0px 1px #3b3b3b,
-    20px 50px 0px 5px,
-    66px 50px 0px 5px;
+    20px 50px 0px 5px #000000,
+    66px 50px 0px 5px #000000;
 }
 
 .uiverse-car-wrapper .details::after {
@@ -475,7 +494,7 @@
   position: absolute;
   width: 70px;
   height: 4px;
-  background-color: black;
+  background-color: #000000;
   right: -230px;
   transform: rotate(5deg);
   bottom: -3px;
@@ -488,7 +507,7 @@
   background-color: #c42525;
   top: 228px;
   left: 60px;
-  box-shadow: 195px 2px #c42525;
+  box-shadow: 195px 2px 0 0 #c42525;
   border-radius: 17% 18% 26% 26% / 100% 100% 0% 0%;
 }
 
@@ -500,7 +519,7 @@
   background-color: #c42525;
   transform: rotate(24deg);
   left: -8.7px;
-  box-shadow: 178.1px -79px #c42525;
+  box-shadow: 178.1px -79px 0 0 #c42525;
 }
 
 .uiverse-car-wrapper .details2::after {
@@ -511,17 +530,17 @@
   background-color: #9c1717;
   transform: rotate(-24deg);
   left: 65px;
-  box-shadow: 178.1px 79px #9c1717;
+  box-shadow: 178.1px 79px 0 0 #9c1717;
 }
 
 .uiverse-car-wrapper .details4 {
   position: absolute;
   width: 50px;
   height: 3px;
-  background-color: #f75f5f8c;
+  background-color: rgba(247, 95, 95, 0.55);
   top: 233px;
   left: 64px;
-  box-shadow: 195px 2px #f75f5f8c;
+  box-shadow: 195px 2px 0 0 rgba(247, 95, 95, 0.55);
   border-radius: 17% 18% 26% 26% / 100% 100% 0% 0%;
 }
 
@@ -530,11 +549,11 @@
   position: absolute;
   width: 3px;
   height: 50px;
-  background-color: #f75f5f8c;
+  background-color: rgba(247, 95, 95, 0.55);
   transform: rotate(24deg);
   left: -11px;
   top: -2px;
-  box-shadow: 178.1px -77px 0px -0.5px #f75f5f8c;
+  box-shadow: 178.1px -77px 0px -0.5px rgba(247, 95, 95, 0.55);
 }
 
 .uiverse-car-wrapper .details4::after {
@@ -542,24 +561,24 @@
   position: absolute;
   width: 2px;
   height: 50px;
-  background-color: #f75f5f8c;
+  background-color: rgba(247, 95, 95, 0.55);
   transform: rotate(-24deg);
   left: 60px;
   top: -2px;
-  box-shadow: 177px 81px #f75f5f8c;
+  box-shadow: 177px 81px 0 0 rgba(247, 95, 95, 0.55);
 }
 
 .uiverse-car-wrapper .details3 {
   position: absolute;
   width: 20px;
   height: 15px;
-  background-color: black;
+  background-color: #000000;
   bottom: 175px;
   right: 146px;
   box-shadow:
-    inset 0px 2px #424141,
-    inset -2px 0px #1d1515,
-    inset 0px 10px rgb(37, 37, 37);
+    inset 0px 2px 0 0 #424141,
+    inset -2px 0px 0 0 #1d1515,
+    inset 0px 10px 0 0 rgb(37, 37, 37);
   border-radius: 4px 4px 0px 4px;
 }
 
@@ -568,10 +587,10 @@
   content: "";
   width: 10px;
   height: 4px;
-  background-color: rgba(0, 0, 0, 0.858);
+  background-color: rgba(0, 0, 0, 0.86);
   left: -41px;
   top: 30px;
-  box-shadow: -67px 0px;
+  box-shadow: -67px 0px 0 0 #000000;
 }
 
 .uiverse-car-wrapper .details3::after {
@@ -579,21 +598,21 @@
   content: "";
   width: 2px;
   height: 2px;
-  background-color: rgba(179, 178, 178, 0.858);
+  background-color: rgba(179, 178, 178, 0.86);
   left: -41px;
   top: 30px;
-  box-shadow: -67px 0px rgb(167, 167, 167);
+  box-shadow: -67px 0px 0 0 rgb(167, 167, 167);
 }
 
 .uiverse-car-wrapper .bumper {
   position: absolute;
   width: 20px;
   height: 35px;
-  background-color: black;
+  background-color: #000000;
   bottom: 100px;
   right: 23px;
   border-radius: 0% 20% 20% 0%;
-  box-shadow: inset -4px 0px rgb(79, 79, 79);
+  box-shadow: inset -4px 0px 0 0 rgb(79, 79, 79);
 }
 
 .uiverse-car-wrapper .bumper::before {
@@ -602,7 +621,7 @@
   width: 20px;
   height: 3px;
   background-color: rgb(105, 105, 105);
-  box-shadow: 0px 14px 0px -0.3px rgba(251, 251, 251, 0.315);
+  box-shadow: 0px 14px 0px -0.3px rgba(251, 251, 251, 0.32);
 }
 
 .uiverse-car-wrapper .bumper::after {
@@ -611,7 +630,7 @@
   width: 3px;
   height: 25px;
   background-color: rgb(69, 69, 69);
-  rotate: 8deg;
+  transform: rotate(8deg);
   top: 3px;
   left: -2px;
 }
@@ -623,12 +642,7 @@
   background-color: rgb(39, 39, 39);
   bottom: 101px;
   right: 23px;
-  rotate: 5deg;
-}
-
-.uiverse-car-wrapper .bumper2::before {
-  content: "";
-  position: absolute;
+  transform: rotate(5deg);
 }
 
 .uiverse-car-wrapper .details5 {
@@ -645,13 +659,13 @@
   position: absolute;
   width: 20px;
   height: 10px;
-  background-color: rgba(255, 255, 255, 0.096);
+  background-color: rgba(255, 255, 255, 0.1);
   top: -80px;
   left: -125px;
   transform: rotate(5deg);
   box-shadow:
     inset 0px -3px rgba(255, 255, 255, 0.24),
-    0px 40px 0px 1px black;
+    0px 40px 0px 1px #000000;
 }
 
 .uiverse-car-wrapper .details5::after {
@@ -659,10 +673,10 @@
   position: absolute;
   width: 170px;
   height: 1px;
-  background-color: rgb(0, 0, 0);
+  background-color: #000000;
   top: -120px;
   left: -98px;
-  box-shadow: 0px -2px 0px 1px;
+  box-shadow: 0px -2px 0px 1px #000000;
 }
 
 .uiverse-car-wrapper .wheel-logo {
@@ -707,9 +721,9 @@
   left: 334px;
   bottom: 140px;
   box-shadow:
-    inset 3px 0px #840f0f,
-    inset -5px 0px #9a4e4e,
-    inset -5px 0px #ad2121;
+    inset 3px 0px 0 0 #840f0f,
+    inset -5px 0px 0 0 #9a4e4e,
+    inset -5px 0px 0 0 #ad2121;
 }
 
 .uiverse-car-wrapper .head-lights::before {
@@ -727,10 +741,10 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  background-color: #840f0f86;
+  background-color: rgba(132, 15, 15, 0.52);
   left: 3px;
   bottom: 0px;
-  box-shadow: -1px -13px 0px -1px rgba(254, 254, 235, 0.568);
+  box-shadow: -1px -13px 0px -1px rgba(254, 254, 235, 0.57);
 }
 
 .uiverse-car-wrapper .tail-lights {
@@ -738,9 +752,9 @@
   width: 4px;
   height: 10px;
   background-color: rgb(252, 3, 3);
-  right: 348px;
+  left: 28px;
   bottom: 125px;
-  box-shadow: inset -2px 0px rgb(214, 0, 0);
+  box-shadow: inset -2px 0px 0 0 rgb(214, 0, 0);
 }
 
 .uiverse-car-wrapper .tail-lights::before {
@@ -748,87 +762,87 @@
   position: absolute;
   width: 14px;
   height: 16px;
-  background-color: rgba(255, 0, 0, 0.288);
+  background-color: rgba(255, 0, 0, 0.29);
   left: -4px;
 }
 
 .uiverse-car-wrapper .extra-lighting-details {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.712);
+  background-color: rgba(255, 255, 255, 0.71);
   height: 1.5px;
   width: 50px;
   bottom: 145px;
   left: 65px;
-  box-shadow: 195px 2px rgba(255, 255, 255, 0.712);
+  box-shadow: 195px 2px 0 0 rgba(255, 255, 255, 0.71);
 }
 
 .uiverse-car-wrapper .extra-lighting-details::before {
   content: "";
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.288);
+  background-color: rgba(255, 255, 255, 0.29);
   height: 2px;
   width: 115px;
   top: 10px;
   left: 65px;
-  box-shadow: -30px -35px 0px 1px rgba(255, 255, 255, 0.205);
+  box-shadow: -30px -35px 0px 1px rgba(255, 255, 255, 0.21);
 }
 
 .uiverse-car-wrapper .extra-lighting-details::after {
   content: "";
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.568);
+  background-color: rgba(255, 255, 255, 0.57);
   height: 2px;
   width: 80px;
   top: -22px;
   left: 190px;
-  rotate: 8deg;
-  box-shadow: 0px -3px rgba(0, 0, 0, 0.349);
+  transform: rotate(8deg);
+  box-shadow: 0px -3px 0 0 rgba(0, 0, 0, 0.35);
 }
 
 .uiverse-car-wrapper .extra-lighting-details2 {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.226);
+  background-color: rgba(0, 0, 0, 0.23);
   height: 12px;
   width: 10px;
   bottom: 165px;
   left: 220px;
-  rotate: 15deg;
+  transform: rotate(15deg);
 }
 
 .uiverse-car-wrapper .extra-lighting-details2::before {
   content: "";
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.308);
+  background-color: rgba(0, 0, 0, 0.31);
   height: 8px;
   width: 10px;
   bottom: 5px;
   left: 0px;
-  rotate: -15deg;
+  transform: rotate(-15deg);
 }
 
 .uiverse-car-wrapper .extra-lighting-details3 {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.089);
+  background-color: rgba(255, 255, 255, 0.09);
   height: 45px;
   width: 5px;
   bottom: 175px;
   left: 100px;
-  rotate: 5deg;
+  transform: rotate(5deg);
   box-shadow:
-    10px 0px rgba(255, 255, 255, 0.144),
-    65px -5px rgba(255, 255, 255, 0.144);
+    10px 0px 0 0 rgba(255, 255, 255, 0.14),
+    65px -5px 0 0 rgba(255, 255, 255, 0.14);
 }
 
 .uiverse-car-wrapper .extra-lighting-details3::before {
   content: "";
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.418);
+  background-color: rgba(255, 255, 255, 0.42);
   height: 1px;
   width: 25px;
   bottom: -33px;
   left: 240px;
-  rotate: -5deg;
-  box-shadow: 1px -12px rgba(255, 255, 255, 0.541);
+  transform: rotate(-5deg);
+  box-shadow: 1px -12px 0 0 rgba(255, 255, 255, 0.54);
 }
 
 .uiverse-car-wrapper .street {
@@ -836,29 +850,36 @@
   width: 600px;
   height: 450px;
   bottom: 0px;
-  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .uiverse-car-wrapper .line {
   position: absolute;
   width: 100%;
   height: 4px;
-  background-color: black;
+  background-color: #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
   bottom: 62px;
+  left: 0;
 }
 
 .uiverse-car-wrapper .obstacles {
   position: absolute;
   width: 20px;
   height: 15px;
-  background-color: black;
+  background-color: #111827;
+  border: 1px solid rgba(212, 175, 55, 0.4);
   border-radius: 40% 40% 0% 0%;
   bottom: 60px;
   left: 110%;
+  animation: road-displacement 3s linear infinite;
 }
 
-/*wheel*/
+/* عجلات السيارة التفاعلية */
 .uiverse-car-wrapper .wheel-ring {
   position: absolute;
   width: 60px;
@@ -880,20 +901,22 @@
   top: 10px;
 }
 
-.uiverse-car-wrapper .container-wheel2 {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  bottom: 60px;
-  left: 245px;
-}
-
 .uiverse-car-wrapper .container-wheel1 {
   width: 80px;
   height: 80px;
   position: absolute;
   bottom: 60px;
   left: 50px;
+  animation: wheel-bounce1 3s infinite;
+}
+
+.uiverse-car-wrapper .container-wheel2 {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 60px;
+  left: 245px;
+  animation: wheel-bounce2 3s infinite;
 }
 
 .uiverse-car-wrapper .wheel-center {
@@ -903,9 +926,9 @@
   border-radius: 50%;
   background-color: rgb(255, 255, 255);
   box-shadow:
-    inset 0px 0px 0px 5px,
+    inset 0px 0px 0px 5px #000000,
     inset 0px 0px 0px 6px rgb(191, 191, 191),
-    inset 0px 0px 0px 12px black;
+    inset 0px 0px 0px 12px #000000;
 }
 
 .uiverse-car-wrapper .wheel-center2 {
@@ -921,7 +944,7 @@
   position: absolute;
   width: 4px;
   height: 18px;
-  background-color: black;
+  background-color: #000000;
   top: 32px;
   left: 19px;
   transform: rotate(15deg);
@@ -932,7 +955,7 @@
   position: absolute;
   width: 4px;
   height: 18px;
-  background-color: black;
+  background-color: #000000;
   top: -2px;
   left: 8px;
   transform: rotate(-20deg);
@@ -962,9 +985,11 @@
   transform: rotate(225deg);
 }
 
-/*----ANIMATION-----*/
+/* ==========================================================================
+   الحركات والتأثيرات (Keyframes Animations)
+   ========================================================================== */
 
-@keyframes spinning {
+@keyframes wheel-spinning {
   0% {
     transform: rotate(0deg);
   }
@@ -974,22 +999,14 @@
 }
 
 .uiverse-car-wrapper .wheel-ring1 {
-  animation: spinning 1s linear infinite;
+  animation: wheel-spinning 1s linear infinite;
 }
 
 .uiverse-car-wrapper .wheel-ring2 {
-  animation: spinning 1s linear infinite;
+  animation: wheel-spinning 1s linear infinite;
 }
 
-.uiverse-car-wrapper .container-wheel1 {
-  animation: bounce1 3s infinite;
-}
-
-.uiverse-car-wrapper .container-wheel2 {
-  animation: bounce2 3s infinite;
-}
-
-@keyframes bounce1 {
+@keyframes wheel-bounce1 {
   0%,
   50% {
     transform: translateY(0px);
@@ -1002,7 +1019,7 @@
   }
 }
 
-@keyframes bounce2 {
+@keyframes wheel-bounce2 {
   0%,
   28% {
     transform: translateY(0px);
@@ -1015,12 +1032,7 @@
   }
 }
 
-.uiverse-car-wrapper .car-container {
-  animation: lift 3s infinite cubic-bezier(0.96, 0.5, 0.27, 0.55);
-  transform-origin: center;
-}
-
-@keyframes lift {
+@keyframes car-lift {
   0%,
   30% {
     transform: rotate(0deg) translateY(0px);
@@ -1040,11 +1052,7 @@
   }
 }
 
-.uiverse-car-wrapper .obstacles {
-  animation: displacement 3s linear infinite;
-}
-
-@keyframes displacement {
+@keyframes road-displacement {
   0% {
     left: 110%;
   }

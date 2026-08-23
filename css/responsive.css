@@ -64,9 +64,12 @@ html, body {
     border-top: 4px solid var(--gold-primary);
   }
   .owner-card-hero {
-    max-width: 500px;
+    max-width: 620px;
     margin: 0 auto;
-    min-height: 460px;
+    aspect-ratio: 16 / 9;
+    min-height: auto;
+    width: 100%;
+    padding: 0;
   }
   .stats-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -306,8 +309,11 @@ html, body {
     height: 40px;
   }
   .owner-card-hero {
-    min-height: 400px;
-    padding: 25px 16px;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: auto;
+    padding: 0;
   }
   .calculator-card {
     padding: 24px 16px;
@@ -474,12 +480,29 @@ html, body {
     line-height: 1.35 !important;
   }
   .owner-card-hero {
-    min-height: 360px;
-    padding: 20px 12px;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: auto;
+    padding: 0;
+  }
+  .video-corner-logo {
+    top: 7px;
+    left: 8px;
+    right: auto;
+    padding: 3px 6px;
+    border-radius: 8px;
+    background: rgba(12, 14, 18, 0.65);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+  }
+  .video-watermark-img {
+    width: 36px;
+    max-height: 38px;
   }
   .btn {
-    padding: 12px 20px;
-    font-size: 0.95rem;
+    padding: 13px 20px;
+    font-size: 0.98rem;
+    gap: 12px;
   }
   .car-specs-grid {
     grid-template-columns: 1fr;

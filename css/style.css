@@ -12,6 +12,16 @@
   box-sizing: border-box;
 }
 
+::selection {
+  background: var(--gold-primary, #D4AF37);
+  color: #0A0B0E;
+}
+
+::-moz-selection {
+  background: var(--gold-primary, #D4AF37);
+  color: #0A0B0E;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -178,7 +188,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   padding: 14px 28px;
   font-family: var(--font-primary);
   font-size: 1.05rem;
@@ -196,16 +206,47 @@ img {
   z-index: 1;
 }
 
+.btn i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.15em;
+  margin: 0;
+  color: inherit;
+  transition: transform var(--transition-normal);
+}
+
 .btn-gold {
   background: var(--gold-gradient);
   color: #0A0B0E;
   box-shadow: var(--shadow-gold);
 }
 
+.btn-gold i {
+  color: #0A0B0E;
+  transition: transform var(--transition-normal);
+}
+
 .btn-gold:hover {
+  background: linear-gradient(135deg, #FFF0A3 0%, #E5C158 50%, #C4971A 100%);
+  color: #000000;
   transform: translateY(-3px);
   box-shadow: var(--shadow-gold-hover);
-  color: #000000;
+}
+
+.btn-gold:hover i {
+  transform: scale(1.12);
+}
+
+.btn-gold:focus,
+.btn-gold:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5), var(--shadow-gold-hover);
+}
+
+.btn-gold:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .btn-outline-gold {
@@ -222,16 +263,44 @@ img {
 }
 
 .btn-glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: var(--text-primary);
+  background: rgba(22, 25, 34, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  color: #FFFFFF;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.btn-glass i {
+  color: var(--gold-primary);
+  transition: transform var(--transition-normal), color var(--transition-normal);
 }
 
 .btn-glass:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22) 0%, rgba(26, 30, 42, 0.95) 100%);
   border-color: var(--gold-primary);
+  color: #FFFFFF;
   transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+}
+
+.btn-glass:hover i {
+  color: #FFF0A3;
+  transform: scale(1.12);
+}
+
+.btn-glass:focus,
+.btn-glass:focus-visible {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4), 0 8px 25px rgba(0, 0, 0, 0.5);
+  background: rgba(26, 30, 42, 0.95);
+  color: #FFFFFF;
+}
+
+.btn-glass:active {
+  transform: translateY(-1px) scale(0.98);
+  background: rgba(212, 175, 55, 0.3);
 }
 
 .btn-sm {
@@ -572,10 +641,13 @@ img {
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-/* إخفاء المؤشر المخصص تلقائياً على الشاشات التي تعمل باللمس */
-@media (hover: none) and (pointer: coarse) {
+/* إخفاء المؤشر المخصص تلقائياً على الشاشات التي تعمل باللمس والشاشات الصغيرة والهواتف */
+@media (max-width: 991px), (hover: none), (pointer: coarse) {
   .custom-cursor-ring,
   .custom-cursor-dot {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 }

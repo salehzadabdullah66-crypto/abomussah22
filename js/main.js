@@ -15,6 +15,7 @@
     }
 
     // تفعيل مشغل البنار الصوتي والتشغيل التلقائي للفيديو عند التمرير والمؤشر الذهبي
+    initHeroOwnerVideo();
     initAudioTestimonialPlayer();
     initScrollAutoplayVideos();
     initCustomGoldenCursor();
@@ -373,6 +374,35 @@
         });
       }
     });
+  }
+
+  // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
+  function initHeroOwnerVideo() {
+    const heroVideo = document.querySelector('.owner-full-video');
+    if (!heroVideo) return;
+
+    // تشغيل سلس وفوري
+    heroVideo.muted = true;
+    heroVideo.playbackRate = 1.0;
+    const playPromise = heroVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    // إيقاف الفيديو عند الابتعاد عن الهيرو لتوفير موارد كرت الشاشة والبطارية واستئنافه فور الرجوع
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            heroVideo.play().catch(() => {});
+          } else {
+            heroVideo.pause();
+          }
+        });
+      }, { threshold: 0.15 });
+
+      heroObserver.observe(heroVideo);
+    }
   }
 
   // 15. التشغيل التلقائي للفيديو عند التمرير والنزول مع إيقاظ الصوت تلقائياً (Scroll Autoplay With Sound)
