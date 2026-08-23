@@ -409,35 +409,14 @@
       playVideoSafely();
     };
 
-    ['touchstart', 'touchend', 'click', 'scroll', 'visibilitychange'].forEach((evt) => {
-      window.addEventListener(evt, unlockMobileVideo, { passive: true });
+    // تشغيل مستمر ودائم عند أي تفاعل أو تمرير بدون توقف أو ظهور خلفية في كروم
+    ['touchstart', 'touchend', 'touchmove', 'click', 'scroll', 'visibilitychange'].forEach((evt) => {
+      window.addEventListener(evt, playVideoSafely, { passive: true });
     });
 
     // تشغيل عند النقر المباشر على كارت الفيديو
     if (heroCard) {
-      heroCard.addEventListener('click', () => {
-        if (heroVideo.paused) {
-          heroVideo.play().catch(() => {});
-        }
-      });
-    }
-
-    // مراقبة الفيديو عند الخروج التام من الشاشة مع حماية من التقطيع أثناء التمرير في الموبايل
-    if ('IntersectionObserver' in window) {
-      const heroObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            playVideoSafely();
-          } else {
-            // إيقاف فقط إذا اختفى الكارت كلياً عن الشاشة
-            if (entry.intersectionRatio === 0) {
-              heroVideo.pause();
-            }
-          }
-        });
-      }, { threshold: [0, 0.1] });
-
-      heroObserver.observe(heroVideo);
+      heroCard.addEventListener('click', playVideoSafely);
     }
   }
 

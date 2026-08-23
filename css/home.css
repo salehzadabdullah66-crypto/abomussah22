@@ -174,7 +174,7 @@
   max-width: 660px;
   aspect-ratio: 16 / 9;
   min-height: auto;
-  background: radial-gradient(circle at 50% 50%, #141722 0%, #08090C 85%);
+  background: #0a0b0e;
   border: 2px solid var(--border-color);
   border-radius: 20px;
   padding: 0;
@@ -201,7 +201,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #06070a;
+  background: #0a0b0e;
 }
 
 /* هالة إضاءة ذهبية محيطية ناعمة خلف الفيديو لتعزيز العمق البصري */

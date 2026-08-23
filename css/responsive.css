@@ -143,6 +143,23 @@ html, body {
   }
 
   /* شبكات وتنسيقات الجوال */
+  .owner-card-hero {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    background: transparent !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+  .owner-card-hero::after,
+  .owner-card-bg::before,
+  .owner-card-overlay {
+    display: none !important;
+  }
+  .owner-card-bg,
+  .owner-full-video {
+    background: transparent !important;
+  }
   .contact-hub-grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
