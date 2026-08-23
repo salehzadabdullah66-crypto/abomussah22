@@ -227,8 +227,8 @@ function initContactShowroomVideoControls() {
     }
   };
 
-  ['touchstart', 'scroll', 'wheel', 'click', 'pointerdown'].forEach((evt) => {
-    window.addEventListener(evt, unlockSoundOnInteraction, { passive: true, once: true });
+  ['touchstart', 'click', 'pointerdown', 'keydown'].forEach((evt) => {
+    window.addEventListener(evt, unlockSoundOnInteraction, { passive: true });
   });
 
   // تفعيل IntersectionObserver للتشغيل مع الصوت عند الوصول لقسم الفيديو
@@ -236,7 +236,9 @@ function initContactShowroomVideoControls() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (video.paused) {
+          if (soundUnlocked) {
+            playVideoWithAudio();
+          } else if (video.paused) {
             video.muted = true;
             video.play().catch(() => {});
           }
