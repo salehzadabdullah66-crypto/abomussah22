@@ -168,17 +168,17 @@
       );
     }
 
-    function unmuteAndPlay() {
-      video.muted = false;
+    function playVideo(withSound) {
+      video.muted = !withSound;
       const promise = video.play();
       if (promise !== undefined) {
         promise.then(() => {
-          if (soundBtn) {
+          if (soundBtn && withSound) {
             soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>الصوت يعمل 🔊</span>';
             soundBtn.classList.add('unmuted');
           }
         }).catch(() => {
-          // في حال واجه تقييداً من المتصفح قبل أول لمسة للمستخدم، يبدأ التشغيل ويكرر فك الكتم تلقائياً
+          // تشغيل صامت كاحتياط عند رفض المتصفح التشغيل مع الصوت.
           video.muted = true;
           video.play().catch(() => {});
           if (soundBtn) {
@@ -193,7 +193,7 @@
     const unlockAudioOnUserTouch = () => {
       if (isElementInViewport(videoSection)) {
         if (video.muted) {
-          unmuteAndPlay();
+          playVideo(true);
         }
       }
     };
@@ -207,7 +207,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            unmuteAndPlay();
+            playVideo(false);
           } else {
             video.pause();
           }
@@ -218,7 +218,7 @@
     } else {
       window.addEventListener('scroll', () => {
         if (isElementInViewport(videoSection)) {
-          unmuteAndPlay();
+          playVideo(false);
         } else {
           video.pause();
         }

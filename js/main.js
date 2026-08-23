@@ -458,7 +458,15 @@
       if (soundUnlocked) return;
       soundUnlocked = true;
       videos.forEach((video) => {
+        const rect = video.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!isVisible) return;
+
         video.muted = false;
+        video.play().catch(() => {
+          video.muted = true;
+          video.play().catch(() => {});
+        });
       });
     };
 
