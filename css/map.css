@@ -694,10 +694,10 @@
 }
 
 .map-app-nav-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-color);
+  background: rgba(20, 24, 34, 0.95);
+  border: 1.5px solid rgba(212, 175, 55, 0.3);
   border-radius: var(--radius-md);
-  padding: 14px 12px;
+  padding: 14px 14px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -705,28 +705,33 @@
   transition: var(--transition-fast);
   color: var(--text-primary);
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
 }
 
 [data-theme="light"] .map-app-nav-card {
-  background: rgba(0, 0, 0, 0.02);
+  background: #ffffff;
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .map-app-nav-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--gold-primary);
-  background: rgba(212, 175, 55, 0.08);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(212, 175, 55, 0.2);
+  background: rgba(30, 36, 50, 0.98);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.3);
 }
 
 .map-app-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 .map-app-icon.google {
@@ -753,25 +758,41 @@
 .map-app-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
+  flex: 1;
 }
 
 .map-app-name {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.94rem;
+  font-weight: 800;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .map-app-desc {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+[data-theme="light"] .map-app-desc {
+  color: #64748b;
+}
+
+.map-app-arrow {
+  font-size: 0.85rem;
+  color: var(--gold-primary);
+  opacity: 0.7;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin-right: auto;
+  flex-shrink: 0;
+}
+
+.map-app-nav-card:hover .map-app-arrow {
+  transform: translateX(-3px);
+  opacity: 1;
 }
 
 /* بطاقات إرشادات الوصول والاتجاهات (Access Guide Cards) */
@@ -937,6 +958,7 @@
   }
   .map-nav-hub-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
   .map-access-guide-grid {
     grid-template-columns: 1fr;
@@ -1121,36 +1143,37 @@
   }
 
   .map-navigation-hub {
-    padding: 16px 12px;
+    padding: 18px 14px;
   }
 
   .map-nav-hub-title {
     font-size: 0.95rem;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
+  /* بطاقات تطبيقات الملاحة في الهواتف: واضحة وكبيرة وعالية التباين */
   .map-nav-hub-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 10px;
   }
 
   .map-app-nav-card {
-    padding: 10px 8px;
-    gap: 8px;
+    padding: 12px 10px;
+    gap: 10px;
   }
 
   .map-app-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
   }
 
   .map-app-name {
-    font-size: 0.84rem;
+    font-size: 0.88rem;
   }
 
   .map-app-desc {
-    font-size: 0.7rem;
+    font-size: 0.74rem;
   }
 
   .map-tour-overlay {
@@ -1163,7 +1186,33 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
+  /* في الشاشات الصغيرة جداً: كل تطبيق في سطر كامل فائق الوضوح والسهولة */
+  .map-nav-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .map-app-nav-card {
+    padding: 14px 16px;
+    gap: 14px;
+  }
+
+  .map-app-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.35rem;
+  }
+
+  .map-app-name {
+    font-size: 0.96rem;
+  }
+
+  .map-app-desc {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+  }
+
   .map-landmark-chip {
     flex: 1 1 100%;
     font-size: 0.76rem;
@@ -1180,9 +1229,5 @@
 
   .map-layer-btn span {
     font-size: 0.72rem;
-  }
-
-  .map-nav-hub-grid {
-    grid-template-columns: 1fr 1fr;
   }
 }
