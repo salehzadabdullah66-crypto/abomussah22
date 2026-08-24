@@ -190,6 +190,18 @@
   cursor: pointer;
 }
 
+/* كارت استعراض الفيديو لقسم تواصل معنا للشاشات الكبيرة بحجم متناسق ومريح للعين */
+@media (min-width: 992px) {
+  .contact-showcase-video.owner-card-hero {
+    max-width: 860px !important;
+  }
+}
+@media (min-width: 1300px) {
+  .contact-showcase-video.owner-card-hero {
+    max-width: 940px !important;
+  }
+}
+
 /* خلفية الفيديو السينمائية المتطورة */
 .owner-card-bg {
   position: absolute;
