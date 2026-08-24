@@ -377,75 +377,77 @@
   }
 
   // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
-  // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو (Hero Owner Video Performance Optimizer)
+  // 14.2 تحسين أداء وتشغيل فيديو الانترو في الهيرو وقسم التواصل (Hero & Contact Owner Video Performance Optimizer)
   function initHeroOwnerVideo() {
-    const heroVideo = document.querySelector('.owner-full-video');
-    const heroCard = document.querySelector('.owner-card-hero');
-    if (!heroVideo) return;
+    const heroCards = document.querySelectorAll('.owner-card-hero');
+    if (!heroCards.length) return;
 
-    // إعدادات التوافق الأقصى والأداء السلس للهواتف المحمولة متصفح كروم
-    heroVideo.muted = true;
-    heroVideo.defaultMuted = true;
-    heroVideo.playsInline = true;
-    heroVideo.playbackRate = 1.0;
+    heroCards.forEach(heroCard => {
+      const heroVideo = heroCard.querySelector('.owner-full-video');
+      if (!heroVideo) return;
 
-    let isUserInteracted = false;
+      // إعدادات التوافق الأقصى والأداء السلس للهواتف المحمولة متصفح كروم
+      heroVideo.muted = true;
+      heroVideo.defaultMuted = true;
+      heroVideo.playsInline = true;
+      heroVideo.playbackRate = 1.0;
 
-    const playVideoSafely = () => {
-      if (heroVideo.paused) {
-        const playPromise = heroVideo.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            heroVideo.muted = true;
-            heroVideo.play().catch(() => {});
-          });
-        }
-      }
-    };
+      let isUserInteracted = false;
 
-    // تشغيل فوري
-    playVideoSafely();
-
-    // تفعيل التشغيل التلقائي عند أول تفاعل باللمس (بدون التكرار مع التمرير لمنع التقطيع)
-    const handleFirstInteraction = () => {
-      if (isUserInteracted) return;
-      isUserInteracted = true;
-      playVideoSafely();
-    };
-
-    ['pointerdown', 'touchstart', 'click'].forEach((evt) => {
-      window.addEventListener(evt, handleFirstInteraction, { passive: true, once: true });
-    });
-
-    // إيقاف التشغيل عند الخروج من الشاشة وتفعيله فقط عند الظهور لتوفير رامات ومعالج الهاتف ومنع التقطيع
-    if ('IntersectionObserver' in window) {
-      const heroObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            playVideoSafely();
-          } else {
-            if (!heroVideo.paused) {
-              heroVideo.pause();
-            }
+      const playVideoSafely = () => {
+        if (heroVideo.paused) {
+          const playPromise = heroVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              heroVideo.muted = true;
+              heroVideo.play().catch(() => {});
+            });
           }
-        });
-      }, { threshold: 0.15 });
+        }
+      };
 
-      heroObserver.observe(heroCard || heroVideo);
-    }
+      // تشغيل فوري
+      playVideoSafely();
 
-    // إدارة الرؤية وتبديل التبويبات
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (!heroVideo.paused) heroVideo.pause();
-      } else {
+      // تفعيل التشغيل التلقائي عند أول تفاعل باللمس (بدون التكرار مع التمرير لمنع التقطيع)
+      const handleFirstInteraction = () => {
+        if (isUserInteracted) return;
+        isUserInteracted = true;
         playVideoSafely();
-      }
-    });
+      };
 
-    if (heroCard) {
+      ['pointerdown', 'touchstart', 'click'].forEach((evt) => {
+        window.addEventListener(evt, handleFirstInteraction, { passive: true, once: true });
+      });
+
+      // إيقاف التشغيل عند الخروج من الشاشة وتفعيله فقط عند الظهور لتوفير رامات ومعالج الهاتف ومنع التقطيع
+      if ('IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              playVideoSafely();
+            } else {
+              if (!heroVideo.paused) {
+                heroVideo.pause();
+              }
+            }
+          });
+        }, { threshold: 0.15 });
+
+        heroObserver.observe(heroCard);
+      }
+
+      // إدارة الرؤية وتبديل التبويبات
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (!heroVideo.paused) heroVideo.pause();
+        } else {
+          playVideoSafely();
+        }
+      });
+
       heroCard.addEventListener('click', playVideoSafely);
-    }
+    });
   }
 
   // 15. التشغيل التلقائي للفيديو عند التمرير والنزول مع إيقاظ الصوت تلقائياً للشاشات الكبيرة والصغيرة

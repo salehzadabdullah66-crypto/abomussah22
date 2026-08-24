@@ -375,81 +375,99 @@
       <div class="container">
         <div class="hero-grid" style="align-items:start;">
           
-          <!-- VIP Modern Contact Form Card -->
-          <div class="contact-form-card-vip scroll-reveal">
-            <div class="form-vip-header">
-              <span class="form-vip-badge"><i class="fas fa-crown"></i> خدمة VIP المباشرة</span>
-              <h2 class="form-vip-title">أرسل <span>رسالتك المباشرة</span></h2>
-              <p class="form-vip-desc">يسعدنا الإجابة عن كافة استفساراتكم وتوفير سيارة أحلامكم بأسرع وقت تحت إشراف أبو موسى</p>
+          <!-- VIP Modern Contact Column (Form + Intro Showcase Video Replica) -->
+          <div class="scroll-reveal" style="display:flex; flex-direction:column; gap:25px;">
+            <!-- VIP Modern Contact Form Card -->
+            <div class="contact-form-card-vip">
+              <div class="form-vip-header">
+                <span class="form-vip-badge"><i class="fas fa-crown"></i> خدمة VIP المباشرة</span>
+                <h2 class="form-vip-title">أرسل <span>رسالتك المباشرة</span></h2>
+                <p class="form-vip-desc">يسعدنا الإجابة عن كافة استفساراتكم وتوفير سيارة أحلامكم بأسرع وقت تحت إشراف أبو موسى</p>
+              </div>
+
+              <!-- Topic Selector Chips -->
+              <div class="topic-selector-chips">
+                <button type="button" class="topic-chip active" data-topic="شراء سيارة فاخرة"><i class="fas fa-car"></i> شراء سيارة</button>
+                <button type="button" class="topic-chip" data-topic="طلب تقسيط وتمويل"><i class="fas fa-calculator"></i> تقسيط وتمويل</button>
+                <button type="button" class="topic-chip" data-topic="تبديل وتثمين سيارة"><i class="fas fa-sync-alt"></i> تبديل وتثمين</button>
+                <button type="button" class="topic-chip" data-topic="استشارة أبو موسى"><i class="fas fa-crown"></i> استشارة أبو موسى</button>
+              </div>
+
+              <form id="contact-form" novalidate>
+                <div class="form-row-2">
+                  <div class="form-group form-group-animated">
+                    <label class="form-label">الاسم الكامل <span>*</span>:</label>
+                    <div class="input-icon-wrap">
+                      <i class="fas fa-user input-icon"></i>
+                      <input type="text" id="contact-name" class="form-control form-control-icon" placeholder="أدخل اسمك الكامل..." required>
+                    </div>
+                  </div>
+
+                  <div class="form-group form-group-animated">
+                    <label class="form-label">رقم الهاتف / الواتساب <span>*</span>:</label>
+                    <div class="input-icon-wrap">
+                      <i class="fas fa-phone-alt input-icon"></i>
+                      <input type="tel" id="contact-phone" class="form-control form-control-icon" placeholder="05XXXXXXXX..." required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group form-group-animated">
+                    <label class="form-label">البريد الإلكتروني <span>*</span>:</label>
+                    <div class="input-icon-wrap">
+                      <i class="fas fa-envelope input-icon"></i>
+                      <input type="email" id="contact-email" class="form-control form-control-icon" placeholder="example@domain.com" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group form-group-animated">
+                    <label class="form-label">نوع الموضوع / الخدمة <span>*</span>:</label>
+                    <div class="input-icon-wrap">
+                      <i class="fas fa-concierge-bell input-icon"></i>
+                      <select id="contact-topic" class="form-select form-control-icon">
+                        <option value="شراء سيارة فاخرة">شراء سيارة فاخرة</option>
+                        <option value="طلب تقسيط وتمويل">طلب تقسيط وتمويل</option>
+                        <option value="تبديل وتثمين سيارة">تبديل وتثمين سيارة</option>
+                        <option value="استشارة أبو موسى المباشرة">استشارة أبو موسى المباشرة</option>
+                        <option value="خدمات ما بعد البيع والضمان">خدمات ما بعد البيع والضمان</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group form-group-animated">
+                  <label class="form-label">تفاصيل الرسالة أو الطلب <span>*</span>:</label>
+                  <div class="input-icon-wrap">
+                    <i class="fas fa-comment-dots input-icon" style="top:25px;"></i>
+                    <textarea id="contact-message" class="form-control form-control-icon" placeholder="اكتب تفاصيل طلبك أو طراز السيارة المطلوب هنا..." required></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-gold btn-lg btn-send-animated btn-vip-submit" style="width:100%;">
+                  <i class="fas fa-paper-plane"></i> إرسال الرسالة المباشرة الآن
+                </button>
+
+                <!-- Alerts -->
+                <div id="contact-alert-success" class="alert-msg alert-success"></div>
+                <div id="contact-alert-error" class="alert-msg alert-error"></div>
+              </form>
             </div>
 
-            <!-- Topic Selector Chips -->
-            <div class="topic-selector-chips">
-              <button type="button" class="topic-chip active" data-topic="شراء سيارة فاخرة"><i class="fas fa-car"></i> شراء سيارة</button>
-              <button type="button" class="topic-chip" data-topic="طلب تقسيط وتمويل"><i class="fas fa-calculator"></i> تقسيط وتمويل</button>
-              <button type="button" class="topic-chip" data-topic="تبديل وتثمين سيارة"><i class="fas fa-sync-alt"></i> تبديل وتثمين</button>
-              <button type="button" class="topic-chip" data-topic="استشارة أبو موسى"><i class="fas fa-crown"></i> استشارة أبو موسى</button>
+            <!-- Video Intro Showcase Card (Exact Replica of Hero Intro with New Video) -->
+            <div class="owner-card-hero" style="max-width: 100%;">
+              <div class="owner-card-bg">
+                <video class="owner-full-img owner-full-video" autoplay muted loop playsinline webkit-playsinline x5-playsinline disablePictureInPicture disableRemotePlayback preload="auto" poster="img/aboomussa11.jpg">
+                  <source src="videos/video287saa77123.mp4" type="video/mp4">
+                  <source src="videos/video287saa77123.mp4.mp4" type="video/mp4">
+                </video>
+                <div class="owner-card-overlay"></div>
+              </div>
+              <!-- Video Watermark / Corner Logo -->
+              <div class="video-corner-logo" title="معرض آية لتجارة السيارات - أبو موسى">
+                <img src="img/logo_transparent.png" alt="شعار معرض آية لتجارة السيارات" class="video-watermark-img">
+              </div>
             </div>
-
-            <form id="contact-form" novalidate>
-              <div class="form-row-2">
-                <div class="form-group form-group-animated">
-                  <label class="form-label">الاسم الكامل <span>*</span>:</label>
-                  <div class="input-icon-wrap">
-                    <i class="fas fa-user input-icon"></i>
-                    <input type="text" id="contact-name" class="form-control form-control-icon" placeholder="أدخل اسمك الكامل..." required>
-                  </div>
-                </div>
-
-                <div class="form-group form-group-animated">
-                  <label class="form-label">رقم الهاتف / الواتساب <span>*</span>:</label>
-                  <div class="input-icon-wrap">
-                    <i class="fas fa-phone-alt input-icon"></i>
-                    <input type="tel" id="contact-phone" class="form-control form-control-icon" placeholder="05XXXXXXXX..." required>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-row-2">
-                <div class="form-group form-group-animated">
-                  <label class="form-label">البريد الإلكتروني <span>*</span>:</label>
-                  <div class="input-icon-wrap">
-                    <i class="fas fa-envelope input-icon"></i>
-                    <input type="email" id="contact-email" class="form-control form-control-icon" placeholder="example@domain.com" required>
-                  </div>
-                </div>
-
-                <div class="form-group form-group-animated">
-                  <label class="form-label">نوع الموضوع / الخدمة <span>*</span>:</label>
-                  <div class="input-icon-wrap">
-                    <i class="fas fa-concierge-bell input-icon"></i>
-                    <select id="contact-topic" class="form-select form-control-icon">
-                      <option value="شراء سيارة فاخرة">شراء سيارة فاخرة</option>
-                      <option value="طلب تقسيط وتمويل">طلب تقسيط وتمويل</option>
-                      <option value="تبديل وتثمين سيارة">تبديل وتثمين سيارة</option>
-                      <option value="استشارة أبو موسى المباشرة">استشارة أبو موسى المباشرة</option>
-                      <option value="خدمات ما بعد البيع والضمان">خدمات ما بعد البيع والضمان</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group form-group-animated">
-                <label class="form-label">تفاصيل الرسالة أو الطلب <span>*</span>:</label>
-                <div class="input-icon-wrap">
-                  <i class="fas fa-comment-dots input-icon" style="top:25px;"></i>
-                  <textarea id="contact-message" class="form-control form-control-icon" placeholder="اكتب تفاصيل طلبك أو طراز السيارة المطلوب هنا..." required></textarea>
-                </div>
-              </div>
-
-              <button type="submit" class="btn btn-gold btn-lg btn-send-animated btn-vip-submit" style="width:100%;">
-                <i class="fas fa-paper-plane"></i> إرسال الرسالة المباشرة الآن
-              </button>
-
-              <!-- Alerts -->
-              <div id="contact-alert-success" class="alert-msg alert-success"></div>
-              <div id="contact-alert-error" class="alert-msg alert-error"></div>
-            </form>
           </div>
 
           <!-- Contact Details & Map -->
