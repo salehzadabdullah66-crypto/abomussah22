@@ -53,10 +53,44 @@
     "footer_title_contact": { ar: 'تواصل معنا', en: 'Contact Us' },
     "footer_contact_location": { ar: 'موقع شركة آية لتجارة السيارات - دخولية مدينة الباب - دوار سوق الهال', en: 'Aya Car Trading Showroom - Al-Bab City Entrance, Al-Hal Market R/A' },
     "footer_contact_whatsapp": { ar: 'محادثة واتساب مباشرة', en: 'Direct WhatsApp Chat' },
-    "footer_copyright": { ar: 'جميع الحقوق محفوظة © 2026 <strong>معرض آية لتجارة السيارات - برئاسة أبو موسى</strong>', en: 'All Rights Reserved © 2026 <strong>Aya Car Trading Showroom - Headed by Abu Mousa</strong>', html: true }
+    "footer_copyright": { ar: 'جميع الحقوق محفوظة © 2026 <strong>معرض آية لتجارة السيارات - برئاسة أبو موسى</strong>', en: 'All Rights Reserved © 2026 <strong>Aya Car Trading Showroom - Headed by Abu Mousa</strong>', html: true },
+
+    // بطاقة أوقات العمل والضمانات الملكية في صفحة التواصل
+    "contact_hours_title": { ar: 'أوقات العمل <span>والاستقبال الملكي</span>', en: 'Working Hours & <span>Royal Reception</span>', html: true },
+    "contact_hours_desc": { ar: 'نستقبلكم طيلة أيام الأسبوع لتقديم أفضل الاستشارات والصفقات', en: 'We welcome you 7 days a week to provide the finest consultations and deals' },
+    "contact_schedule_days": { ar: 'متاحون لخدمتكم واستقبالكم طيلة أيام الأسبوع', en: 'Available to serve and welcome you 7 days a week' },
+    "contact_schedule_hours": { ar: '9:00 صباحاً – 10:00 مساءً', en: '9:00 AM – 10:00 PM' },
+    "contact_schedule_badge": { ar: '<i class="fas fa-circle"></i> <span>نسعد بزيارتكم وتلبية كافة طلباتكم فوراً</span>', en: '<i class="fas fa-circle"></i> <span>Delighted to welcome you and fulfill all requests instantly</span>', html: true },
+    "contact_guarantee_header": { ar: '<i class="fas fa-shield-alt"></i> <span>مزايا وضمانات المعرض برعاية وإشراف أبو موسى</span>', en: '<i class="fas fa-shield-alt"></i> <span>Showroom Advantages & Guarantees supervised by Abu Mousa</span>', html: true },
+    "contact_guarantee_1": { ar: 'فحص فني شامل 100% للمحرك والشاسيه والهيكل', en: '100% comprehensive technical inspection for engine, chassis & body' },
+    "contact_guarantee_2": { ar: 'استشارة مباشرة وتفاوض ميسر مع مالك المعرض', en: 'Direct consultation & flexible negotiation with showroom owner' },
+    "contact_guarantee_3": { ar: 'تسهيلات دفع وتقسيط وتبديل فوري معتمد', en: 'Certified flexible financing, installments & instant trade-in' },
+
+    // عناوين وبطاقات قسم الخريطة التفاعلية
+    "map_section_badge": { ar: '<i class="fas fa-map-marked-alt"></i> <span>الموقع الجغرافي المباشر</span>', en: '<i class="fas fa-map-marked-alt"></i> <span>Direct GPS Location</span>', html: true },
+    "map_section_title": { ar: 'الموقع المباشر <span>لمعرض آية للسيارات</span>', en: 'Live Location <span>of Aya Car Showroom</span>', html: true },
+    "map_section_subtitle": { ar: 'تفضل بزيارتنا في موقعنا المباشر الموضّح أدناه، أو استخدم خيارات الملاحة الفورية والتوجيه المباشر', en: 'Visit us at our live location below, or use instant navigation and direct GPS routing' },
+    "map_showroom_title_header": { ar: 'معرض آية لتجارة السيارات - إدارة أبو موسى', en: 'Aya Car Trading Showroom - Abu Mousa Management' },
+    "map_guide_title_1": { ar: 'الوصول من طريق حلب - الباب', en: 'Access from Aleppo - Al-Bab Highway' },
+    "map_guide_desc_1": { ar: 'دقيقتان فقط من المدخل الرئيسي لمدينة الباب باتجاه دوار سوق الهال مباشرة، المعرض يقع على الواجهة الرئيسية.', en: 'Just 2 minutes from the main entrance of Al-Bab towards Al-Hal Market Roundabout, located on the main front.' },
+    "map_guide_title_2": { ar: 'مواقف VIP مجانية وواسعة', en: 'Free & Spacious VIP Parking' },
+    "map_guide_desc_2": { ar: 'تتوفر مساحات ومواقف سيارات واسعة ومظللة مخصصة لكافة زوار وعملاء المعرض لتجربة مريحة وسلسة.', en: 'Spacious and shaded parking spaces are available for all visitors and clients for a comfortable experience.' },
+    "map_guide_title_3": { ar: 'أوقات الاستقبال والزيارة', en: 'Reception & Visiting Hours' },
+    "map_guide_desc_3": { ar: 'نستقبلكم يومياً طوال أيام الأسبوع من الساعة 9:00 صباحاً وحتى الساعة 10:00 مساءً مع تجربة قيادة مجانية.', en: 'We welcome you daily 7 days a week from 9:00 AM to 10:00 PM with complimentary test drives.' }
   };
 
-                    const dictionary = {
+  const dictionary = {
+    "أوقات العمل والاستقبال الملكي": "Working Hours & Royal Reception",
+    "أوقات العمل <span>والاستقبال الملكي</span>": "Working Hours & <span>Royal Reception</span>",
+    "نستقبلكم طيلة أيام الأسبوع لتقديم أفضل الاستشارات والصفقات": "We welcome you 7 days a week to provide the finest consultations and deals",
+    "متاحون لخدمتكم واستقبالكم طيلة أيام الأسبوع": "Available to serve and welcome you 7 days a week",
+    "9:00 صباحاً – 10:00 مساءً": "9:00 AM – 10:00 PM",
+    "9:00 صباحاً - 10:00 مساءً": "9:00 AM – 10:00 PM",
+    "نسعد بزيارتكم وتلبية كافة طلباتكم فوراً": "Delighted to welcome you and fulfill all requests instantly",
+    "مزايا وضمانات المعرض برعاية وإشراف أبو موسى": "Showroom Advantages & Guarantees supervised by Abu Mousa",
+    "فحص فني شامل 100% للمحرك والشاسيه والهيكل": "100% comprehensive technical inspection for engine, chassis & body",
+    "استشارة مباشرة وتفاوض ميسر مع مالك المعرض": "Direct consultation & flexible negotiation with showroom owner",
+    "تسهيلات دفع وتقسيط وتبديل فوري معتمد": "Certified flexible financing, installments & instant trade-in",
     "الموقع المباشر لمعرض آية للسيارات": "Live Location of Aya Car Showroom",
     "الموقع المباشر <span>لمعرض آية للسيارات</span>": "Live Location <span>of Aya Car Showroom</span>",
     "تفضل بزيارتنا في موقعنا المباشر الموضّح أدناه، أو استخدم خيارات الملاحة الفورية والتوجيه المباشر": "Visit us at our live location below, or use instant navigation and direct GPS routing",
@@ -69,6 +103,7 @@
     "مركز مدينة الباب (5 دقائق)": "Al-Bab City Center (5 min)",
     "مواقف المعرض VIP": "Showroom VIP Parking",
     "طريق الراعي (6 دقائق)": "Al-Rai Road (6 min)",
+    "26°C طقس صافٍ وحركة السير سالكة": "26°C • Clear Weather & Smooth Traffic",
     "26°C • طقس مدينة الباب": "26°C • Al-Bab City Weather",
     "الرؤية ممتازة وحركة السير سالكة": "Clear visibility & smooth traffic",
     "شاشة السيارة (QR)": "In-Car Screen (QR)",
@@ -87,7 +122,9 @@
     "افتح الملاحة المباشرة (GPS)": "Open Live GPS Navigation",
     "احسب المسافة من موقعي الحالي": "Calculate Distance from My Location",
     "اختر تطبيق الملاحة المفضل للوصول المباشر إلى المعرض:": "Choose your preferred navigation app for direct directions to the showroom:",
+    "التوجيه الحي والمباشر (GPS)": "Live & Direct Navigation (GPS)",
     "التوجيه الحي والمباشر": "Live & Direct Routing",
+    "لأجهزة iPhone و Apple CarPlay": "For iPhone & Apple CarPlay",
     "لأجهزة iPhone و Apple": "For iPhone & Apple Devices",
     "تفادي الازدحام والمسار الأسرع": "Avoid Traffic & Fastest Route",
     "الوصول من طريق حلب - الباب": "Access from Aleppo - Al-Bab Highway",
@@ -1468,7 +1505,10 @@
           return;
         }
 
-        const orig = node._origText !== undefined ? node._origText : node.nodeValue;
+        if (node._origText === undefined) {
+          node._origText = node.nodeValue;
+        }
+        const orig = node._origText;
         if (!orig || !orig.trim()) return;
 
         if (!isEn) {
@@ -1491,7 +1531,7 @@
 
           let val = orig;
           arKeysSorted.forEach((key) => {
-            if (val.includes(key)) {
+            if (key.length >= 4 && val.includes(key)) {
               val = val.split(key).join(dictionary[key]);
             }
           });
@@ -1652,6 +1692,16 @@
         }
       }
     });
+
+    // 7. تحديث نصوص الخريطة التفاعلية الفاخرة
+    try {
+      window.dispatchEvent(new CustomEvent('ayaLanguageChanged', { detail: { lang: lang, isEn: isEn } }));
+      if (typeof window.updateMapLanguage === 'function') {
+        window.updateMapLanguage(lang);
+      }
+    } catch (e) {
+      console.warn('Map language update error:', e);
+    }
   }
 
   window.ayaApplyTranslation = applyTranslation;

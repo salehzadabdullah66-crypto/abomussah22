@@ -1,5 +1,6 @@
 /* ==========================================================================
    معرض آية لتجارة السيارات - الجافاسكربت التفاعلي الشامل للخريطة الملكية (contact-map.js)
+   يدعم الترجمة اللغوية الفورية الكاملة (Arabic & English Multilingual Support)
    ========================================================================== */
 
 (function () {
@@ -10,37 +11,52 @@
   const SHOWROOM_LNG = 37.4959483;
   const SHOWROOM_COORDS = [SHOWROOM_LAT, SHOWROOM_LNG];
 
-  // شبكة المعالم ونقاط الانطلاق المحيطة (Landmarks & Departure Points)
+  // شبكة المعالم ونقاط الانطلاق المحيطة (Landmarks & Departure Points with full i18n)
   const landmarks = {
     hal_roundabout: {
-      name: "دوار سوق الهال (المدخل المباشر)",
+      name_ar: "دوار سوق الهال (المدخل المباشر)",
+      name_en: "Al-Hal Roundabout (Direct Entrance)",
       coords: [36.350650, 37.494700],
-      desc: "نقطة الدخول الرئيسية والمباشرة لواجهة صالة المعرض (أقل من دقيقة)",
-      driveTime: "1 دقيقة"
+      desc_ar: "نقطة الدخول الرئيسية والمباشرة لواجهة صالة المعرض (أقل من دقيقة)",
+      desc_en: "Main direct entrance point to showroom frontage (under 1 min)",
+      driveTime_ar: "1 دقيقة",
+      driveTime_en: "1 min"
     },
     aleppo_highway: {
-      name: "طريق حلب - الباب (المدخل الغربي)",
+      name_ar: "طريق حلب - الباب (المدخل الغربي)",
+      name_en: "Aleppo - Al-Bab Highway (West Entrance)",
       coords: [36.347800, 37.480200],
-      desc: "المدخل السريع القادم من اتجاه حلب وريفها الغربي مباشرة للمعرض",
-      driveTime: "2 دقيقة"
+      desc_ar: "المدخل السريع القادم من اتجاه حلب وريفها الغربي مباشرة للمعرض",
+      desc_en: "Express entrance directly from Aleppo & western countryside to showroom",
+      driveTime_ar: "2 دقيقة",
+      driveTime_en: "2 min"
     },
     city_center: {
-      name: "مركز مدينة الباب (الجامع الكبير / السوق)",
+      name_ar: "مركز مدينة الباب (الجامع الكبير / السوق)",
+      name_en: "Al-Bab City Center (Grand Mosque / Market)",
       coords: [36.370500, 37.514000],
-      desc: "قلب مدينة الباب والأسواق المركزية باتجاه دوار سوق الهال",
-      driveTime: "5 دقائق"
+      desc_ar: "قلب مدينة الباب والأسواق المركزية باتجاه دوار سوق الهال",
+      desc_en: "Heart of Al-Bab city & central markets towards Al-Hal Roundabout",
+      driveTime_ar: "5 دقائق",
+      driveTime_en: "5 min"
     },
     vip_parking: {
-      name: "مواقف زوار المعرض VIP",
+      name_ar: "مواقف زوار المعرض VIP",
+      name_en: "Showroom VIP Parking",
       coords: [36.350100, 37.496400],
-      desc: "مواقف سيارات مظللة ومجانية مخصصة لعملاء وزوار معرض آية",
-      driveTime: "مباشر أمام المعرض"
+      desc_ar: "مواقف سيارات مظللة ومجانية مخصصة لعملاء وزوار معرض آية",
+      desc_en: "Free shaded parking spaces dedicated for Aya Showroom clients and visitors",
+      driveTime_ar: "مباشر أمام المعرض",
+      driveTime_en: "Directly in front of showroom"
     },
     al_rai_road: {
-      name: "طريق الراعي - الباب (المدخل الشمالي)",
+      name_ar: "طريق الراعي - الباب (المدخل الشمالي)",
+      name_en: "Al-Rai - Al-Bab Road (North Entrance)",
       coords: [36.378000, 37.499000],
-      desc: "المدخل الشمالي القادم من اتجاه الراعي والحدود مباشرة",
-      driveTime: "6 دقائق"
+      desc_ar: "المدخل الشمالي القادم من اتجاه الراعي والحدود مباشرة",
+      desc_en: "North entrance directly from Al-Rai and border direction",
+      driveTime_ar: "6 دقائق",
+      driveTime_en: "6 min"
     }
   };
 
@@ -48,8 +64,11 @@
   let currentTileLayer = null;
   let activeRoutePolyline = null;
   let activeLandmarkMarker = null;
+  let activeLandmarkKey = null;
   let userRoutePolyline = null;
   let userMarker = null;
+  let showroomMarker = null;
+  let halGuideMarker = null;
   let deliveryCircles = [];
   let isTourRunning = false;
   let tourTimeouts = [];
@@ -81,7 +100,11 @@
     }
   };
 
-  // تشغيل التهيئة عند جاهزية المستند مع محاولات إعادة في حال تأخر تحميل المكتبة
+  function getCurrentLang() {
+    return (document.documentElement.getAttribute('lang') || localStorage.getItem('aya_car_lang') || 'ar').toLowerCase();
+  }
+
+  // تشغيل التهيئة عند جاهزية المستند
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startInitialization);
   } else {
@@ -143,7 +166,12 @@
     setupCinematicTour();
     setupModals();
 
-    // تحديث أبعاد الخريطة عند تغيير حجم الشاشة أو تدوير الهاتف
+    // الاستماع لتغيير اللغة لتحديث عناصر الخريطة التفاعلية فوراً
+    window.addEventListener('ayaLanguageChanged', (e) => {
+      const lang = e.detail && e.detail.lang ? e.detail.lang : getCurrentLang();
+      updateMapLanguage(lang);
+    });
+
     window.addEventListener('resize', () => {
       if (royalMap) {
         royalMap.invalidateSize();
@@ -152,10 +180,48 @@
   }
 
   /**
+   * إنشاء محتوى النافذة المنبثقة بحسب اللغة النشطة
+   */
+  function getShowroomPopupContent(lang) {
+    const isEn = lang === 'en';
+    const title = isEn ? 'Aya Car Trading Showroom' : 'معرض آية لتجارة السيارات';
+    const subtitle = isEn ? 'Al-Bab City - Al-Hal Roundabout' : 'مدينة الباب - دوار سوق الهال';
+    const status = isEn ? 'Open Now until 10:00 PM' : 'مفتوح الآن لغاية 10:00 مساءً';
+    const btnNav = isEn ? 'Start Navigation' : 'بدء الملاحة';
+    const btnWa = isEn ? 'WhatsApp' : 'واتساب';
+    const dirStyle = isEn ? 'ltr' : 'rtl';
+    const textAlign = isEn ? 'left' : 'right';
+
+    return `
+      <div class="royal-popup-body" style="direction:${dirStyle}; text-align:${textAlign}; font-family:${isEn ? 'var(--font-en)' : 'var(--font-primary)'};">
+        <div class="royal-popup-title" style="display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-gem" style="color:var(--gold-primary);"></i> ${title}
+        </div>
+        <div class="royal-popup-sub" style="margin:4px 0 6px 0; color:var(--text-secondary); font-size:0.82rem;">
+          <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); margin-left:4px; margin-right:4px;"></i>
+          ${subtitle}
+        </div>
+        <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:8px;">
+          <i class="fas fa-door-open"></i> ${status}
+        </div>
+        <div class="royal-popup-buttons" style="display:flex; gap:6px;">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${SHOWROOM_LAT},${SHOWROOM_LNG}" target="_blank" class="map-action-btn-primary" style="font-size:0.76rem; padding:6px 10px; border-radius:4px; text-decoration:none;">
+            <i class="fas fa-directions"></i> ${btnNav}
+          </a>
+          <a href="https://wa.me/963959124771" target="_blank" class="map-action-btn-secondary" style="font-size:0.76rem; padding:6px 10px; color:#25D366; border-color:#25D366; border-radius:4px; text-decoration:none;">
+            <i class="fab fa-whatsapp"></i> ${btnWa}
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  /**
    * بناء وضبط خريطة Leaflet الملكية
    */
   function setupLeafletMap() {
     const isMobile = window.innerWidth <= 768;
+    const currentLang = getCurrentLang();
 
     royalMap = L.map('leaflet-royal-map', {
       center: SHOWROOM_COORDS,
@@ -194,36 +260,12 @@
       popupAnchor: [0, -45]
     });
 
-    const showroomMarker = L.marker(SHOWROOM_COORDS, {
+    showroomMarker = L.marker(SHOWROOM_COORDS, {
       icon: customRoyalIcon,
       title: 'معرض آية لتجارة السيارات - أبو موسى'
     }).addTo(royalMap);
 
-    // محتوى النافذة المنبثقة التفاعلية الفاخرة
-    const popupContent = `
-      <div class="royal-popup-body">
-        <div class="royal-popup-title">
-          <i class="fas fa-gem" style="color:var(--gold-primary);"></i> معرض آية لتجارة السيارات
-        </div>
-        <div class="royal-popup-sub">
-          <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); margin-left:4px;"></i>
-          مدينة الباب - دوار سوق الهال
-        </div>
-        <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:8px;">
-          <i class="fas fa-door-open"></i> مفتوح الآن لغاية 10:00 مساءً
-        </div>
-        <div class="royal-popup-buttons">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${SHOWROOM_LAT},${SHOWROOM_LNG}" target="_blank" class="map-action-btn-primary" style="font-size:0.76rem; padding:6px 10px;">
-            <i class="fas fa-directions"></i> بدء الملاحة
-          </a>
-          <a href="https://wa.me/963959124771" target="_blank" class="map-action-btn-secondary" style="font-size:0.76rem; padding:6px 10px; color:#25D366; border-color:#25D366;">
-            <i class="fab fa-whatsapp"></i> واتساب
-          </a>
-        </div>
-      </div>
-    `;
-
-    showroomMarker.bindPopup(popupContent, {
+    showroomMarker.bindPopup(getShowroomPopupContent(currentLang), {
       maxWidth: isMobile ? 260 : 290,
       minWidth: isMobile ? 200 : 230,
       autoPan: true,
@@ -232,31 +274,89 @@
       closeButton: true
     }).openPopup();
 
-    addShowroomVisualGuides();
+    addShowroomVisualGuides(currentLang);
 
-    // تأكيد تحديث أبعاد الخريطة بعد التحميل لتفادي المربعات الرمادية
     setTimeout(() => {
       if (royalMap) royalMap.invalidateSize();
     }, 400);
   }
 
   /**
-   * إضافة علامات استرشادية دائمة
+   * إضافة علامات استرشادية دائمة مع دعم الترجمة
    */
-  function addShowroomVisualGuides() {
+  function addShowroomVisualGuides(lang) {
     if (!royalMap) return;
+    const isEn = lang === 'en';
+    const halLabel = isEn ? 'Al-Hal Roundabout' : 'دوار سوق الهال';
 
     try {
+      if (halGuideMarker) {
+        royalMap.removeLayer(halGuideMarker);
+      }
+
       const halIcon = L.divIcon({
-        html: `<div style="background:rgba(14,17,24,0.92); border:1.5px solid #D4AF37; color:#D4AF37; font-size:0.72rem; font-weight:800; padding:3px 10px; border-radius:14px; white-space:nowrap; box-shadow:0 3px 10px rgba(0,0,0,0.6); cursor:pointer;"><i class="fas fa-circle-notch"></i> دوار سوق الهال</div>`,
+        html: `<div style="background:rgba(14,17,24,0.92); border:1.5px solid #D4AF37; color:#D4AF37; font-size:0.72rem; font-weight:800; padding:3px 10px; border-radius:14px; white-space:nowrap; box-shadow:0 3px 10px rgba(0,0,0,0.6); cursor:pointer;"><i class="fas fa-circle-notch"></i> ${halLabel}</div>`,
         className: 'landmark-marker-label',
         iconAnchor: [50, 15]
       });
-      L.marker(landmarks.hal_roundabout.coords, { icon: halIcon }).addTo(royalMap);
+
+      halGuideMarker = L.marker(landmarks.hal_roundabout.coords, { icon: halIcon }).addTo(royalMap);
     } catch (e) {
       console.warn('Could not add visual guides:', e);
     }
   }
+
+  /**
+   * تحديث لغة الخريطة الملكية فورياً لجميع المكونات
+   */
+  function updateMapLanguage(lang) {
+    const isEn = lang === 'en';
+
+    // 1. تحديث محتوى نافذة المعرض المنبثقة
+    if (showroomMarker) {
+      const popup = showroomMarker.getPopup();
+      if (popup) {
+        popup.setContent(getShowroomPopupContent(lang));
+      }
+    }
+
+    // 2. تحديث العلامات الاسترشادية
+    addShowroomVisualGuides(lang);
+
+    // 3. تحديث نافذة نقطة الانطلاق النشطة
+    if (activeLandmarkMarker && activeLandmarkKey && landmarks[activeLandmarkKey]) {
+      const target = landmarks[activeLandmarkKey];
+      const name = isEn ? target.name_en : target.name_ar;
+      const desc = isEn ? target.desc_en : target.desc_ar;
+      const eta = isEn ? target.driveTime_en : target.driveTime_ar;
+      const etaLabel = isEn ? 'ETA to Showroom:' : 'زمن الوصول للمعرض:';
+      const dir = isEn ? 'ltr' : 'rtl';
+      const align = isEn ? 'left' : 'right';
+
+      activeLandmarkMarker.setPopupContent(`
+        <div style="direction:${dir}; text-align:${align}; font-family:${isEn ? 'var(--font-en)' : 'var(--font-primary)'};">
+          <strong style="color:var(--gold-primary); font-size:0.95rem;">${name}</strong>
+          <p style="margin:4px 0 0 0; font-size:0.8rem; color:#ccc;">${desc}</p>
+          <div style="margin-top:6px; font-size:0.8rem; color:#25D366; font-weight:700;"><i class="fas fa-car"></i> ${etaLabel} ${eta}</div>
+        </div>
+      `);
+    }
+
+    // 4. تحديث دوائر نطاقات التوصيل في حال كانت نشطة
+    if (deliveryCircles && deliveryCircles.length === 2) {
+      const z1Text = isEn 
+        ? '<strong>Al-Bab City Zone</strong>: Home test drive & instant delivery within 30 min.' 
+        : '<strong>نطاق مدينة الباب</strong>: تجربة قيادة منزلية وتوصيل فوري خلال 30 دقيقة.';
+      const z2Text = isEn 
+        ? '<strong>Aleppo Countryside Zone</strong>: Free VIP shipping in enclosed carriers.' 
+        : '<strong>نطاق ريف حلب</strong>: شحن VIP مجاني بمركبات مغلقة.';
+
+      deliveryCircles[0].setPopupContent(z1Text);
+      deliveryCircles[1].setPopupContent(z2Text);
+    }
+  }
+
+  window.updateMapLanguage = updateMapLanguage;
 
   /**
    * شريط الانطلاق السريع للمعالم ورسم المسارات الحية
@@ -268,7 +368,7 @@
     chips.forEach(chip => {
       chip.addEventListener('click', (e) => {
         e.preventDefault();
-        stopTour(); // إيقاف الجولة في حال كانت تعمل
+        stopTour();
 
         chips.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
@@ -276,6 +376,10 @@
         const landmarkKey = chip.getAttribute('data-landmark');
         const target = landmarks[landmarkKey];
         if (!target || !royalMap) return;
+
+        activeLandmarkKey = landmarkKey;
+        const currentLang = getCurrentLang();
+        const isEn = currentLang === 'en';
 
         // إزالة المسار والماركر السابقين
         if (activeRoutePolyline) royalMap.removeLayer(activeRoutePolyline);
@@ -288,12 +392,19 @@
           iconAnchor: [17, 34]
         });
 
+        const name = isEn ? target.name_en : target.name_ar;
+        const desc = isEn ? target.desc_en : target.desc_ar;
+        const eta = isEn ? target.driveTime_en : target.driveTime_ar;
+        const etaLabel = isEn ? 'ETA to Showroom:' : 'زمن الوصول للمعرض:';
+        const dir = isEn ? 'ltr' : 'rtl';
+        const align = isEn ? 'left' : 'right';
+
         activeLandmarkMarker = L.marker(target.coords, { icon: landmarkIcon }).addTo(royalMap);
         activeLandmarkMarker.bindPopup(`
-          <div style="direction:rtl; text-align:right; font-family:var(--font-primary);">
-            <strong style="color:var(--gold-primary); font-size:0.95rem;">${target.name}</strong>
-            <p style="margin:4px 0 0 0; font-size:0.8rem; color:#ccc;">${target.desc}</p>
-            <div style="margin-top:6px; font-size:0.8rem; color:#25D366; font-weight:700;"><i class="fas fa-car"></i> زمن الوصول للمعرض: ${target.driveTime}</div>
+          <div style="direction:${dir}; text-align:${align}; font-family:${isEn ? 'var(--font-en)' : 'var(--font-primary)'};">
+            <strong style="color:var(--gold-primary); font-size:0.95rem;">${name}</strong>
+            <p style="margin:4px 0 0 0; font-size:0.8rem; color:#ccc;">${desc}</p>
+            <div style="margin-top:6px; font-size:0.8rem; color:#25D366; font-weight:700;"><i class="fas fa-car"></i> ${etaLabel} ${eta}</div>
           </div>
         `).openPopup();
 
@@ -309,7 +420,10 @@
         const bounds = L.latLngBounds([target.coords, SHOWROOM_COORDS]);
         royalMap.flyToBounds(bounds, { padding: [50, 50], duration: 1.2 });
 
-        showToast(`نقطة الانطلاق: ${target.name} (~${target.driveTime})`);
+        const toastMsg = isEn 
+          ? `Departure point: ${name} (~${eta})` 
+          : `نقطة الانطلاق: ${name} (~${eta})`;
+        showToast(toastMsg);
       });
     });
   }
@@ -349,21 +463,35 @@
       if (overlay) overlay.classList.add('active');
       btnTour.classList.add('active');
 
+      const isEn = getCurrentLang() === 'en';
+
       // المرحلة 1: الانطلاق من مدخل طريق حلب السريع
-      if (tourStatusText) tourStatusText.innerHTML = 'المرحلة 1: الانطلاق من مدخل طريق حلب - الباب...';
+      if (tourStatusText) {
+        tourStatusText.innerHTML = isEn 
+          ? 'Stage 1: Depart from Aleppo - Al-Bab Highway entrance...' 
+          : 'المرحلة 1: الانطلاق من مدخل طريق حلب - الباب...';
+      }
       royalMap.flyTo(landmarks.aleppo_highway.coords, 15, { duration: 2 });
 
       // المرحلة 2: التحليق فوق دوار سوق الهال
       tourTimeouts.push(setTimeout(() => {
         if (!isTourRunning) return;
-        if (tourStatusText) tourStatusText.innerHTML = 'المرحلة 2: الاقتراب من دوار سوق الهال ومدخل المعرض...';
+        if (tourStatusText) {
+          tourStatusText.innerHTML = isEn 
+            ? 'Stage 2: Approach Al-Hal Roundabout and showroom entrance...' 
+            : 'المرحلة 2: الاقتراب من دوار سوق الهال ومدخل المعرض...';
+        }
         royalMap.flyTo(landmarks.hal_roundabout.coords, 16.5, { duration: 2.5 });
       }, 3500));
 
       // المرحلة 3: التمركز بدقة أمام واجهة معرض آية
       tourTimeouts.push(setTimeout(() => {
         if (!isTourRunning) return;
-        if (tourStatusText) tourStatusText.innerHTML = 'المرحلة 3: الوصول لصالة معرض آية لتجارة السيارات!';
+        if (tourStatusText) {
+          tourStatusText.innerHTML = isEn 
+            ? 'Stage 3: Arrived at Aya Car Trading Showroom!' 
+            : 'المرحلة 3: الوصول لصالة معرض آية لتجارة السيارات!';
+        }
         royalMap.flyTo(SHOWROOM_COORDS, 16.5, { duration: 2 });
       }, 7000));
 
@@ -401,11 +529,19 @@
       e.preventDefault();
       if (!royalMap) return;
       zonesActive = !zonesActive;
+      const isEn = getCurrentLang() === 'en';
 
       if (zonesActive) {
         btnDelivery.classList.add('active');
 
-        // نطاق 1: 5 كم (توصيل فوري وتجربة قيادة منزلية مجانية)
+        const z1Text = isEn 
+          ? '<strong>Al-Bab City Zone</strong>: Home test drive & instant delivery within 30 min.' 
+          : '<strong>نطاق مدينة الباب</strong>: تجربة قيادة منزلية وتوصيل فوري خلال 30 دقيقة.';
+        const z2Text = isEn 
+          ? '<strong>Aleppo Countryside Zone</strong>: Free VIP shipping in enclosed carriers.' 
+          : '<strong>نطاق ريف حلب</strong>: شحن VIP مجاني بمركبات مغلقة.';
+
+        // نطاق 1: 5 كم
         const zone1 = L.circle(SHOWROOM_COORDS, {
           radius: 3000,
           color: '#D4AF37',
@@ -413,9 +549,9 @@
           fillOpacity: 0.12,
           weight: 2,
           dashArray: '6, 6'
-        }).addTo(royalMap).bindPopup('<strong>نطاق مدينة الباب</strong>: تجربة قيادة منزلية وتوصيل فوري خلال 30 دقيقة.');
+        }).addTo(royalMap).bindPopup(z1Text);
 
-        // نطاق 2: 15 كم (شحن مجاني لكافة مناطق ريف حلب)
+        // نطاق 2: 15 كم
         const zone2 = L.circle(SHOWROOM_COORDS, {
           radius: 12000,
           color: '#9A7B1C',
@@ -423,11 +559,11 @@
           fillOpacity: 0.06,
           weight: 1.5,
           dashArray: '8, 8'
-        }).addTo(royalMap).bindPopup('<strong>نطاق ريف حلب</strong>: شحن VIP مجاني بمركبات مغلقة.');
+        }).addTo(royalMap).bindPopup(z2Text);
 
         deliveryCircles = [zone1, zone2];
         royalMap.flyTo(SHOWROOM_COORDS, 13, { duration: 1.5 });
-        showToast('تم تفعيل عرض نطاقات التوصيل وتجربة القيادة');
+        showToast(isEn ? 'VIP delivery and test-drive radius enabled' : 'تم تفعيل عرض نطاقات التوصيل وتجربة القيادة');
       } else {
         btnDelivery.classList.remove('active');
         deliveryCircles.forEach(c => {
@@ -539,12 +675,14 @@
 
     btnCalcDist.addEventListener('click', (e) => {
       e.preventDefault();
+      const isEn = getCurrentLang() === 'en';
+
       if (!navigator.geolocation) {
-        showToast('متصفحك لا يدعم تحديد الموقع الجغرافي');
+        showToast(isEn ? 'Your browser does not support geolocation' : 'متصفحك لا يدعم تحديد الموقع الجغرافي');
         return;
       }
 
-      btnCalcDist.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري تحديد موقعك...';
+      btnCalcDist.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${isEn ? 'Locating your position...' : 'جاري تحديد موقعك...'}`;
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -555,10 +693,12 @@
           const distanceKm = calculateHaversineDistance(userLat, userLng, SHOWROOM_LAT, SHOWROOM_LNG);
           const estMinutes = Math.max(2, Math.round(distanceKm * 1.5));
 
-          btnCalcDist.innerHTML = '<i class="fas fa-location-arrow"></i> تم تحديد موقعك ومسارك!';
+          btnCalcDist.innerHTML = `<i class="fas fa-location-arrow"></i> ${isEn ? 'Your location and route located!' : 'تم تحديد موقعك ومسارك!'}`;
 
           if (resultBox && resultText) {
-            resultText.innerHTML = `أنت على بُعد <strong>${distanceKm.toFixed(1)} كم</strong> تقريباً من المعرض (~${estMinutes} دقيقة بالسيارة)`;
+            resultText.innerHTML = isEn
+              ? `You are approx. <strong>${distanceKm.toFixed(1)} km</strong> away from the showroom (~${estMinutes} min by car)`
+              : `أنت على بُعد <strong>${distanceKm.toFixed(1)} كم</strong> تقريباً من المعرض (~${estMinutes} دقيقة بالسيارة)`;
             resultBox.classList.add('active');
           }
 
@@ -573,7 +713,7 @@
             });
 
             userMarker = L.marker(userCoords, { icon: userIcon }).addTo(royalMap);
-            userMarker.bindPopup('<strong>موقعك الحالي</strong>').openPopup();
+            userMarker.bindPopup(isEn ? '<strong>Your Current Location</strong>' : '<strong>موقعك الحالي</strong>').openPopup();
 
             userRoutePolyline = L.polyline([userCoords, SHOWROOM_COORDS], {
               color: '#D4AF37',
@@ -586,11 +726,11 @@
             royalMap.fitBounds(bounds, { padding: [50, 50] });
           }
 
-          showToast(`تم حساب المسافة: ${distanceKm.toFixed(1)} كم`);
+          showToast(isEn ? `Distance calculated: ${distanceKm.toFixed(1)} km` : `تم حساب المسافة: ${distanceKm.toFixed(1)} كم`);
         },
         () => {
-          btnCalcDist.innerHTML = '<i class="fas fa-location-arrow"></i> احسب المسافة من موقعي الحالي';
-          showToast('تعذر الوصول لموقعك. يرجى تفعيل إذن الموقع في المتصفح.');
+          btnCalcDist.innerHTML = `<i class="fas fa-location-arrow"></i> ${isEn ? 'Calculate Distance from My Location' : 'احسب المسافة من موقعي الحالي'}`;
+          showToast(isEn ? 'Could not access your location. Please enable location permissions in your browser.' : 'تعذر الوصول لموقعك. يرجى تفعيل إذن الموقع في المتصفح.');
         },
         { enableHighAccuracy: true, timeout: 10000 }
       );
@@ -647,27 +787,28 @@
       if (!targetBtn) return;
 
       e.preventDefault();
+      const isEn = getCurrentLang() === 'en';
       const coordsText = `${SHOWROOM_LAT}, ${SHOWROOM_LNG}`;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(coordsText).then(() => {
-          showToast('تم نسخ الإحداثيات الجغرافية بنجاح!');
-        }).catch(() => fallbackCopy(coordsText));
+          showToast(isEn ? 'Geographic coordinates copied successfully!' : 'تم نسخ الإحداثيات الجغرافية بنجاح!');
+        }).catch(() => fallbackCopy(coordsText, isEn));
       } else {
-        fallbackCopy(coordsText);
+        fallbackCopy(coordsText, isEn);
       }
     });
   }
 
-  function fallbackCopy(text) {
+  function fallbackCopy(text, isEn) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     document.body.appendChild(textArea);
     textArea.select();
     try {
       document.execCommand('copy');
-      showToast('تم نسخ الإحداثيات الجغرافية بنجاح!');
+      showToast(isEn ? 'Geographic coordinates copied successfully!' : 'تم نسخ الإحداثيات الجغرافية بنجاح!');
     } catch (err) {
-      showToast('الإحداثيات: ' + text);
+      showToast('Coordinates: ' + text);
     }
     document.body.removeChild(textArea);
   }
