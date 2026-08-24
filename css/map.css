@@ -293,6 +293,204 @@
   background: #0b0e14;
 }
 
+/* ==========================================================================
+   بطاقة الطقس الملكية الحية في زاوية الخريطة اليسرى (Floating Weather Card)
+   ========================================================================== */
+.map-floating-weather-card {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 400;
+  width: 275px;
+  background: rgba(14, 17, 24, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+  pointer-events: auto;
+  transition: var(--transition-normal);
+}
+
+[data-theme="light"] .map-floating-weather-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 0 15px rgba(212, 175, 55, 0.25);
+}
+
+.map-weather-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.map-weather-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.map-weather-live-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 0 8px #25D366;
+  animation: liveStatusPulse 1.8s infinite;
+}
+
+.map-weather-reload-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.map-weather-reload-btn:hover {
+  color: var(--gold-primary);
+  transform: rotate(180deg);
+}
+
+.map-weather-reload-btn.spinning i {
+  animation: spinReload 0.8s linear infinite;
+}
+
+@keyframes spinReload {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.map-weather-main-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.map-weather-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(253, 184, 19, 0.1);
+  border: 1px solid rgba(253, 184, 19, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  position: relative;
+  transition: var(--transition-normal);
+}
+
+/* تأثير الشمس النهاري الفخم */
+.map-weather-icon-box.weather-is-day {
+  color: #FDB813;
+  background: radial-gradient(circle, rgba(253, 184, 19, 0.28) 0%, rgba(253, 184, 19, 0.05) 100%);
+  border-color: rgba(253, 184, 19, 0.55);
+  box-shadow: 0 0 16px rgba(253, 184, 19, 0.4);
+  animation: sunGlowPulse 3s infinite ease-in-out;
+}
+
+/* تأثير القمر الليلي الفاخر */
+.map-weather-icon-box.weather-is-night {
+  color: #E2E8F0;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.28) 0%, rgba(30, 41, 59, 0.1) 100%);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 0 16px rgba(226, 232, 240, 0.35);
+  animation: moonGlowPulse 3.5s infinite ease-in-out;
+}
+
+@keyframes sunGlowPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(253, 184, 19, 0.3); }
+  50% { transform: scale(1.06); box-shadow: 0 0 22px rgba(253, 184, 19, 0.65); }
+}
+
+@keyframes moonGlowPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(226, 232, 240, 0.25); }
+  50% { transform: scale(1.06); box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+}
+
+.map-weather-temp-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-weather-temp-display {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+}
+
+.map-weather-temp-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  font-family: var(--font-primary);
+}
+
+.map-weather-temp-unit {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--gold-primary);
+}
+
+.map-weather-condition-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.map-weather-sub-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.72rem;
+}
+
+.map-weather-metric-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.map-weather-metric-item i {
+  color: var(--gold-primary);
+  font-size: 0.74rem;
+}
+
+.map-weather-metric-item.traffic-item {
+  color: #25D366;
+}
+
+.map-weather-metric-item.traffic-item i {
+  color: #25D366;
+}
+
 /* بطاقة المعلومات العائمة داخل الخريطة (Floating Showroom Info Box) */
 .map-floating-info-card {
   position: absolute;
@@ -1108,13 +1306,84 @@
   }
 
   .map-viewport-wrapper {
-    height: 420px;
+    height: 440px;
+  }
+
+  /* مقياس الطقس في الهواتف: كبسولة فاخرة فائقة الأناقة في أقصى الزاوية دون أي تداخل مع النافذة أو الخريطة */
+  .map-floating-weather-card {
+    top: 8px;
+    left: 8px;
+    width: auto;
+    max-width: fit-content;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(212, 175, 55, 0.25);
+    z-index: 350;
+  }
+
+  .map-weather-card-header {
+    display: none !important;
+  }
+
+  .map-weather-main-row {
+    margin-bottom: 0;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .map-weather-icon-box {
+    width: 22px;
+    height: 22px;
+    font-size: 0.78rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .map-weather-temp-info {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .map-weather-temp-display {
+    gap: 1px;
+    line-height: 1;
+  }
+
+  .map-weather-temp-num {
+    font-size: 0.92rem;
+    font-weight: 800;
+  }
+
+  .map-weather-temp-unit {
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  /* إخفاء الوصف النصي الطويل في الهواتف لمنع أي حجب للنافذة */
+  .map-weather-condition-text {
+    display: none !important;
+  }
+
+  .map-weather-sub-metrics {
+    display: none !important;
+  }
+
+  /* إخفاء بطاقة المعلومات العائمة الكبيرة في الهواتف لمنع حجب الخريطة والتداخل مع أزرار التحكم */
+  .map-floating-info-card {
+    display: none !important;
   }
 
   .map-floating-controls {
-    bottom: 10px;
-    left: 10px;
+    bottom: 12px;
+    left: 12px;
     gap: 6px;
+    flex-direction: row;
+    z-index: 350;
   }
 
   .map-ctrl-btn {
@@ -1122,24 +1391,26 @@
     height: 34px;
     font-size: 0.88rem;
     border-radius: var(--radius-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 
   .leaflet-popup-content-wrapper {
-    max-width: calc(100vw - 32px) !important;
+    max-width: 230px !important;
     padding: 4px !important;
+    border-radius: 10px !important;
   }
 
   .royal-popup-body {
     padding: 6px 8px !important;
-    min-width: 200px !important;
+    min-width: 170px !important;
   }
 
   .royal-popup-title {
-    font-size: 0.92rem !important;
+    font-size: 0.88rem !important;
   }
 
   .royal-popup-sub {
-    font-size: 0.78rem !important;
+    font-size: 0.75rem !important;
   }
 
   .map-navigation-hub {

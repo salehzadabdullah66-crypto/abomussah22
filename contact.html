@@ -740,8 +740,8 @@
                   <button type="button" class="map-copy-coords-btn" title="نسخ الإحداثيات">
                     <i class="far fa-copy"></i> نسخ الإحداثيات
                   </button>
-                  <span class="map-weather-pill" title="حالة الطقس وجودة السير في مدينة الباب">
-                    <i class="fas fa-sun" style="color:#FDB813;"></i> <span>26°C طقس صافٍ وحركة السير سالكة</span>
+                  <span class="map-weather-pill" id="map-top-weather-pill" title="حالة الطقس وجودة السير في مدينة الباب">
+                    <i class="fas fa-sun" id="map-top-weather-icon" style="color:#FDB813;"></i> <span id="map-top-weather-text">26°C طقس صافٍ وحركة السير سالكة</span>
                   </span>
                 </div>
               </div>
@@ -800,6 +800,49 @@
           <div class="map-viewport-wrapper">
             <!-- عنصر خريطة Leaflet -->
             <div id="leaflet-royal-map"></div>
+
+            <!-- بطاقة الطقس ومقياس الحرارة المباشر في زاوية الخريطة من اليسار -->
+            <div class="map-floating-weather-card" id="map-live-weather-card">
+              <div class="map-weather-card-header">
+                <div class="map-weather-badge-tag">
+                  <span class="map-weather-live-indicator"></span>
+                  <span class="map-weather-location-label" id="map-weather-loc-label">طقس مباشر • مدينة الباب</span>
+                </div>
+                <button type="button" class="map-weather-reload-btn" id="map-weather-reload-btn" title="تحديث بيانات الطقس الحية">
+                  <i class="fas fa-rotate"></i>
+                </button>
+              </div>
+
+              <div class="map-weather-main-row">
+                <div class="map-weather-icon-box" id="map-weather-icon-box">
+                  <i class="fas fa-sun" id="map-weather-main-icon"></i>
+                </div>
+                <div class="map-weather-temp-info">
+                  <div class="map-weather-temp-display">
+                    <span class="map-weather-temp-num" id="map-weather-temp-val">--</span>
+                    <span class="map-weather-temp-unit">°C</span>
+                  </div>
+                  <div class="map-weather-condition-text" id="map-weather-condition-val">
+                    جاري رصد الطقس...
+                  </div>
+                </div>
+              </div>
+
+              <div class="map-weather-sub-metrics">
+                <div class="map-weather-metric-item" title="درجة الحرارة المحسوسة">
+                  <i class="fas fa-temperature-half"></i>
+                  <span id="map-weather-feels-val">المحسوسة: --°C</span>
+                </div>
+                <div class="map-weather-metric-item traffic-item" title="حالة الطرق وحركة السير">
+                  <i class="fas fa-car-side"></i>
+                  <span id="map-weather-traffic-val">السير: سالكة</span>
+                </div>
+                <div class="map-weather-metric-item" title="نسبة الرطوبة">
+                  <i class="fas fa-droplet"></i>
+                  <span id="map-weather-humidity-val">--%</span>
+                </div>
+              </div>
+            </div>
 
             <!-- بطاقة المعلومات العائمة داخل الخريطة -->
             <div class="map-floating-info-card">

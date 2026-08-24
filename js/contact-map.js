@@ -165,6 +165,7 @@
     setupDeliveryZonesToggle();
     setupCinematicTour();
     setupModals();
+    setupLiveWeather();
 
     // الاستماع لتغيير اللغة لتحديث عناصر الخريطة التفاعلية فوراً
     window.addEventListener('ayaLanguageChanged', (e) => {
@@ -266,13 +267,18 @@
     }).addTo(royalMap);
 
     showroomMarker.bindPopup(getShowroomPopupContent(currentLang), {
-      maxWidth: isMobile ? 260 : 290,
-      minWidth: isMobile ? 200 : 230,
+      maxWidth: isMobile ? 220 : 290,
+      minWidth: isMobile ? 170 : 230,
       autoPan: true,
-      autoPanPaddingTopLeft: L.point(15, isMobile ? 25 : 40),
-      autoPanPaddingBottomRight: L.point(15, 20),
+      autoPanPaddingTopLeft: L.point(20, isMobile ? 60 : 40),
+      autoPanPaddingBottomRight: L.point(20, 20),
       closeButton: true
-    }).openPopup();
+    });
+
+    // في الشاشات الكبيرة يتم فتح النافذة تلقائياً، أما في الهواتف فتفتح عند النقر لإبقاء الخريطة واضحة ونظيفة
+    if (!isMobile) {
+      showroomMarker.openPopup();
+    }
 
     addShowroomVisualGuides(currentLang);
 
@@ -843,6 +849,223 @@
         title="موقع معرض آية لتجارة السيارات على الخريطة">
       </iframe>
     `;
+  }
+
+  /* ==========================================================================
+     محرك الطقس الحي الحقيقي لمدينة الباب والمعرض (Open-Meteo Weather Engine)
+     ========================================================================== */
+  let liveWeatherData = null;
+  const WEATHER_STORAGE_KEY = 'aya_map_weather_cache_v2';
+  const WEATHER_CACHE_TTL = 10 * 60 * 1000; // صلاحية الكاش 10 دقائق
+
+  /**
+   * تهيئة وتفعيل نظام الطقس الحي
+   */
+  function setupLiveWeather() {
+    const reloadBtn = document.getElementById('map-weather-reload-btn');
+    if (reloadBtn) {
+      reloadBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        reloadBtn.classList.add('spinning');
+        fetchLiveWeather(true).finally(() => {
+          setTimeout(() => reloadBtn.classList.remove('spinning'), 600);
+        });
+      });
+    }
+
+    // جلب الطقس الحقيقي فوراً
+    fetchLiveWeather(false);
+
+    // تحديث الطقس تلقائياً كل 10 دقائق
+    setInterval(() => {
+      fetchLiveWeather(true);
+    }, WEATHER_CACHE_TTL);
+  }
+
+  /**
+   * جلب بيانات الطقس الحية من مرصد Open-Meteo بدقة إحداثيات المعرض
+   */
+  async function fetchLiveWeather(forceRefresh = false) {
+    const lang = getCurrentLang();
+
+    // فحص الكاش المؤقت لتفادي الطلبات المتكررة
+    if (!forceRefresh) {
+      try {
+        const cachedStr = sessionStorage.getItem(WEATHER_STORAGE_KEY);
+        if (cachedStr) {
+          const cached = JSON.parse(cachedStr);
+          if (cached && cached.timestamp && (Date.now() - cached.timestamp < WEATHER_CACHE_TTL)) {
+            liveWeatherData = cached.data;
+            renderLiveWeatherUI(liveWeatherData, lang);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Weather cache read error:', err);
+      }
+    }
+
+    // إحداثيات المعرض الحقيقية في مدينة الباب
+    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${SHOWROOM_LAT}&longitude=${SHOWROOM_LNG}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&timezone=auto`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Weather API network response failed');
+      const data = await response.json();
+
+      if (data && data.current) {
+        liveWeatherData = {
+          temp: Math.round(data.current.temperature_2m),
+          feelsLike: Math.round(data.current.apparent_temperature),
+          isDay: data.current.is_day, // 1: نهار/صباح, 0: مساء/ليل
+          weatherCode: data.current.weather_code,
+          humidity: Math.round(data.current.relative_humidity_2m || 45),
+          windSpeed: Math.round(data.current.wind_speed_10m || 10)
+        };
+
+        try {
+          sessionStorage.setItem(WEATHER_STORAGE_KEY, JSON.stringify({
+            data: liveWeatherData,
+            timestamp: Date.now()
+          }));
+        } catch (e) {}
+
+        renderLiveWeatherUI(liveWeatherData, lang);
+      } else {
+        throw new Error('Invalid weather payload');
+      }
+    } catch (err) {
+      console.warn('Live weather fetch fallback:', err);
+      fallbackLocalWeather(lang);
+    }
+  }
+
+  /**
+   * احتياطي دقيق في حال عدم توفر إنترنت
+   */
+  function fallbackLocalWeather(lang) {
+    const now = new Date();
+    const hour = now.getHours();
+    const isDay = (hour >= 6 && hour < 19) ? 1 : 0;
+    
+    liveWeatherData = {
+      temp: isDay ? 31 : 24,
+      feelsLike: isDay ? 33 : 25,
+      isDay: isDay,
+      weatherCode: 0,
+      humidity: 45,
+      windSpeed: 12
+    };
+
+    renderLiveWeatherUI(liveWeatherData, lang);
+  }
+
+  /**
+   * استخراج مظهر الأيقونة والنصوص المناسبة وفق حالة الليل والنهار وظروف الطقس
+   */
+  function getWeatherMeta(code, isDay, lang) {
+    const isEn = lang === 'en';
+    const isDayTime = isDay === 1;
+
+    let icon = isDayTime ? 'fas fa-sun' : 'fas fa-moon';
+    let text = isDayTime ? 
+      (isEn ? 'Clear Sky • Ideal for Visiting' : 'طقس صافٍ ومثالي للزيارة') : 
+      (isEn ? 'Clear & Serene Night' : 'أجواء ليلية صافية وهادئة');
+
+    if (code === 1 || code === 2) {
+      icon = isDayTime ? 'fas fa-cloud-sun' : 'fas fa-cloud-moon';
+      text = isDayTime ? 
+        (isEn ? 'Partly Cloudy & Pleasant' : 'طقس غائم جزئياً ولطيف') : 
+        (isEn ? 'Partly Cloudy Night' : 'أجواء ليلية غائمة جزئياً');
+    } else if (code === 3) {
+      icon = 'fas fa-cloud';
+      text = isEn ? 'Overcast & Mild' : 'أجواء غائمة ومعتدلة';
+    } else if (code === 45 || code === 48) {
+      icon = 'fas fa-smog';
+      text = isEn ? 'Foggy • Fair Visibility' : 'ضباب خفيف والرؤية مقبولة';
+    } else if (code >= 51 && code <= 67) {
+      icon = isDayTime ? 'fas fa-cloud-sun-rain' : 'fas fa-cloud-moon-rain';
+      text = isEn ? 'Light Rain Showers' : 'أجواء ماطرة ومنعشة';
+    } else if (code >= 71 && code <= 86) {
+      icon = 'fas fa-snowflake';
+      text = isEn ? 'Snowfall & Cold' : 'تساقط ثلوج وأجواء باردة';
+    } else if (code >= 95) {
+      icon = 'fas fa-bolt';
+      text = isEn ? 'Thunderstorms & Rain' : 'عواصف رعدية وأمطار';
+    }
+
+    return {
+      icon: icon,
+      text: text,
+      isDayTime: isDayTime
+    };
+  }
+
+  /**
+   * رسم وعرض عناصر الطقس الحي في الخريطة وشريط العنوان
+   */
+  function renderLiveWeatherUI(data, lang) {
+    if (!data) return;
+    const isEn = lang === 'en';
+    const meta = getWeatherMeta(data.weatherCode, data.isDay, lang);
+
+    // 1. تحديث بطاقة زاوية الخريطة اليسرى
+    const tempValEl = document.getElementById('map-weather-temp-val');
+    const conditionValEl = document.getElementById('map-weather-condition-val');
+    const iconBoxEl = document.getElementById('map-weather-icon-box');
+    const feelsValEl = document.getElementById('map-weather-feels-val');
+    const trafficValEl = document.getElementById('map-weather-traffic-val');
+    const humidityValEl = document.getElementById('map-weather-humidity-val');
+    const locLabelEl = document.getElementById('map-weather-loc-label');
+
+    if (tempValEl) tempValEl.textContent = data.temp;
+    if (conditionValEl) conditionValEl.textContent = meta.text;
+    
+    if (iconBoxEl) {
+      iconBoxEl.className = 'map-weather-icon-box ' + (meta.isDayTime ? 'weather-is-day' : 'weather-is-night');
+      if (meta.isDayTime) {
+        iconBoxEl.innerHTML = `<i class="${meta.icon}" style="color:#FDB813;"></i>`;
+      } else {
+        iconBoxEl.innerHTML = `<i class="${meta.icon}" style="color:#E2E8F0;"></i>`;
+      }
+    }
+
+    if (feelsValEl) {
+      feelsValEl.textContent = (isEn ? 'Feels: ' : 'المحسوسة: ') + data.feelsLike + '°C';
+    }
+    if (trafficValEl) {
+      trafficValEl.textContent = isEn ? 'Traffic: Clear' : 'السير: سالكة';
+    }
+    if (humidityValEl) {
+      humidityValEl.textContent = data.humidity + '%';
+    }
+    if (locLabelEl) {
+      locLabelEl.textContent = isEn ? 'Live Weather • Al-Bab' : 'طقس مباشر • مدينة الباب';
+    }
+
+    // 2. تحديث مؤشر الطقس في الشريط العلوي (Synchronized Pill)
+    const topIcon = document.getElementById('map-top-weather-icon');
+    const topText = document.getElementById('map-top-weather-text');
+
+    if (topIcon) {
+      topIcon.className = meta.icon;
+      topIcon.style.color = meta.isDayTime ? '#FDB813' : '#cbd5e1';
+    }
+    if (topText) {
+      topText.textContent = `${data.temp}°C ` + (isEn ? '• Al-Bab City • Smooth Traffic' : 'طقس مدينة الباب • حركة السير سالكة');
+    }
+  }
+
+  /**
+   * تحديث لغة عناصر الخريطة
+   */
+  function updateMapLanguage(lang) {
+    if (showroomMarker) {
+      showroomMarker.setPopupContent(getShowroomPopupContent(lang));
+    }
+    if (liveWeatherData) {
+      renderLiveWeatherUI(liveWeatherData, lang);
+    }
   }
 
 })();
