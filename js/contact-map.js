@@ -194,23 +194,25 @@
     const textAlign = isEn ? 'left' : 'right';
 
     return `
-      <div class="royal-popup-body" style="direction:${dirStyle}; text-align:${textAlign}; font-family:${isEn ? 'var(--font-en)' : 'var(--font-primary)'};">
-        <div class="royal-popup-title" style="display:flex; align-items:center; gap:6px;">
-          <i class="fas fa-gem" style="color:var(--gold-primary);"></i> ${title}
+      <div class="royal-popup-body" style="direction:${dirStyle}; text-align:${textAlign}; font-family:${isEn ? 'var(--font-en)' : 'var(--font-primary)'}; width:100%; box-sizing:border-box;">
+        <div class="royal-popup-title" style="display:flex; align-items:flex-start; gap:6px; font-size:0.92rem; font-weight:800; color:var(--gold-primary); margin-bottom:4px; line-height:1.3; padding-${isEn ? 'right' : 'left'}:22px; box-sizing:border-box;">
+          <i class="fas fa-gem" style="color:var(--gold-primary); flex-shrink:0; margin-top:3px;"></i>
+          <span>${title}</span>
         </div>
-        <div class="royal-popup-sub" style="margin:4px 0 6px 0; color:var(--text-secondary); font-size:0.82rem;">
-          <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); margin-left:4px; margin-right:4px;"></i>
-          ${subtitle}
+        <div style="display:flex; align-items:center; gap:5px; margin-bottom:5px; color:var(--text-secondary); font-size:0.78rem; box-sizing:border-box;">
+          <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); flex-shrink:0;"></i>
+          <span>${subtitle}</span>
         </div>
-        <div style="font-size:0.8rem; color:#25D366; font-weight:700; margin-bottom:8px;">
-          <i class="fas fa-door-open"></i> ${status}
+        <div style="display:flex; align-items:center; gap:5px; font-size:0.76rem; color:#25D366; font-weight:700; margin-bottom:10px; box-sizing:border-box;">
+          <i class="fas fa-door-open" style="flex-shrink:0;"></i>
+          <span>${status}</span>
         </div>
-        <div class="royal-popup-buttons" style="display:flex; gap:6px;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${SHOWROOM_LAT},${SHOWROOM_LNG}" target="_blank" class="map-action-btn-primary" style="font-size:0.76rem; padding:6px 10px; border-radius:4px; text-decoration:none;">
-            <i class="fas fa-directions"></i> ${btnNav}
+        <div style="display:flex; flex-direction:column; gap:6px; width:100%; box-sizing:border-box;">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${SHOWROOM_LAT},${SHOWROOM_LNG}" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:6px; width:100%; box-sizing:border-box; background:var(--gold-gradient); color:#0b0e14 !important; font-weight:700; font-size:0.8rem; padding:8px 10px; border-radius:6px; text-decoration:none !important; border:none; cursor:pointer;">
+            <i class="fas fa-directions"></i> <span>${btnNav}</span>
           </a>
-          <a href="https://wa.me/963959124771" target="_blank" class="map-action-btn-secondary" style="font-size:0.76rem; padding:6px 10px; color:#25D366; border-color:#25D366; border-radius:4px; text-decoration:none;">
-            <i class="fab fa-whatsapp"></i> ${btnWa}
+          <a href="https://wa.me/963959124771" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:6px; width:100%; box-sizing:border-box; background:rgba(37,211,102,0.12); color:#25D366 !important; font-weight:700; font-size:0.8rem; padding:8px 10px; border-radius:6px; text-decoration:none !important; border:1.5px solid #25D366; cursor:pointer;">
+            <i class="fab fa-whatsapp"></i> <span>${btnWa}</span>
           </a>
         </div>
       </div>
@@ -267,8 +269,8 @@
     }).addTo(royalMap);
 
     showroomMarker.bindPopup(getShowroomPopupContent(currentLang), {
-      maxWidth: isMobile ? 220 : 290,
-      minWidth: isMobile ? 170 : 230,
+      maxWidth: isMobile ? 260 : 300,
+      minWidth: isMobile ? 210 : 250,
       autoPan: true,
       autoPanPaddingTopLeft: L.point(20, isMobile ? 60 : 40),
       autoPanPaddingBottomRight: L.point(20, 20),
