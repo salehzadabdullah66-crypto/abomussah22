@@ -69,6 +69,9 @@
   <link rel="stylesheet" href="css/forms.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <!-- Leaflet Map CSS & Custom Map Styling -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/map.css">
 
   <!-- ========================================== -->
   <!-- 9. البيانات المنظمة للبحث (Schema.org JSON-LD) -->
@@ -714,39 +717,228 @@
       </div>
     </section>
 
-    <!-- Royal Interactive Google Map Section -->
-    <section class="contact-map-section scroll-reveal" style="padding: 30px 0 60px 0;">
+    <!-- Royal Interactive Google & Leaflet Map Section -->
+    <section class="royal-map-section scroll-reveal" id="showroom-map-section">
       <div class="container">
-        <div class="section-header" style="text-align: center; margin-bottom: 30px;">
+        <div class="section-header" style="text-align: center; margin-bottom: 35px;">
           <span class="section-badge"><i class="fas fa-map-marked-alt"></i> الموقع الجغرافي المباشر</span>
-          <h2 class="section-title">موقع <span>معرض آية على الخريطة</span></h2>
-          <p class="section-subtitle">تفضل بزيارتنا في موقعنا المباشر الموضّح أدناه، أو اضغط للتوجيه المباشر عبر Google Maps</p>
+          <h2 class="section-title">الموقع المباشر <span>لمعرض آية للسيارات</span></h2>
+          <p class="section-subtitle">تفضل بزيارتنا في موقعنا المباشر الموضّح أدناه، أو استخدم خيارات الملاحة الفورية والتوجيه المباشر</p>
         </div>
 
-        <div class="royal-map-card" style="position: relative; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--gold-primary); box-shadow: 0 0 35px rgba(212, 175, 55, 0.3); background: #0b0e14;">
-          <!-- Map Action Top Bar -->
-          <div style="background: var(--bg-card); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid var(--border-subtle);">
-            <div style="display:flex; align-items:center; gap:10px; color:var(--text-primary); font-weight:700; font-size:1.05rem;">
-              <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); font-size:1.3rem;"></i>
-              <span>الإحداثيات الجغرافية: 36°21'00.8"N 37°29'45.4"E</span>
+        <div class="royal-map-card">
+          <!-- شريط التحكم العلوي والمعلومات الجغرافية -->
+          <div class="map-top-bar">
+            <div class="map-location-badge">
+              <div class="map-pin-pulse-icon">
+                <i class="fas fa-location-dot"></i>
+              </div>
+              <div class="map-location-texts">
+                <span class="map-location-title">معرض آية لتجارة السيارات - إدارة أبو موسى</span>
+                <div class="map-location-coords">
+                  <span>36°21'00.8"N 37°29'45.4"E</span>
+                  <button type="button" class="map-copy-coords-btn" title="نسخ الإحداثيات">
+                    <i class="far fa-copy"></i> نسخ الإحداثيات
+                  </button>
+                  <span class="map-weather-pill" title="حالة الطقس وجودة السير في مدينة الباب">
+                    <i class="fas fa-sun" style="color:#FDB813;"></i> 26°C طقس صافٍ وحركة السير سالكة
+                  </span>
+                </div>
+              </div>
             </div>
-            <a href="https://www.google.com/maps/place/36%C2%B021'00.8%22N+37%C2%B029'45.4%22E/@36.350217,37.498137,668m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d36.350217!4d37.4959483?hl=ar" target="_blank" class="btn btn-gold btn-sm">
-              <i class="fas fa-directions"></i> افتح الملاحة في Google Maps
-            </a>
+
+            <!-- أزرار الميزات المتقدمة وتبديل الطبقات -->
+            <div class="map-top-actions-group">
+              <button type="button" class="map-top-feature-btn" id="map-btn-tour" title="تشغيل جولة الطيران والوصول الافتراضية">
+                <i class="fas fa-video"></i> <span>جولة وصول افتراضية</span>
+              </button>
+              <button type="button" class="map-top-feature-btn" id="map-btn-delivery-zones" title="إظهار نطاقات التوصيل وتجربة القيادة">
+                <i class="fas fa-truck-moving"></i> <span>نطاق التوصيل VIP</span>
+              </button>
+
+              <!-- تبديل مظهر الخريطة الفاخر -->
+              <div class="map-layer-toggles">
+                <button type="button" class="map-layer-btn active" data-layer="dark" title="الوضع الليلي الفاخر">
+                  <i class="fas fa-moon"></i> <span>ليلي فاخر</span>
+                </button>
+                <button type="button" class="map-layer-btn" data-layer="satellite" title="قمر صناعي بدقة عالية">
+                  <i class="fas fa-satellite"></i> <span>قمر صناعي</span>
+                </button>
+                <button type="button" class="map-layer-btn" data-layer="street" title="خريطة الشوارع التوضيحية">
+                  <i class="fas fa-road"></i> <span>شوارع</span>
+                </button>
+              </div>
+            </div>
           </div>
 
-          <!-- Embedded Interactive Google Map Iframe -->
-          <div class="map-iframe-container" style="position: relative; width: 100%; height: 460px;">
-            <iframe 
-              src="https://maps.google.com/maps?q=36.350217,37.4959483&z=16&output=embed&hl=ar" 
-              width="100%" 
-              height="100%" 
-              style="border:0;" 
-              allowfullscreen="" 
-              loading="lazy" 
-              referrerpolicy="no-referrer-when-downgrade"
-              title="موقع معرض آية لتجارة السيارات على الخريطة">
-            </iframe>
+          <!-- شريط الانطلاق السريع للمعالم ورسم المسارات الحية -->
+          <div class="map-landmarks-bar">
+            <div class="map-landmarks-label">
+              <i class="fas fa-route"></i>
+              <span>نقاط الانطلاق السريعة:</span>
+            </div>
+            <div class="map-landmarks-chips-scroll">
+              <button type="button" class="map-landmark-chip" data-landmark="aleppo_highway">
+                <i class="fas fa-road"></i> طريق حلب - الباب (2 دقيقة)
+              </button>
+              <button type="button" class="map-landmark-chip" data-landmark="hal_roundabout">
+                <i class="fas fa-circle-notch"></i> دوار سوق الهال (المدخل)
+              </button>
+              <button type="button" class="map-landmark-chip" data-landmark="city_center">
+                <i class="fas fa-city"></i> مركز مدينة الباب (5 دقائق)
+              </button>
+              <button type="button" class="map-landmark-chip" data-landmark="vip_parking">
+                <i class="fas fa-parking"></i> مواقف المعرض VIP
+              </button>
+              <button type="button" class="map-landmark-chip" data-landmark="al_rai_road">
+                <i class="fas fa-compass"></i> طريق الراعي (6 دقائق)
+              </button>
+            </div>
+          </div>
+
+          <!-- الحاوية التفاعلية للخريطة الفاخرة -->
+          <div class="map-viewport-wrapper">
+            <!-- عنصر خريطة Leaflet -->
+            <div id="leaflet-royal-map"></div>
+
+            <!-- بطاقة المعلومات العائمة داخل الخريطة -->
+            <div class="map-floating-info-card">
+              <div class="map-floating-header">
+                <img src="img/logo.png" alt="شعار المعرض" class="map-floating-logo">
+                <div>
+                  <h4 class="map-floating-title">معرض آية للسيارات</h4>
+                  <span class="map-floating-subtitle">بإشراف وإدارة أبو موسى</span>
+                </div>
+              </div>
+
+              <div class="map-floating-status">
+                <span class="map-status-dot"></span>
+                <span>مفتوح الآن • يستقبلكم حتى 10:00 م</span>
+              </div>
+
+              <p class="map-floating-desc">
+                <i class="fas fa-map-marker-alt" style="color:var(--gold-primary); margin-left:4px;"></i>
+                مدينة الباب - دخولية المدينة - دوار سوق الهال
+              </p>
+
+              <div class="map-floating-actions">
+                <a href="https://www.google.com/maps/place/36%C2%B021'00.8%22N+37%C2%B029'45.4%22E/@36.350217,37.498137,668m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d36.350217!4d37.4959483?hl=ar" target="_blank" class="map-action-btn-primary">
+                  <i class="fas fa-directions"></i> افتح الملاحة المباشرة (GPS)
+                </a>
+                <button type="button" class="map-action-btn-secondary" id="map-btn-calc-dist">
+                  <i class="fas fa-location-arrow"></i> احسب المسافة من موقعي الحالي
+                </button>
+              </div>
+
+              <!-- نتيجة حساب المسافة الفورية -->
+              <div class="map-distance-result" id="map-distance-result">
+                <i class="fas fa-route" style="color:var(--gold-primary); margin-left:4px;"></i>
+                <span id="map-distance-text"></span>
+              </div>
+            </div>
+
+            <!-- أزرار التحكم العائمة بالخريطة -->
+            <div class="map-floating-controls">
+              <button type="button" class="map-ctrl-btn" id="map-btn-fullscreen" title="عرض ملء الشاشة">
+                <i class="fas fa-expand"></i>
+              </button>
+              <button type="button" class="map-ctrl-btn" id="map-btn-center" title="إعادة التمركز على المعرض">
+                <i class="fas fa-crosshairs"></i>
+              </button>
+              <button type="button" class="map-ctrl-btn" id="map-btn-zoom-in" title="تكبير الخريطة">
+                <i class="fas fa-plus"></i>
+              </button>
+              <button type="button" class="map-ctrl-btn" id="map-btn-zoom-out" title="تصغير الخريطة">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+
+            <!-- بنر الجولة السينمائية المباشرة -->
+            <div class="map-tour-overlay" id="map-tour-overlay">
+              <i class="fas fa-circle-notch fa-spin" style="color:var(--gold-primary);"></i>
+              <span id="map-tour-status-text">جاري بدء جولة الوصول الافتراضية...</span>
+              <button type="button" class="map-tour-stop-btn" id="map-tour-stop-btn">
+                <i class="fas fa-stop"></i> إنهاء
+              </button>
+            </div>
+          </div>
+
+          <!-- شبكة تطبيقات الملاحة الفورية المباشرة -->
+          <div class="map-navigation-hub">
+            <h4 class="map-nav-hub-title">
+              <i class="fas fa-compass" style="color:var(--gold-primary);"></i>
+              اختر تطبيق الملاحة المفضل للوصول المباشر إلى المعرض:
+            </h4>
+            <div class="map-nav-hub-grid">
+              <!-- Google Maps -->
+              <a href="https://www.google.com/maps/place/36%C2%B021'00.8%22N+37%C2%B029'45.4%22E/@36.350217,37.498137,668m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d36.350217!4d37.4959483?hl=ar" target="_blank" class="map-app-nav-card">
+                <div class="map-app-icon google"><i class="fab fa-google"></i></div>
+                <div class="map-app-info">
+                  <span class="map-app-name">Google Maps</span>
+                  <span class="map-app-desc">التوجيه الحي والمباشر</span>
+                </div>
+              </a>
+
+              <!-- Apple Maps -->
+              <a href="https://maps.apple.com/?q=36.350217,37.4959483" target="_blank" class="map-app-nav-card">
+                <div class="map-app-icon apple"><i class="fab fa-apple"></i></div>
+                <div class="map-app-info">
+                  <span class="map-app-name">Apple Maps</span>
+                  <span class="map-app-desc">لأجهزة iPhone و Apple</span>
+                </div>
+              </a>
+
+              <!-- Waze -->
+              <a href="https://waze.com/ul?ll=36.350217,37.4959483&navigate=yes" target="_blank" class="map-app-nav-card">
+                <div class="map-app-icon waze"><i class="fas fa-route"></i></div>
+                <div class="map-app-info">
+                  <span class="map-app-name">Waze Navigation</span>
+                  <span class="map-app-desc">تفادي الازدحام والمسار الأسرع</span>
+                </div>
+              </a>
+
+              <!-- QR Code Navigation Modal Card -->
+              <div class="map-app-nav-card" id="map-btn-open-qr">
+                <div class="map-app-icon qrcode"><i class="fas fa-qrcode"></i></div>
+                <div class="map-app-info">
+                  <span class="map-app-name">شاشة السيارة (QR)</span>
+                  <span class="map-app-desc">امسح الرمز للتوجيه الفوري</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- بطاقات إرشادات الوصول السريع ومواقف السيارات -->
+        <div class="map-access-guide-grid">
+          <div class="map-guide-card">
+            <div class="map-guide-icon-box">
+              <i class="fas fa-car-side"></i>
+            </div>
+            <div class="map-guide-content">
+              <h4>الوصول من طريق حلب - الباب</h4>
+              <p>دقيقتان فقط من المدخل الرئيسي لمدينة الباب باتجاه دوار سوق الهال مباشرة، المعرض يقع على الواجهة الرئيسية.</p>
+            </div>
+          </div>
+
+          <div class="map-guide-card">
+            <div class="map-guide-icon-box">
+              <i class="fas fa-parking"></i>
+            </div>
+            <div class="map-guide-content">
+              <h4>مواقف VIP مجانية وواسعة</h4>
+              <p>تتوفر مساحات ومواقف سيارات واسعة ومظللة مخصصة لكافة زوار وعملاء المعرض لتجربة مريحة وسلسة.</p>
+            </div>
+          </div>
+
+          <div class="map-guide-card">
+            <div class="map-guide-icon-box">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="map-guide-content">
+              <h4>أوقات الاستقبال والزيارة</h4>
+              <p>نستقبلكم يومياً طوال أيام الأسبوع من الساعة 9:00 صباحاً وحتى الساعة 10:00 مساءً مع تجربة قيادة مجانية.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -809,6 +1001,34 @@
     </a>
   </div>
 
+  <!-- In-Car Navigation QR Code Luxury Modal -->
+  <div class="map-luxury-modal" id="map-qr-modal">
+    <div class="map-modal-dialog">
+      <button type="button" class="map-modal-close-btn" aria-label="إغلاق"><i class="fas fa-times"></i></button>
+      <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient-soft); border:1.5px solid var(--gold-primary); color:var(--gold-primary); display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 12px auto;">
+        <i class="fas fa-qrcode"></i>
+      </div>
+      <h3 style="font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:6px;">ملاحة شاشة السيارة الفورية</h3>
+      <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.6; margin-bottom:15px;">
+        امسح رمز QR التالي بكاميرا هاتفك لبدء التوجيه المباشر فوراً على شاشة سيارتك (Apple CarPlay / Android Auto) أو عبر Google Maps:
+      </p>
+
+      <!-- رمز الاستجابة السريعة عالي الدقة والموثوق -->
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fmaps.google.com%2F%3Fq%3D36.350217%2C37.4959483" alt="رمز QR لملاحة معرض آية لتجارة السيارات" class="map-qr-code-img">
+
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
+        <a href="https://www.google.com/maps/place/36%C2%B021'00.8%22N+37%C2%B029'45.4%22E/@36.350217,37.498137,668m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d36.350217!4d37.4959483?hl=ar" target="_blank" class="map-action-btn-primary">
+          <i class="fas fa-external-link-alt"></i> فتح في Google Maps مباشرة
+        </a>
+        <button type="button" class="map-action-btn-secondary map-copy-coords-btn">
+          <i class="far fa-copy"></i> نسخ الإحداثيات (36.350217, 37.495948)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/lang.js"></script>
   <script src="js/menu.js"></script>
@@ -817,5 +1037,6 @@
   <script src="js/animation.js"></script>
   <script src="js/contact.js"></script>
   <script src="js/contact-animation.js"></script>
+  <script src="js/contact-map.js"></script>
 </body>
 </html>
